@@ -1,5 +1,5 @@
 {
-  "name": "cypress-webpack-dev-server",
+  "name": "cypress-rspack-dev-server",
   "version": "0.0.1",
   "description": "Launches Rspack Dev Server for Component Testing",
   "main": "dist/index.js",
