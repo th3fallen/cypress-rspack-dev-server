@@ -1,4 +1,5 @@
 # cypress-rspack-dev-server
+Based off the amazing work of the cypress team at https://github.com/cypress-io/cypress/blob/develop/npm/webpack-dev-server/
 
 Implements the APIs for the object-syntax of the Cypress Component-testing "rspack dev server".
 
