@@ -83,7 +83,6 @@ class CypressCTRspackPlugin {
             /* istanbul ignore next */
             if ('NormalModule' in this.compilation.compiler.webpack) {
                 const loader = this.compilation.compiler.webpack.NormalModule.getCompilationHooks(compilation).loader;
-                debug(loader);
                 loader.tap('CypressCTPlugin', this.addLoaderContext);
             }
         };
@@ -91,7 +90,7 @@ class CypressCTRspackPlugin {
         this.supportFile = options.supportFile;
         this.projectRoot = options.projectRoot;
         this.devServerEvents = options.devServerEvents;
-        this.webpack = options.webpack;
+        this.rspack = options.rspack;
         this.indexHtmlFile = options.indexHtmlFile;
     }
     /**

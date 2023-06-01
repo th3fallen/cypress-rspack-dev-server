@@ -6,10 +6,10 @@ export interface CypressCTRspackPluginOptions {
     projectRoot: string;
     supportFile: string | false;
     devServerEvents: EventEmitter;
-    webpack: Function;
+    rspack: Function;
     indexHtmlFile: string;
 }
-export type CypressCTContextOptions = Omit<CypressCTRspackPluginOptions, 'devServerEvents' | 'webpack'>;
+export type CypressCTContextOptions = Omit<CypressCTRspackPluginOptions, 'devServerEvents' | 'rspack'>;
 export interface CypressCTRspackContext {
     _cypress: CypressCTContextOptions;
 }

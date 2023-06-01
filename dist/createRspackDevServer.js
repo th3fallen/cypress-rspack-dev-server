@@ -18,7 +18,9 @@ async function createRspackDevServer(config) {
             stats: (_a = finalRspackConfig.stats) !== null && _a !== void 0 ? _a : 'minimal',
         }, hot: false, 
         // Only enable file watching & reload when executing tests in `open` mode
-        liveReload: isOpenMode });
+        liveReload: isOpenMode, client: {
+            overlay: false,
+        } });
     const server = new RspackDevServer(rspackDevServerConfig, rspackCompiler);
     return {
         server,

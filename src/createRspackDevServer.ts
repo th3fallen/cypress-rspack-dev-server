@@ -59,6 +59,9 @@ export async function createRspackDevServer(
     hot: false,
     // Only enable file watching & reload when executing tests in `open` mode
     liveReload: isOpenMode,
+    client: {
+      overlay: false,
+    }
   };
 
   const server = new RspackDevServer(rspackDevServerConfig, rspackCompiler);

@@ -78,7 +78,7 @@ export function makeCypressWebpackConfig(
         projectRoot,
         devServerEvents,
         supportFile,
-        webpack,
+        rspack: webpack,
         indexHtmlFile,
       }),
     ],

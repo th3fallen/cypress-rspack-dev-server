@@ -17,7 +17,7 @@ const makeImport = (file, filename, chunkName, projectRoot) => {
     const magicComments = chunkName ? `/* webpackChunkName: "${chunkName}" */` : '';
     return `"${filename}": {
     shouldLoad: () => decodeURI(document.location.pathname).includes("${file.absolute}"),
-    load: () => import("${file.absolute}" ${magicComments}),
+    load: () => import(${magicComments} "${file.absolute}"),
     absolute: "${file.absolute.split(path.sep).join(path.posix.sep)}",
     relative: "${file.relative.split(path.sep).join(path.posix.sep)}",
     relativeUrl: "/__cypress/src/${chunkName}.js",
@@ -74,7 +74,7 @@ function loader() {
       absolute: ${supportFileAbsolutePath},
       relative: ${supportFileRelativePath},
       relativeUrl: "/__cypress/src/cypress-support-file.js",
-      load: () => import(${supportFileAbsolutePath} /* webpackChunkName: "cypress-support-file" */),
+      load: () => import(/* webpackChunkName: "cypress-support-file" */ ${supportFileAbsolutePath}),
     }
     scriptLoaders.unshift(supportFile)
   }

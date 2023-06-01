@@ -48,7 +48,7 @@ function makeCypressWebpackConfig(config) {
                 projectRoot,
                 devServerEvents,
                 supportFile,
-                webpack,
+                rspack: webpack,
                 indexHtmlFile,
             }),
         ],

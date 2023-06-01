@@ -14,11 +14,11 @@ export interface CypressCTRspackPluginOptions {
   projectRoot: string;
   supportFile: string | false;
   devServerEvents: EventEmitter;
-  webpack: Function;
+  rspack: Function;
   indexHtmlFile: string;
 }
 
-export type CypressCTContextOptions = Omit<CypressCTRspackPluginOptions, 'devServerEvents' | 'webpack'>
+export type CypressCTContextOptions = Omit<CypressCTRspackPluginOptions, 'devServerEvents' | 'rspack'>
 
 export interface CypressCTRspackContext {
   _cypress: CypressCTContextOptions;
@@ -48,7 +48,7 @@ export class CypressCTRspackPlugin {
   private files: Cypress.Cypress['spec'][] = [];
   private supportFile: string | false;
   private compilation: RspackCompilation | null = null;
-  private webpack: Function;
+  private rspack: Function;
   private indexHtmlFile: string;
 
   private readonly projectRoot: string;
@@ -59,7 +59,7 @@ export class CypressCTRspackPlugin {
     this.supportFile = options.supportFile;
     this.projectRoot = options.projectRoot;
     this.devServerEvents = options.devServerEvents;
-    this.webpack = options.webpack;
+    this.rspack = options.rspack;
     this.indexHtmlFile = options.indexHtmlFile;
   }
 
@@ -110,7 +110,7 @@ export class CypressCTRspackPlugin {
    * See https://github.com/cypress-io/cypress/issues/24398
    */
   private onSpecsChange = async (specs: Cypress.Cypress['spec'][]) => {
-    if (!this.compilation ||isEqual(specs, this.files)) {
+    if (!this.compilation || isEqual(specs, this.files)) {
       return;
     }
 
@@ -136,7 +136,7 @@ export class CypressCTRspackPlugin {
     /* istanbul ignore next */
     if ('NormalModule' in this.compilation.compiler.webpack) {
       const loader = (this.compilation.compiler.webpack as Compiler['webpack']).NormalModule.getCompilationHooks(compilation).loader;
-      debug(loader);
+
       loader.tap('CypressCTPlugin', this.addLoaderContext);
     }
   };
