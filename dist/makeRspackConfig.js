@@ -10,15 +10,25 @@ const makeDefaultWebpackConfig_1 = require("./makeDefaultWebpackConfig");
 const constants_1 = require("./constants");
 const dynamic_import_1 = require("./dynamic-import");
 const debug = (0, debug_1.debug)('cypress:rspack-dev-server:makeRspackConfig');
+const removeList = [
+    // We provide a webpack-html-plugin config pinned to a specific version (4.x)
+    // that we have tested and are confident works with all common configurations.
+    // https://github.com/cypress-io/cypress/issues/15865
+    'HtmlWebpackPlugin',
+    // We already reload when webpack recompiles (via listeners on
+    // devServerEvents). Removing this plugin can prevent double-refreshes
+    // in some setups.
+    'HotModuleReplacementPlugin',
+];
 exports.CYPRESS_RSPACK_ENTRYPOINT = path.resolve(__dirname, 'browser.js');
 /**
  * Removes and/or modifies certain plugins known to conflict
  * when used with cypress/rspack-dev-server.
  */
 function modifyRspackConfigForCypress(rspackConfig) {
-    var _a, _b;
-    (_a = rspackConfig.builtins) === null || _a === void 0 ? true : delete _a.html;
-    (_b = rspackConfig.builtins) === null || _b === void 0 ? true : delete _b.copy;
+    if (rspackConfig === null || rspackConfig === void 0 ? void 0 : rspackConfig.plugins) {
+        rspackConfig.plugins = rspackConfig.plugins.filter((plugin) => !removeList.includes(plugin.constructor.name));
+    }
     delete rspackConfig.entry;
     delete rspackConfig.output;
     return rspackConfig;
