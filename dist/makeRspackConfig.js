@@ -6,7 +6,7 @@ const debug_1 = require("debug");
 const path = tslib_1.__importStar(require("path"));
 const webpack_merge_1 = require("webpack-merge");
 const local_pkg_1 = require("local-pkg");
-const makeDefaultWebpackConfig_1 = require("./makeDefaultWebpackConfig");
+const makeDefaultRspackConfig_1 = require("./makeDefaultRspackConfig");
 const constants_1 = require("./constants");
 const dynamic_import_1 = require("./dynamic-import");
 const debug = (0, debug_1.debug)('cypress:rspack-dev-server:makeRspackConfig');
@@ -78,7 +78,7 @@ async function makeRspackConfig(config) {
     debug(`New webpack entries %o`, files);
     debug(`Project root`, projectRoot);
     debug(`Support file`, supportFile);
-    const mergedConfig = (0, webpack_merge_1.merge)(userAndFrameworkWebpackConfig, (0, makeDefaultWebpackConfig_1.makeCypressWebpackConfig)(config));
+    const mergedConfig = (0, webpack_merge_1.merge)(userAndFrameworkWebpackConfig, (0, makeDefaultRspackConfig_1.makeCypressRspackConfig)(config));
     // Some frameworks (like Next.js) change this value which changes the path we would need to use to fetch our spec.
     // (eg, http://localhost:xxxx/<dev-server-public-path>/static/chunks/spec-<x>.js). Deleting this key to normalize
     // the spec URL to `*/spec-<x>.js` which we need to know up-front so we can fetch the sourcemaps.

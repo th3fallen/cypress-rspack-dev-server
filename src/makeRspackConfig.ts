@@ -3,7 +3,7 @@ import * as path from 'path';
 import { merge } from 'webpack-merge';
 import { importModule } from 'local-pkg';
 import type { Configuration, EntryObject } from '@rspack/core';
-import { makeCypressWebpackConfig } from './makeDefaultWebpackConfig';
+import { makeCypressRspackConfig } from './makeDefaultRspackConfig';
 import type { CreateFinalRspackConfig } from './createRspackDevServer';
 import { configFiles } from './constants';
 import { dynamicImport } from './dynamic-import';
@@ -108,7 +108,7 @@ export async function makeRspackConfig(
 
   const mergedConfig = merge(
     userAndFrameworkWebpackConfig,
-    makeCypressWebpackConfig(config),
+    makeCypressRspackConfig(config),
   );
 
   // Some frameworks (like Next.js) change this value which changes the path we would need to use to fetch our spec.

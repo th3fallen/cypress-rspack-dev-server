@@ -12,7 +12,7 @@ const OUTPUT_PATH = path.join(__dirname, 'dist');
 const OsSeparatorRE = RegExp(`\\${path.sep}`, 'g');
 const posixSeparator = '/';
 
-export function makeCypressWebpackConfig(
+export function makeCypressRspackConfig(
   config: CreateFinalRspackConfig,
 ): Configuration {
   const {
@@ -30,11 +30,7 @@ export function makeCypressWebpackConfig(
     },
     sourceRspackModulesResult: {
       rspack: {
-        module: webpack,
-        majorVersion: webpackMajorVersion,
-      },
-      rspackDevServer: {
-        majorVersion: webpackDevServerMajorVersion,
+        module: rspack,
       },
     },
   } = config;
@@ -75,7 +71,7 @@ export function makeCypressWebpackConfig(
         projectRoot,
         devServerEvents,
         supportFile,
-        rspack: webpack,
+        rspack,
         indexHtmlFile,
       }),
     ],

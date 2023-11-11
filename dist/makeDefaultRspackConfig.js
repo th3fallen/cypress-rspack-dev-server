@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.makeCypressWebpackConfig = void 0;
+exports.makeCypressRspackConfig = void 0;
 const tslib_1 = require("tslib");
 const path_1 = tslib_1.__importDefault(require("path"));
 const debug_1 = tslib_1.__importDefault(require("debug"));
@@ -10,8 +10,8 @@ const debug = (0, debug_1.default)('cypress:rspack-dev-server:makeDefaultRspackC
 const OUTPUT_PATH = path_1.default.join(__dirname, 'dist');
 const OsSeparatorRE = RegExp(`\\${path_1.default.sep}`, 'g');
 const posixSeparator = '/';
-function makeCypressWebpackConfig(config) {
-    const { devServerConfig: { cypressConfig: { projectRoot, devServerPublicPathRoute, supportFile, indexHtmlFile, isTextTerminal: isRunMode, }, specs: files, devServerEvents, framework, }, sourceRspackModulesResult: { rspack: { module: webpack, majorVersion: webpackMajorVersion, }, rspackDevServer: { majorVersion: webpackDevServerMajorVersion, }, }, } = config;
+function makeCypressRspackConfig(config) {
+    const { devServerConfig: { cypressConfig: { projectRoot, devServerPublicPathRoute, supportFile, indexHtmlFile, isTextTerminal: isRunMode, }, specs: files, devServerEvents, framework, }, sourceRspackModulesResult: { rspack: { module: rspack, }, }, } = config;
     const optimization = {
         // To prevent files from being tree shaken by rspack, we set optimization.sideEffects: false ensuring that
         // rspack does not recognize the sideEffects flag in the package.json and thus files are not unintentionally
@@ -45,7 +45,7 @@ function makeCypressWebpackConfig(config) {
                 projectRoot,
                 devServerEvents,
                 supportFile,
-                rspack: webpack,
+                rspack,
                 indexHtmlFile,
             }),
         ],
@@ -60,4 +60,4 @@ function makeCypressWebpackConfig(config) {
     // @ts-ignore
     return Object.assign({}, finalConfig);
 }
-exports.makeCypressWebpackConfig = makeCypressWebpackConfig;
+exports.makeCypressRspackConfig = makeCypressRspackConfig;
