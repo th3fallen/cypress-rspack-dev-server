@@ -1,5 +1,6 @@
 import path from 'path';
 import debugLib from 'debug';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Configuration } from '@rspack/core';
 import type { CreateFinalRspackConfig } from './createRspackDevServer';
 import { CypressCTRspackPlugin } from './CypressCTRspackPlugin';
@@ -64,15 +65,11 @@ export function makeCypressWebpackConfig(
       path: OUTPUT_PATH,
       publicPath,
     },
-    builtins: {
-      html: [
-        {
-          template: indexHtmlFile,
-          filename: 'index.html',
-        },
-      ],
-    },
     plugins: [
+      new HtmlWebpackPlugin({
+        template: indexHtmlFile,
+        filename: 'index.html',
+      }),
       new CypressCTRspackPlugin({
         files,
         projectRoot,
