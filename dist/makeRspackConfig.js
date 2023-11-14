@@ -15,6 +15,8 @@ const removeList = [
     // that we have tested and are confident works with all common configurations.
     // https://github.com/cypress-io/cypress/issues/15865
     'HtmlWebpackPlugin',
+    // the rspack's internal html plugin
+    'HtmlRspackPlugin',
     // We already reload when webpack recompiles (via listeners on
     // devServerEvents). Removing this plugin can prevent double-refreshes
     // in some setups.
@@ -27,7 +29,7 @@ exports.CYPRESS_RSPACK_ENTRYPOINT = path.resolve(__dirname, 'browser.js');
  */
 function modifyRspackConfigForCypress(rspackConfig) {
     if (rspackConfig === null || rspackConfig === void 0 ? void 0 : rspackConfig.plugins) {
-        rspackConfig.plugins = rspackConfig.plugins.filter((plugin) => !removeList.includes(plugin.constructor.name));
+        rspackConfig.plugins = rspackConfig.plugins.filter((plugin) => !removeList.includes('raw' in plugin ? plugin.raw().name : plugin.constructor.name));
     }
     delete rspackConfig.entry;
     delete rspackConfig.output;
