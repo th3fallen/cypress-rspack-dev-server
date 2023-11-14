@@ -4,7 +4,7 @@ exports.makeCypressRspackConfig = void 0;
 const tslib_1 = require("tslib");
 const path_1 = tslib_1.__importDefault(require("path"));
 const debug_1 = tslib_1.__importDefault(require("debug"));
-const html_webpack_plugin_1 = tslib_1.__importDefault(require("html-webpack-plugin"));
+const core_1 = require("@rspack/core");
 const CypressCTRspackPlugin_1 = require("./CypressCTRspackPlugin");
 const debug = (0, debug_1.default)('cypress:rspack-dev-server:makeDefaultRspackConfig');
 const OUTPUT_PATH = path_1.default.join(__dirname, 'dist');
@@ -36,7 +36,7 @@ function makeCypressRspackConfig(config) {
             publicPath,
         },
         plugins: [
-            new html_webpack_plugin_1.default({
+            new core_1.HtmlRspackPlugin({
                 template: indexHtmlFile,
                 filename: 'index.html',
             }),
