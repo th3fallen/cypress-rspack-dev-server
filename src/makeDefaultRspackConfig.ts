@@ -1,6 +1,6 @@
 import path from 'path';
 import debugLib from 'debug';
-import type { Configuration } from '@rspack/core';
+import { HtmlRspackPlugin, type Configuration } from '@rspack/core';
 import type { CreateFinalRspackConfig } from './createRspackDevServer';
 import { CypressCTRspackPlugin } from './CypressCTRspackPlugin';
 
@@ -11,7 +11,7 @@ const OUTPUT_PATH = path.join(__dirname, 'dist');
 const OsSeparatorRE = RegExp(`\\${path.sep}`, 'g');
 const posixSeparator = '/';
 
-export function makeCypressWebpackConfig(
+export function makeCypressRspackConfig(
   config: CreateFinalRspackConfig,
 ): Configuration {
   const {
@@ -29,11 +29,7 @@ export function makeCypressWebpackConfig(
     },
     sourceRspackModulesResult: {
       rspack: {
-        module: webpack,
-        majorVersion: webpackMajorVersion,
-      },
-      rspackDevServer: {
-        majorVersion: webpackDevServerMajorVersion,
+        module: rspack,
       },
     },
   } = config;
@@ -64,21 +60,17 @@ export function makeCypressWebpackConfig(
       path: OUTPUT_PATH,
       publicPath,
     },
-    builtins: {
-      html: [
-        {
-          template: indexHtmlFile,
-          filename: 'index.html',
-        },
-      ],
-    },
     plugins: [
+      new HtmlRspackPlugin({
+        template: indexHtmlFile,
+        filename: 'index.html',
+      }),
       new CypressCTRspackPlugin({
         files,
         projectRoot,
         devServerEvents,
         supportFile,
-        rspack: webpack,
+        rspack,
         indexHtmlFile,
       }),
     ],
