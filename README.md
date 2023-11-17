@@ -1,4 +1,5 @@
 # cypress-rspack-dev-server
+
 Based off the amazing work of the cypress team at https://github.com/cypress-io/cypress/blob/develop/npm/webpack-dev-server/
 
 Implements the APIs for the object-syntax of the Cypress Component-testing "rspack dev server".
@@ -38,20 +39,6 @@ export default defineConfig({
 })
 ```
 
-## Testing
-
-Unit tests can be run with `yarn test`. Integration tests can be run with `yarn cypress:run`
-
-This module should be primarily covered by system-tests / open-mode tests. All system-tests directories should be
-created using the notation:
-
-`rspack${major}_wds${devServerMajor}-$framework{-$variant}`
-
-- webpack4_wds3-react
-- webpack4_wds4-next-11
-- webpack5_wds3-next-12
-- webpack4_wds4-create-react-app
-
 ## Architecture
 
 There should be a single publicly-exported entrypoint for the module, `devServer`, all other types and functions should be considered internal/implementation details, and types stripped from the output.
@@ -68,8 +55,8 @@ rspack instance. The rspack instance used to create a rspack-dev-server, which i
 ## Compatibility
 
 | cypress-rspack-dev-server | cypress |
-|---------------------------|---------|
-| >= v2                     | >= v10  |
+| ------------------------- | ------- |
+| >= 0.3                    | >= v12  |
 
 ## License
 
