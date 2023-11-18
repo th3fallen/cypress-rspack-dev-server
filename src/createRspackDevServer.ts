@@ -1,10 +1,10 @@
-import debugLib from 'debug';
-import type { Configuration } from '@rspack/dev-server';
-import type { DevServerConfig } from './devServer';
-import type { SourceRelativeRspackResult } from './helpers/sourceRelativeRspackModules';
-import { makeRspackConfig } from './makeRspackConfig';
+import debugLib from 'debug'
+import type { Configuration } from '@rspack/dev-server'
+import type { DevServerConfig } from './devServer'
+import type { SourceRelativeRspackResult } from './helpers/sourceRelativeRspackModules'
+import { makeRspackConfig } from './makeRspackConfig'
 
-const debug = debugLib('cypress:rspack-dev-server:start');
+const debug = debugLib('cypress:rspack-dev-server:start')
 
 /**
  * Takes the rspack / rspackDevServer modules, the configuration provide
@@ -16,37 +16,35 @@ export interface CreateFinalRspackConfig {
   /**
    * Initial config passed to devServer
    */
-  devServerConfig: DevServerConfig;
+  devServerConfig: DevServerConfig
   /**
    * Result of sourcing the rspack from the
    */
-  sourceRspackModulesResult: SourceRelativeRspackResult;
+  sourceRspackModulesResult: SourceRelativeRspackResult
   /**
    * Framework-specific config overrides
    */
-  frameworkConfig?: unknown;
+  frameworkConfig?: unknown
 }
 
-export async function createRspackDevServer(
-  config: CreateFinalRspackConfig,
-) {
+export async function createRspackDevServer(config: CreateFinalRspackConfig) {
   const {
     sourceRspackModulesResult: {
-      rspack: {
-        module: rspack,
-      },
-      rspackDevServer: {
-        majorVersion: rspackDevServerMajorVersion,
-      },
+      rspack: { module: rspack },
+      rspackDevServer: { majorVersion: rspackDevServerMajorVersion },
     },
-  } = config;
+  } = config
 
-  const finalRspackConfig = await makeRspackConfig(config);
-  const rspackCompiler = rspack(finalRspackConfig, undefined);
+  const finalRspackConfig = await makeRspackConfig(config)
+  const rspackCompiler = rspack(finalRspackConfig, undefined)
 
-  const { devServerConfig: { cypressConfig: { devServerPublicPathRoute } } } = config;
-  const isOpenMode = !config.devServerConfig.cypressConfig.isTextTerminal;
-  const RspackDevServer = config.sourceRspackModulesResult.rspackDevServer.module;
+  const {
+    devServerConfig: {
+      cypressConfig: { devServerPublicPathRoute },
+    },
+  } = config
+  const isOpenMode = !config.devServerConfig.cypressConfig.isTextTerminal
+  const RspackDevServer = config.sourceRspackModulesResult.rspackDevServer.module
   const rspackDevServerConfig: Configuration = {
     host: '127.0.0.1',
     port: 'auto',
@@ -61,15 +59,15 @@ export async function createRspackDevServer(
     liveReload: isOpenMode,
     client: {
       overlay: false,
-    }
-  };
+    },
+  }
 
-  const server = new RspackDevServer(rspackDevServerConfig, rspackCompiler);
+  const server = new RspackDevServer(rspackDevServerConfig, rspackCompiler)
 
   return {
     server,
     compiler: rspackCompiler,
-  };
+  }
 
-  throw new Error(`Unsupported webpackDevServer version ${ rspackDevServerMajorVersion }`);
+  throw new Error(`Unsupported webpackDevServer version ${rspackDevServerMajorVersion}`)
 }

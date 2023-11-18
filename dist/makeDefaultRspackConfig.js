@@ -11,7 +11,7 @@ const OUTPUT_PATH = path_1.default.join(__dirname, 'dist');
 const OsSeparatorRE = RegExp(`\\${path_1.default.sep}`, 'g');
 const posixSeparator = '/';
 function makeCypressRspackConfig(config) {
-    const { devServerConfig: { cypressConfig: { projectRoot, devServerPublicPathRoute, supportFile, indexHtmlFile, isTextTerminal: isRunMode, }, specs: files, devServerEvents, framework, }, sourceRspackModulesResult: { rspack: { module: rspack, }, }, } = config;
+    const { devServerConfig: { cypressConfig: { projectRoot, devServerPublicPathRoute, supportFile, indexHtmlFile, isTextTerminal: isRunMode, }, specs: files, devServerEvents, framework, }, sourceRspackModulesResult: { rspack: { module: rspack }, }, } = config;
     const optimization = {
         // To prevent files from being tree shaken by rspack, we set optimization.sideEffects: false ensuring that
         // rspack does not recognize the sideEffects flag in the package.json and thus files are not unintentionally
@@ -21,12 +21,11 @@ function makeCypressRspackConfig(config) {
             chunks: 'all',
         },
     };
-    const publicPath = (path_1.default.sep === posixSeparator)
+    const publicPath = path_1.default.sep === posixSeparator
         ? path_1.default.join(devServerPublicPathRoute, posixSeparator)
-        // The second line here replaces backslashes on windows with posix compatible slash
-        // See https://github.com/cypress-io/cypress/issues/16097
-        : path_1.default.join(devServerPublicPathRoute, posixSeparator)
-            .replace(OsSeparatorRE, posixSeparator);
+        : // The second line here replaces backslashes on windows with posix compatible slash
+            // See https://github.com/cypress-io/cypress/issues/16097
+            path_1.default.join(devServerPublicPathRoute, posixSeparator).replace(OsSeparatorRE, posixSeparator);
     const finalConfig = {
         mode: 'development',
         optimization,

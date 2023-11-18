@@ -21,6 +21,7 @@ class CypressCTRspackPlugin {
         this.files = [];
         this.compilation = null;
         this.addLoaderContext = (loaderContext, module) => {
+            ;
             loaderContext._cypress = {
                 files: this.files,
                 projectRoot: this.projectRoot,
@@ -35,7 +36,7 @@ class CypressCTRspackPlugin {
             }
             // Ensure we don't try to load files that have been removed from the file system
             // but have not yet been detected by the onSpecsChange handler
-            const foundFiles = (await Promise.all(this.files.map(async (file) => {
+            const foundFiles = await Promise.all(this.files.map(async (file) => {
                 try {
                     const exists = await fs_extra_1.default.pathExists(file.absolute);
                     return exists ? file : null;
@@ -43,7 +44,7 @@ class CypressCTRspackPlugin {
                 catch (e) {
                     return null;
                 }
-            })));
+            }));
             this.files = foundFiles.filter((file) => file !== null);
             callback();
         };

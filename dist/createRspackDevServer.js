@@ -7,10 +7,10 @@ const makeRspackConfig_1 = require("./makeRspackConfig");
 const debug = (0, debug_1.default)('cypress:rspack-dev-server:start');
 async function createRspackDevServer(config) {
     var _a;
-    const { sourceRspackModulesResult: { rspack: { module: rspack, }, rspackDevServer: { majorVersion: rspackDevServerMajorVersion, }, }, } = config;
+    const { sourceRspackModulesResult: { rspack: { module: rspack }, rspackDevServer: { majorVersion: rspackDevServerMajorVersion }, }, } = config;
     const finalRspackConfig = await (0, makeRspackConfig_1.makeRspackConfig)(config);
     const rspackCompiler = rspack(finalRspackConfig, undefined);
-    const { devServerConfig: { cypressConfig: { devServerPublicPathRoute } } } = config;
+    const { devServerConfig: { cypressConfig: { devServerPublicPathRoute }, }, } = config;
     const isOpenMode = !config.devServerConfig.cypressConfig.isTextTerminal;
     const RspackDevServer = config.sourceRspackModulesResult.rspackDevServer.module;
     const rspackDevServerConfig = Object.assign(Object.assign({ host: '127.0.0.1', port: 'auto' }, finalRspackConfig === null || finalRspackConfig === void 0 ? void 0 : finalRspackConfig.devServer), { devMiddleware: {
