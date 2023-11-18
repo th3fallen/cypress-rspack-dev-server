@@ -15,7 +15,7 @@
     "cypress:open": "pnpm cypress:run-cypress-in-cypress gulp open --project .",
     "test": "pnpm test-unit",
     "test-unit": "mocha -r ts-node/register/transpile-only --config ./test/.mocharc.js",
-    "lint": "eslint --ext .js,.ts,.json, ."
+    "lint": "eslint ."
   },
   "dependencies": {
     "@rspack/cli": "^0.3.11",
@@ -31,10 +31,13 @@
     "@types/fs-extra": "^11.0.1",
     "@types/lodash": "^4.14.195",
     "@types/proxyquire": "^1.3.28",
+    "@typescript-eslint/parser": "^6.11.0",
     "chai": "^4.3.6",
     "cypress": "^12.13.0",
     "debug": "^4.3.4",
     "dedent": "^0.7.0",
+    "eslint": "^8.54.0",
+    "eslint-config-prettier": "^9.0.0",
     "fs-extra": "9.1.0",
     "lodash": "^4.17.21",
     "mocha": "^9.2.2",
