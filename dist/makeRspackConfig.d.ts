@@ -17,6 +17,23 @@ export declare function makeRspackConfig(config: CreateFinalRspackConfig): Promi
         asyncChunks?: boolean | undefined;
         wasmLoading?: string | false | undefined;
         filename?: string | undefined;
+        library?: {
+            type: string;
+            amdContainer?: string | undefined;
+            auxiliaryComment?: string | {
+                amd?: string | undefined;
+                commonjs?: string | undefined;
+                commonjs2?: string | undefined;
+                root?: string | undefined;
+            } | undefined;
+            export?: string | string[] | undefined;
+            name?: string | string[] | {
+                amd?: string | undefined;
+                commonjs?: string | undefined;
+                root?: string | string[] | undefined;
+            } | undefined;
+            umdNamedDefine?: boolean | undefined;
+        } | undefined;
     }> | undefined;
     output?: {
         path?: string | undefined;
@@ -40,6 +57,7 @@ export declare function makeRspackConfig(config: CreateFinalRspackConfig): Promi
             root?: string | string[] | undefined;
         } | {
             type: string;
+            amdContainer?: string | undefined;
             auxiliaryComment?: string | {
                 amd?: string | undefined;
                 commonjs?: string | undefined;
@@ -57,6 +75,7 @@ export declare function makeRspackConfig(config: CreateFinalRspackConfig): Promi
         libraryExport?: string | string[] | undefined;
         libraryTarget?: string | undefined;
         umdNamedDefine?: boolean | undefined;
+        amdContainer?: string | undefined;
         auxiliaryComment?: string | {
             amd?: string | undefined;
             commonjs?: string | undefined;
@@ -111,7 +130,7 @@ export declare function makeRspackConfig(config: CreateFinalRspackConfig): Promi
         context?: string | undefined;
         dependencyType?: string | undefined;
         request?: string | undefined;
-    }, args_1: (args_0: Error | undefined, args_1: string | boolean | string[] | Record<string, string | string[]> | undefined, args_2: "module" | "promise" | "jsonp" | "import" | "var" | "assign" | "this" | "window" | "self" | "global" | "commonjs" | "commonjs2" | "commonjs-module" | "commonjs-static" | "amd" | "amd-require" | "umd" | "umd2" | "system" | "script" | "node-commonjs" | undefined, ...args_3: unknown[]) => void, ...args_2: unknown[]) => unknown) | ((args_0: {
+    }, args_1: (args_0: Error | undefined, args_1: string | boolean | string[] | Record<string, string | string[]> | undefined, args_2: "module" | "promise" | "jsonp" | "import" | "amd" | "commonjs" | "commonjs2" | "var" | "assign" | "this" | "window" | "self" | "global" | "commonjs-module" | "commonjs-static" | "amd-require" | "umd" | "umd2" | "system" | "script" | "node-commonjs" | undefined, ...args_3: unknown[]) => void, ...args_2: unknown[]) => unknown) | ((args_0: {
         context?: string | undefined;
         dependencyType?: string | undefined;
         request?: string | undefined;
@@ -119,12 +138,12 @@ export declare function makeRspackConfig(config: CreateFinalRspackConfig): Promi
         context?: string | undefined;
         dependencyType?: string | undefined;
         request?: string | undefined;
-    }, args_1: (args_0: Error | undefined, args_1: string | boolean | string[] | Record<string, string | string[]> | undefined, args_2: "module" | "promise" | "jsonp" | "import" | "var" | "assign" | "this" | "window" | "self" | "global" | "commonjs" | "commonjs2" | "commonjs-module" | "commonjs-static" | "amd" | "amd-require" | "umd" | "umd2" | "system" | "script" | "node-commonjs" | undefined, ...args_3: unknown[]) => void, ...args_2: unknown[]) => unknown) | ((args_0: {
+    }, args_1: (args_0: Error | undefined, args_1: string | boolean | string[] | Record<string, string | string[]> | undefined, args_2: "module" | "promise" | "jsonp" | "import" | "amd" | "commonjs" | "commonjs2" | "var" | "assign" | "this" | "window" | "self" | "global" | "commonjs-module" | "commonjs-static" | "amd-require" | "umd" | "umd2" | "system" | "script" | "node-commonjs" | undefined, ...args_3: unknown[]) => void, ...args_2: unknown[]) => unknown) | ((args_0: {
         context?: string | undefined;
         dependencyType?: string | undefined;
         request?: string | undefined;
     }, ...args_1: unknown[]) => Promise<string | boolean | string[] | Record<string, string | string[]>>))[] | undefined;
-    externalsType?: "module" | "promise" | "jsonp" | "import" | "var" | "assign" | "this" | "window" | "self" | "global" | "commonjs" | "commonjs2" | "commonjs-module" | "commonjs-static" | "amd" | "amd-require" | "umd" | "umd2" | "system" | "script" | "node-commonjs" | undefined;
+    externalsType?: "module" | "promise" | "jsonp" | "import" | "amd" | "commonjs" | "commonjs2" | "var" | "assign" | "this" | "window" | "self" | "global" | "commonjs-module" | "commonjs-static" | "amd-require" | "umd" | "umd2" | "system" | "script" | "node-commonjs" | undefined;
     externalsPresets?: {
         node?: boolean | undefined;
         web?: boolean | undefined;
@@ -189,6 +208,7 @@ export declare function makeRspackConfig(config: CreateFinalRspackConfig): Promi
         logging?: boolean | "none" | "verbose" | "error" | "warn" | "info" | "log" | undefined;
         loggingDebug?: string | boolean | RegExp | ((args_0: string, ...args_1: unknown[]) => boolean) | (string | RegExp | ((args_0: string, ...args_1: unknown[]) => boolean))[] | undefined;
         loggingTrace?: boolean | undefined;
+        runtimeModules?: boolean | undefined;
     } | undefined;
     snapshot?: {
         module?: {

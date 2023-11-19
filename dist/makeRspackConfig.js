@@ -17,7 +17,7 @@ const removeList = [
     'HtmlWebpackPlugin',
     // the rspack's internal html plugin
     'HtmlRspackPlugin',
-    // We already reload when webpack recompiles (via listeners on
+    // We already reload when rspack recompiles (via listeners on
     // devServerEvents). Removing this plugin can prevent double-refreshes
     // in some setups.
     'HotModuleReplacementPlugin',
@@ -25,7 +25,7 @@ const removeList = [
 exports.CYPRESS_RSPACK_ENTRYPOINT = path.resolve(__dirname, 'browser.js');
 /**
  * Removes and/or modifies certain plugins known to conflict
- * when used with cypress/rspack-dev-server.
+ * when used with cypress-rspack-dev-server.
  */
 function modifyRspackConfigForCypress(rspackConfig) {
     if (rspackConfig === null || rspackConfig === void 0 ? void 0 : rspackConfig.plugins) {
@@ -62,24 +62,24 @@ async function makeRspackConfig(config) {
         if (!userRspackConfig) {
             debug('could not find rspack.config!');
             if ((_b = config.devServerConfig) === null || _b === void 0 ? void 0 : _b.onConfigNotFound) {
-                config.devServerConfig.onConfigNotFound('webpack', projectRoot, constants_1.configFiles);
+                config.devServerConfig.onConfigNotFound('rspack', projectRoot, constants_1.configFiles);
                 // The config process will be killed from the parent, but we want to early exit so we don't get
                 // any additional errors related to not having a config
                 process.exit(0);
             }
             else {
-                throw new Error(`Your Cypress devServer config is missing a required webpackConfig property, since we could not automatically detect one.\nPlease add one to your ${config.devServerConfig.cypressConfig.configFile}`);
+                throw new Error(`Your Cypress devServer config is missing a required rspackConfig property, since we could not automatically detect one.\nPlease add one to your ${config.devServerConfig.cypressConfig.configFile}`);
             }
         }
     }
     userRspackConfig =
         typeof userRspackConfig === 'function' ? await userRspackConfig() : userRspackConfig;
-    const userAndFrameworkWebpackConfig = modifyRspackConfigForCypress((0, webpack_merge_1.merge)(frameworkRspackConfig !== null && frameworkRspackConfig !== void 0 ? frameworkRspackConfig : {}, userRspackConfig !== null && userRspackConfig !== void 0 ? userRspackConfig : {}));
-    debug(`User passed in user and framework webpack config with values %o`, userAndFrameworkWebpackConfig);
-    debug(`New webpack entries %o`, files);
+    const userAndFrameworkRspackConfig = modifyRspackConfigForCypress((0, webpack_merge_1.merge)(frameworkRspackConfig !== null && frameworkRspackConfig !== void 0 ? frameworkRspackConfig : {}, userRspackConfig !== null && userRspackConfig !== void 0 ? userRspackConfig : {}));
+    debug(`User passed in user and framework rspack config with values %o`, userAndFrameworkRspackConfig);
+    debug(`New rspack entries %o`, files);
     debug(`Project root`, projectRoot);
     debug(`Support file`, supportFile);
-    const mergedConfig = (0, webpack_merge_1.merge)(userAndFrameworkWebpackConfig, (0, makeDefaultRspackConfig_1.makeCypressRspackConfig)(config));
+    const mergedConfig = (0, webpack_merge_1.merge)(userAndFrameworkRspackConfig, (0, makeDefaultRspackConfig_1.makeCypressRspackConfig)(config));
     // Some frameworks (like Next.js) change this value which changes the path we would need to use to fetch our spec.
     // (eg, http://localhost:xxxx/<dev-server-public-path>/static/chunks/spec-<x>.js). Deleting this key to normalize
     // the spec URL to `*/spec-<x>.js` which we need to know up-front so we can fetch the sourcemaps.
