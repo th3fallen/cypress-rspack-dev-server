@@ -1,5 +1,7 @@
 # cypress-rspack-dev-server
 
+![Changelog CI Status](https://github.com/<username>/<repository>/workflows/Changelog%20CI/badge.svg)
+
 Based off the amazing work of the cypress team at https://github.com/cypress-io/cypress/blob/develop/npm/webpack-dev-server/
 
 Implements the APIs for the object-syntax of the Cypress Component-testing "rspack dev server".
