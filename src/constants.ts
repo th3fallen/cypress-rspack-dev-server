@@ -3,4 +3,4 @@ export const configFiles = [
   'rspack.config.js',
   'rspack.config.mjs',
   'rspack.config.cjs',
-];
+]

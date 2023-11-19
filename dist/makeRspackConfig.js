@@ -47,7 +47,7 @@ async function makeRspackConfig(config) {
     var _a, _b, _c;
     let userRspackConfig = config.devServerConfig.rspackConfig;
     const frameworkRspackConfig = config.frameworkConfig;
-    const { cypressConfig: { projectRoot, supportFile, }, specs: files, framework, } = config.devServerConfig;
+    const { cypressConfig: { projectRoot, supportFile }, specs: files, framework, } = config.devServerConfig;
     if (!userRspackConfig && !frameworkRspackConfig) {
         debug('Not user or framework rspack config received. Trying to automatically source it');
         const configFile = await getRspackConfigFromProjectRoot(projectRoot);
@@ -72,9 +72,8 @@ async function makeRspackConfig(config) {
             }
         }
     }
-    userRspackConfig = typeof userRspackConfig === 'function'
-        ? await userRspackConfig()
-        : userRspackConfig;
+    userRspackConfig =
+        typeof userRspackConfig === 'function' ? await userRspackConfig() : userRspackConfig;
     const userAndFrameworkWebpackConfig = modifyRspackConfigForCypress((0, webpack_merge_1.merge)(frameworkRspackConfig !== null && frameworkRspackConfig !== void 0 ? frameworkRspackConfig : {}, userRspackConfig !== null && userRspackConfig !== void 0 ? userRspackConfig : {}));
     debug(`User passed in user and framework webpack config with values %o`, userAndFrameworkWebpackConfig);
     debug(`New webpack entries %o`, files);
@@ -87,7 +86,7 @@ async function makeRspackConfig(config) {
     (_c = mergedConfig.output) === null || _c === void 0 ? true : delete _c.chunkFilename;
     // Angular loads global styles and polyfills via script injection in the index.html
     if (framework === 'angular') {
-        mergedConfig.entry = Object.assign(Object.assign({}, mergedConfig.entry || {}), { 'cypress-entry': exports.CYPRESS_RSPACK_ENTRYPOINT });
+        mergedConfig.entry = Object.assign(Object.assign({}, (mergedConfig.entry || {})), { 'cypress-entry': exports.CYPRESS_RSPACK_ENTRYPOINT });
     }
     else {
         mergedConfig.entry = exports.CYPRESS_RSPACK_ENTRYPOINT;

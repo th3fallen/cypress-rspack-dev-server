@@ -17,12 +17,12 @@ exports.cypressWebpackPath = cypressWebpackPath;
 const frameworkWebpackMapper = {
     'create-react-app': 'react-scripts',
     'vue-cli': '@vue/cli-service',
-    'nuxt': '@nuxt/rspack',
+    nuxt: '@nuxt/rspack',
     react: undefined,
     vue: undefined,
     next: 'next',
-    'angular': '@angular-devkit/build-angular',
-    'svelte': undefined,
+    angular: '@angular-devkit/build-angular',
+    svelte: undefined,
 };
 // Source the users framework from the provided projectRoot. The framework, if available, will serve
 // as the resolve base for rspack dependency resolution.
@@ -97,7 +97,7 @@ function sourceRspack(config, framework) {
         return originalModuleLoad(request, parent, isMain);
     };
     module_1.default._resolveFilename = function (request, parent, isMain, options) {
-        if (request === 'webpack' || request.startsWith('rspack/') && !(options === null || options === void 0 ? void 0 : options.paths)) {
+        if (request === 'webpack' || (request.startsWith('rspack/') && !(options === null || options === void 0 ? void 0 : options.paths))) {
             const resolveFilename = originalModuleResolveFilename(request, parent, isMain, {
                 paths: [rspack.importPath],
             });
@@ -162,6 +162,7 @@ function getMajorVersion(json, acceptedVersions) {
 }
 exports.getMajorVersion = getMajorVersion;
 function restoreLoadHook() {
+    ;
     module_1.default._load = originalModuleLoad;
     module_1.default._resolveFilename = originalModuleResolveFilename;
 }

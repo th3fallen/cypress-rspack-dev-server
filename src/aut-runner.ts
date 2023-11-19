@@ -1,8 +1,11 @@
 /* eslint-env browser */
 
-export function init (importPromises: Array<() => Promise<void>>, parent: Window = (window.opener || window.parent)) {
+export function init(
+  importPromises: Array<() => Promise<void>>,
+  parent: Window = window.opener || window.parent,
+) {
   // @ts-expect-error
-  const Cypress = window.Cypress = parent.Cypress
+  const Cypress = (window.Cypress = parent.Cypress)
 
   if (!Cypress) {
     throw new Error('Tests cannot run without a reference to Cypress!')

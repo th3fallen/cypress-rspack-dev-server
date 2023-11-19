@@ -1,5 +1,5 @@
 function render() {
-  require('!!./loader.js!./browser.js');
+  require('!!./loader.js!./browser.js')
 }
 
-render();
+render()

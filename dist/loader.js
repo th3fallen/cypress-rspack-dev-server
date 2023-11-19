@@ -42,9 +42,11 @@ function buildSpecs(projectRoot, files = []) {
     if (!Array.isArray(files))
         return `{}`;
     debug(`projectRoot: ${projectRoot}, files: ${files.map((f) => f.absolute).join(',')}`);
-    return `{${files.map((f, i) => {
+    return `{${files
+        .map((f, i) => {
         return makeImport(f, f.name, `spec-${i}`, projectRoot);
-    }).join(',')}}`;
+    })
+        .join(',')}}`;
 }
 // Runs the tests inside the iframe
 function loader() {
@@ -54,8 +56,12 @@ function loader() {
     // we regenerate our specs and include any new ones in the compilation.
     ctx.cacheable(false);
     const { files, projectRoot, supportFile } = ctx._cypress;
-    const supportFileAbsolutePath = supportFile ? JSON.stringify(path.resolve(projectRoot, supportFile)) : undefined;
-    const supportFileRelativePath = supportFile ? JSON.stringify(path.relative(projectRoot, supportFileAbsolutePath || '')) : undefined;
+    const supportFileAbsolutePath = supportFile
+        ? JSON.stringify(path.resolve(projectRoot, supportFile))
+        : undefined;
+    const supportFileRelativePath = supportFile
+        ? JSON.stringify(path.relative(projectRoot, supportFileAbsolutePath || ''))
+        : undefined;
     const result = `
   var allTheSpecs = ${buildSpecs(projectRoot, files)};
 

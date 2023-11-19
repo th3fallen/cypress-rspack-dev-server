@@ -17,8 +17,10 @@ const debug = (0, debug_1.default)('cypress:rspack-dev-server:devServer');
  */
 function devServer(devServerConfig) {
     return new Promise(async (resolve, reject) => {
-        const result = await devServer.create(devServerConfig);
-        result.server.start().then(() => {
+        const result = (await devServer.create(devServerConfig));
+        result.server
+            .start()
+            .then(() => {
             if (!result.server.options.port) {
                 return reject(new Error(`Expected port ${result.server.options.port} to be a number`));
             }
@@ -28,12 +30,17 @@ function devServer(devServerConfig) {
                 // Close is for unit testing only. We kill this child process which will handle the closing of the server
                 close: async (done) => {
                     debug('closing dev server');
-                    result.server.stop().then(() => done === null || done === void 0 ? void 0 : done()).catch(done).finally(() => {
+                    result.server
+                        .stop()
+                        .then(() => done === null || done === void 0 ? void 0 : done())
+                        .catch(done)
+                        .finally(() => {
                         debug('closed dev server');
                     });
                 },
             });
-        }).catch(reject);
+        })
+            .catch(reject);
     });
 }
 exports.devServer = devServer;
@@ -43,12 +50,14 @@ const thirdPartyDefinitionPrefixes = {
     globalPrefix: 'cypress-ct-',
 };
 function isThirdPartyDefinition(framework) {
-    return framework.startsWith(thirdPartyDefinitionPrefixes.globalPrefix) ||
-        thirdPartyDefinitionPrefixes.namespacedPrefixRe.test(framework);
+    return (framework.startsWith(thirdPartyDefinitionPrefixes.globalPrefix) ||
+        thirdPartyDefinitionPrefixes.namespacedPrefixRe.test(framework));
 }
 exports.isThirdPartyDefinition = isThirdPartyDefinition;
 async function getPreset(devServerConfig) {
-    const defaultRspackModules = () => ({ sourceRspackModulesResult: (0, sourceRelativeRspackModules_1.sourceDefaultRspackDependencies)(devServerConfig) });
+    const defaultRspackModules = () => ({
+        sourceRspackModulesResult: (0, sourceRelativeRspackModules_1.sourceDefaultRspackDependencies)(devServerConfig),
+    });
     // Third party library (eg solid-js, lit, etc)
     if (devServerConfig.framework && isThirdPartyDefinition(devServerConfig.framework)) {
         return defaultRspackModules();
