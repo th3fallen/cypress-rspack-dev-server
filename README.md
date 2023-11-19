@@ -1,6 +1,6 @@
 # cypress-rspack-dev-server
 
-![Changelog CI Status](https://github.com/<username>/<repository>/workflows/Changelog%20CI/badge.svg)
+[![Changelog CI Status](https://github.com/<username>/<repository>/workflows/Changelog%20CI/badge.svg)]
 
 Based off the amazing work of the cypress team at https://github.com/cypress-io/cypress/blob/develop/npm/webpack-dev-server/
 
