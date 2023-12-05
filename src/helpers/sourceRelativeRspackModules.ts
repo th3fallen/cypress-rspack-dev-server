@@ -46,15 +46,15 @@ export interface SourceRelativeRspackResult {
 const originalModuleLoad = (Module as ModuleClass)._load
 const originalModuleResolveFilename = (Module as ModuleClass)._resolveFilename
 
-export const cypressWebpackPath = (config: DevServerConfig) => {
+export const cypressRspackPath = (config: DevServerConfig) => {
   return require.resolve('@cypress/rspack-batteries-included-preprocessor', {
     paths: [config.cypressConfig.cypressBinaryRoot],
   })
 }
 
-type FrameworkWebpackMapper = { [Property in Frameworks]: string | undefined }
+type FrameworkRspackMapper = { [Property in Frameworks]: string | undefined }
 
-const frameworkWebpackMapper: FrameworkWebpackMapper = {
+const frameworkRspackMapper: FrameworkRspackMapper = {
   'create-react-app': 'react-scripts',
   'vue-cli': '@vue/cli-service',
   nuxt: '@nuxt/rspack',
@@ -75,9 +75,9 @@ export function sourceFramework(config: DevServerConfig): SourcedDependency | nu
     return null
   }
 
-  const sourceOfWebpack = frameworkWebpackMapper[config.framework]
+  const sourceOfRspack = frameworkRspackMapper[config.framework]
 
-  if (!sourceOfWebpack) {
+  if (!sourceOfRspack) {
     debug(
       'Not a higher-order framework so rspack dependencies should be resolvable from projectRoot',
     )
@@ -88,7 +88,7 @@ export function sourceFramework(config: DevServerConfig): SourcedDependency | nu
   const framework = {} as SourcedDependency
 
   try {
-    const frameworkJsonPath = require.resolve(`${sourceOfWebpack}/package.json`, {
+    const frameworkJsonPath = require.resolve(`${sourceOfRspack}/package.json`, {
       paths: [config.cypressConfig.projectRoot],
     })
     const frameworkPathRoot = path.dirname(frameworkJsonPath)
@@ -137,18 +137,17 @@ export function sourceRspack(
     debug('rspack: Falling back to bundled version')
 
     rspackJsonPath = require.resolve('@rspack/core/package.json', {
-      paths: [cypressWebpackPath(config)],
+      paths: [cypressRspackPath(config)],
     })
   }
 
   rspack.importPath = path.dirname(rspackJsonPath)
   rspack.packageJson = require(rspackJsonPath)
   rspack.module = require(rspack.importPath).rspack
-  rspack.majorVersion = getMajorVersion(rspack.packageJson, [0])
 
-  debug('Webpack: Successfully sourced rspack - %o', rspack)
+  debug('Rspack: Successfully sourced rspack - %o', rspack)
   ;(Module as ModuleClass)._load = function (request, parent, isMain) {
-    if (request === 'webpack' || request.startsWith('rspack/')) {
+    if (request === 'rspack' || request.startsWith('rspack/')) {
       const resolvePath = require.resolve(request, {
         paths: [rspack.importPath],
       })
@@ -161,12 +160,12 @@ export function sourceRspack(
     return originalModuleLoad(request, parent, isMain)
   }
   ;(Module as ModuleClass)._resolveFilename = function (request, parent, isMain, options) {
-    if (request === 'webpack' || (request.startsWith('rspack/') && !options?.paths)) {
+    if (request === 'rspack' || (request.startsWith('rspack/') && !options?.paths)) {
       const resolveFilename = originalModuleResolveFilename(request, parent, isMain, {
         paths: [rspack.importPath],
       })
 
-      debug('Webpack: Module._resolveFilename resolveFilename - %s', resolveFilename)
+      debug('Rspack: Module._resolveFilename resolveFilename - %s', resolveFilename)
 
       return resolveFilename
     }
@@ -185,7 +184,7 @@ export function sourceRspackDevServer(
 ): SourcedRspackDevServer {
   const searchRoot = framework?.importPath ?? config.cypressConfig.projectRoot
 
-  debug('WebpackDevServer: Attempting to source rspack-dev-server from %s', searchRoot)
+  debug('RspackDevServer: Attempting to source rspack-dev-server from %s', searchRoot)
 
   const rspackDevServer = {} as SourcedRspackDevServer
   let rspackDevServerJsonPath: string
@@ -200,7 +199,7 @@ export function sourceRspackDevServer(
       throw e
     }
 
-    debug('WebpackDevServer: Falling back to bundled version')
+    debug('RspackDevServer: Falling back to bundled version')
 
     rspackDevServerJsonPath = require.resolve('@rspack/dev-server/package.json', {
       paths: [__dirname],
@@ -210,9 +209,8 @@ export function sourceRspackDevServer(
   rspackDevServer.importPath = path.dirname(rspackDevServerJsonPath)
   rspackDevServer.packageJson = require(rspackDevServerJsonPath)
   rspackDevServer.module = require(rspackDevServer.importPath).RspackDevServer
-  rspackDevServer.majorVersion = getMajorVersion(rspackDevServer.packageJson, [0])
 
-  debug('WebpackDevServer: Successfully sourced rspack-dev-server - %o', rspackDevServer)
+  debug('RspackDevServer: Successfully sourced rspack-dev-server - %o', rspackDevServer)
 
   return rspackDevServer
 }
@@ -222,14 +220,10 @@ export function sourceDefaultRspackDependencies(
   config: DevServerConfig,
 ): SourceRelativeRspackResult {
   const framework = sourceFramework(config)
-  const webpack = sourceRspack(config, framework)
-  const webpackDevServer = sourceRspackDevServer(config, framework)
+  const rspack = sourceRspack(config, framework)
+  const rspackDevServer = sourceRspackDevServer(config, framework)
 
-  return {
-    framework,
-    rspack: webpack,
-    rspackDevServer: webpackDevServer,
-  }
+  return { framework, rspack, rspackDevServer }
 }
 
 export function getMajorVersion<T extends number>(json: PackageJson, acceptedVersions: T[]): T {
@@ -238,7 +232,7 @@ export function getMajorVersion<T extends number>(json: PackageJson, acceptedVer
   if (!acceptedVersions.includes(major as T)) {
     throw new Error(
       `Unexpected major version of ${json.name}. ` +
-        `Cypress webpack-dev-server works with ${json.name} versions ${acceptedVersions.join(
+        `Cypress rspack-dev-server works with ${json.name} versions ${acceptedVersions.join(
           ', ',
         )} - saw ${json.version}`,
     )

@@ -36,7 +36,7 @@ export type DevServerConfig = {
   specs: Cypress.Spec[]
   cypressConfig: Cypress.PluginConfigOptions
   devServerEvents: NodeJS.EventEmitter
-  onConfigNotFound?: (devServer: 'webpack', cwd: string, lookedIn: string[]) => void
+  onConfigNotFound?: (devServer: 'rspack', cwd: string, lookedIn: string[]) => void
   rspackConfig?: ConfigHandler // Derived from the user's rspack config
 } & FrameworkConfig
 
@@ -51,7 +51,7 @@ type DevServerCreateResult = {
 /**
  * import { devServer } from '@cypress/rspack-dev-server'
  *
- * Creates & returns a WebpackDevServer for serving files related
+ * Creates & returns a RspackDevServer for serving files related
  * to Cypress Component Testing
  *
  * @param config
