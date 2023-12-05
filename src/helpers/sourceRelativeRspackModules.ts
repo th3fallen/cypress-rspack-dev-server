@@ -29,14 +29,12 @@ export interface SourcedDependency {
 
 export interface SourcedRspack extends SourcedDependency {
   module: Function
-  majorVersion: 0
 }
 
 export interface SourcedRspackDevServer extends SourcedDependency {
   module: {
     new (...args: unknown[]): RspackDevServer
   }
-  majorVersion: 0
 }
 
 export interface SourceRelativeRspackResult {

@@ -31,7 +31,6 @@ export async function createRspackDevServer(config: CreateFinalRspackConfig) {
   const {
     sourceRspackModulesResult: {
       rspack: { module: rspack },
-      rspackDevServer: { majorVersion: rspackDevServerMajorVersion },
     },
   } = config
 
@@ -68,6 +67,4 @@ export async function createRspackDevServer(config: CreateFinalRspackConfig) {
     server,
     compiler: rspackCompiler,
   }
-
-  throw new Error(`Unsupported webpackDevServer version ${rspackDevServerMajorVersion}`)
 }

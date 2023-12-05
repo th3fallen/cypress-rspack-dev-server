@@ -44,7 +44,6 @@ export type DevServerConfig = {
  * @internal
  */
 type DevServerCreateResult = {
-  version: 0
   server: RspackDevServer
   compiler: Compiler
 }
@@ -172,7 +171,6 @@ devServer.create = async function (devServerConfig: DevServerConfig) {
   const result = {
     server,
     compiler,
-    version: sourceRspackModulesResult.rspackDevServer.majorVersion,
   }
 
   return result
