@@ -26,6 +26,6 @@ async function createRspackDevServer(config) {
         server,
         compiler: rspackCompiler,
     };
-    throw new Error(`Unsupported webpackDevServer version ${rspackDevServerMajorVersion}`);
+    throw new Error(`Unsupported rspackDevServer version ${rspackDevServerMajorVersion}`);
 }
 exports.createRspackDevServer = createRspackDevServer;

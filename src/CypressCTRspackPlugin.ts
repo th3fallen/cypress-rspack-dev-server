@@ -144,9 +144,8 @@ export class CypressCTRspackPlugin {
 
     /* istanbul ignore next */
     if ('NormalModule' in this.compilation.compiler.webpack) {
-      const loader = (
-        this.compilation.compiler.webpack as Compiler['webpack']
-      ).NormalModule.getCompilationHooks(compilation).loader
+      const loader =
+        this.compilation.compiler.webpack.NormalModule.getCompilationHooks(compilation).loader
 
       loader.tap('CypressCTPlugin', this.addLoaderContext)
     }

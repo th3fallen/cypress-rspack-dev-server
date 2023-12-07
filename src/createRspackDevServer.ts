@@ -69,5 +69,5 @@ export async function createRspackDevServer(config: CreateFinalRspackConfig) {
     compiler: rspackCompiler,
   }
 
-  throw new Error(`Unsupported webpackDevServer version ${rspackDevServerMajorVersion}`)
+  throw new Error(`Unsupported rspackDevServer version ${rspackDevServerMajorVersion}`)
 }
