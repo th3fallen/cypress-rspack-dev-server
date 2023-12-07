@@ -8,9 +8,9 @@ const debug_1 = tslib_1.__importDefault(require("debug"));
 const sourceRelativeRspackModules_1 = require("./helpers/sourceRelativeRspackModules");
 const debug = (0, debug_1.default)('cypress:rspack-dev-server:devServer');
 /**
- * import { devServer } from '@cypress/rspack-dev-server'
+ * import { RspackDevServer } from '@rspack/dev-server'
  *
- * Creates & returns a WebpackDevServer for serving files related
+ * Creates & returns a RspackDevServer for serving files related
  * to Cypress Component Testing
  *
  * @param config
@@ -99,7 +99,6 @@ devServer.create = async function (devServerConfig) {
     const result = {
         server,
         compiler,
-        version: sourceRspackModulesResult.rspackDevServer.majorVersion,
     };
     return result;
 };

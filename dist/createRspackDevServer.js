@@ -7,7 +7,7 @@ const makeRspackConfig_1 = require("./makeRspackConfig");
 const debug = (0, debug_1.default)('cypress:rspack-dev-server:start');
 async function createRspackDevServer(config) {
     var _a;
-    const { sourceRspackModulesResult: { rspack: { module: rspack }, rspackDevServer: { majorVersion: rspackDevServerMajorVersion }, }, } = config;
+    const { sourceRspackModulesResult: { rspack: { module: rspack }, }, } = config;
     const finalRspackConfig = await (0, makeRspackConfig_1.makeRspackConfig)(config);
     const rspackCompiler = rspack(finalRspackConfig, undefined);
     const { devServerConfig: { cypressConfig: { devServerPublicPathRoute }, }, } = config;
@@ -22,10 +22,6 @@ async function createRspackDevServer(config) {
             overlay: false,
         } });
     const server = new RspackDevServer(rspackDevServerConfig, rspackCompiler);
-    return {
-        server,
-        compiler: rspackCompiler,
-    };
-    throw new Error(`Unsupported webpackDevServer version ${rspackDevServerMajorVersion}`);
+    return { server, compiler: rspackCompiler };
 }
 exports.createRspackDevServer = createRspackDevServer;

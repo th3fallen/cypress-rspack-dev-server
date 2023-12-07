@@ -232,7 +232,7 @@ export function getMajorVersion<T extends number>(json: PackageJson, acceptedVer
   if (!acceptedVersions.includes(major as T)) {
     throw new Error(
       `Unexpected major version of ${json.name}. ` +
-        `Cypress rspack-dev-server works with ${json.name} versions ${acceptedVersions.join(
+        `Cypress-rspack-dev-server works with ${json.name} versions ${acceptedVersions.join(
           ', ',
         )} - saw ${json.version}`,
     )

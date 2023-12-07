@@ -21,11 +21,11 @@ exports[
   },
   devtool: 'inline-source-map',
   mode: 'development',
-  plugins: ['HtmlRspackPlugin', 'CypressCTRspackPlugin'],
+  plugins: ['HtmlWebpackPlugin', 'CypressCTWebpackPlugin'],
 }
 
 exports[
-  'makeRspackConfig ignores userland rspack `output.publicPath` and `devServer.overlay` with rspack-dev-server v3 1'
+  'makeWebpackConfig ignores userland rspack `output.publicPath` and `devServer.overlay` with rspack-dev-server v3 1'
 ] = {
   output: {
     publicPath: '/test-public-path/',
@@ -44,5 +44,5 @@ exports[
   },
   devtool: 'inline-source-map',
   mode: 'development',
-  plugins: ['HtmlRspackPlugin', 'CypressCTRspackPlugin'],
+  plugins: ['HtmlWebpackPlugin', 'CypressCTWebpackPlugin'],
 }

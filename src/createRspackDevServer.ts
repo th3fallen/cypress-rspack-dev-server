@@ -63,8 +63,5 @@ export async function createRspackDevServer(config: CreateFinalRspackConfig) {
 
   const server = new RspackDevServer(rspackDevServerConfig, rspackCompiler)
 
-  return {
-    server,
-    compiler: rspackCompiler,
-  }
+  return { server, compiler: rspackCompiler }
 }

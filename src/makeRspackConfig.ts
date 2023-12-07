@@ -19,7 +19,7 @@ const removeList = [
   // the rspack's internal html plugin
   'HtmlRspackPlugin',
 
-  // We already reload when webpack recompiles (via listeners on
+  // We already reload when rspack recompiles (via listeners on
   // devServerEvents). Removing this plugin can prevent double-refreshes
   // in some setups.
   'HotModuleReplacementPlugin',
@@ -29,7 +29,7 @@ export const CYPRESS_RSPACK_ENTRYPOINT = path.resolve(__dirname, 'browser.js')
 
 /**
  * Removes and/or modifies certain plugins known to conflict
- * when used with cypress/rspack-dev-server.
+ * when used with cypress-rspack-dev-server.
  */
 function modifyRspackConfigForCypress(rspackConfig: Partial<Configuration>) {
   if (rspackConfig?.plugins) {

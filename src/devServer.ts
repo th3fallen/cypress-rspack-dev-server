@@ -49,7 +49,7 @@ type DevServerCreateResult = {
 }
 
 /**
- * import { devServer } from '@cypress/rspack-dev-server'
+ * import { RspackDevServer } from '@rspack/dev-server'
  *
  * Creates & returns a RspackDevServer for serving files related
  * to Cypress Component Testing

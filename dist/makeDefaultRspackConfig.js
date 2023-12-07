@@ -11,7 +11,7 @@ const OUTPUT_PATH = path_1.default.join(__dirname, 'dist');
 const OsSeparatorRE = RegExp(`\\${path_1.default.sep}`, 'g');
 const posixSeparator = '/';
 function makeCypressRspackConfig(config) {
-    const { devServerConfig: { cypressConfig: { projectRoot, devServerPublicPathRoute, supportFile, indexHtmlFile, isTextTerminal: isRunMode, }, specs: files, devServerEvents, framework, }, sourceRspackModulesResult: { rspack: { module: rspack }, }, } = config;
+    const { devServerConfig: { cypressConfig: { projectRoot, devServerPublicPathRoute, supportFile, indexHtmlFile, isTextTerminal: isRunMode, }, specs: files, devServerEvents, }, sourceRspackModulesResult: { rspack: { module: rspack }, }, } = config;
     const optimization = {
         // To prevent files from being tree shaken by rspack, we set optimization.sideEffects: false ensuring that
         // rspack does not recognize the sideEffects flag in the package.json and thus files are not unintentionally
@@ -56,7 +56,6 @@ function makeCypressRspackConfig(config) {
             ignored: '**/*',
         };
     }
-    // @ts-ignore
-    return Object.assign({}, finalConfig);
+    return finalConfig;
 }
 exports.makeCypressRspackConfig = makeCypressRspackConfig;

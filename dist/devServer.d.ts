@@ -20,13 +20,13 @@ export type DevServerConfig = {
     specs: Cypress.Spec[];
     cypressConfig: Cypress.PluginConfigOptions;
     devServerEvents: NodeJS.EventEmitter;
-    onConfigNotFound?: (devServer: 'webpack', cwd: string, lookedIn: string[]) => void;
+    onConfigNotFound?: (devServer: 'rspack', cwd: string, lookedIn: string[]) => void;
     rspackConfig?: ConfigHandler;
 } & FrameworkConfig;
 /**
- * import { devServer } from '@cypress/rspack-dev-server'
+ * import { RspackDevServer } from '@rspack/dev-server'
  *
- * Creates & returns a WebpackDevServer for serving files related
+ * Creates & returns a RspackDevServer for serving files related
  * to Cypress Component Testing
  *
  * @param config
@@ -36,7 +36,6 @@ export declare namespace devServer {
     var create: (devServerConfig: DevServerConfig) => Promise<{
         server: RspackDevServer;
         compiler: any;
-        version: 0;
     }>;
 }
 export type PresetHandlerResult = {
