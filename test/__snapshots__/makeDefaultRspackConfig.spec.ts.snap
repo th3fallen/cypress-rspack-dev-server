@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`makeCypressRspackConfig should return a valid Configuration object 1`] = `
+[
+  HtmlRspackPlugin {
+    "_options": {
+      "filename": "index.html",
+      "inject": "head",
+      "meta": {},
+      "scriptLoading": "defer",
+      "template": "path/to/indexHtmlFile",
+    },
+    "name": "HtmlRspackPlugin",
+  },
+  CypressCTRspackPlugin {
+    "addCompilationHooks": [Function],
+    "addLoaderContext": [Function],
+    "beforeCompile": [Function],
+    "compilation": null,
+    "devServerEvents": EventEmitter {
+      "_events": {},
+      "_eventsCount": 0,
+      "_maxListeners": undefined,
+      Symbol(kCapture): false,
+    },
+    "files": [],
+    "indexHtmlFile": "path/to/indexHtmlFile",
+    "onSpecsChange": [Function],
+    "projectRoot": "path/to/project",
+    "rspack": {
+      "RspackDevServer": [Function],
+    },
+    "supportFile": "path/to/supportFile",
+  },
+]
+`;

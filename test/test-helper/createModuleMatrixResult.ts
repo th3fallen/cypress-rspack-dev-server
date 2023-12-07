@@ -4,11 +4,11 @@ import type { SourceRelativeRspackResult } from '../../src/helpers/sourceRelativ
 const moduleSources = {
   rspack: '@rspack/dev-server',
   rspackDevServer: '@rspack/dev-server',
-  htmlRspackPlugin: 'HtmlRspackPlugin',
 } as const
 
 export function createModuleMatrixResult(): SourceRelativeRspackResult {
   return {
+    framework: null,
     rspack: resolveModule('rspack'),
     rspackDevServer: resolveModule('rspackDevServer'),
   }
