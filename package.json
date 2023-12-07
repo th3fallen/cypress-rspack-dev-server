@@ -6,7 +6,7 @@
   "scripts": {
     "build": "pnpm tsc --skipLibCheck || echo 'built, with type errors'",
     "build-prod": "pnpm build",
-    "check-ts": "tsc --noEmit",
+    "check-ts": "tsc --noEmit --skipLibCheck",
     "dev": "DEBUG=cypress:rspack-dev-server:* tsc --watch",
     "clean": "rimraf dist",
     "cypress:run": "pnpm cypress:run-cypress-in-cypress node ../../scripts/cypress run --project . --browser chrome",
