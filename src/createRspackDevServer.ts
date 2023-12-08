@@ -4,7 +4,7 @@ import type { DevServerConfig } from './devServer'
 import type { SourceRelativeRspackResult } from './helpers/sourceRelativeRspackModules'
 import { makeRspackConfig } from './makeRspackConfig'
 
-const debug = debugLib('cypress:rspack-dev-server:start')
+const debug = debugLib('cypress-rspack-dev-server:start')
 
 /**
  * Takes the rspack / rspackDevServer modules, the configuration provide
@@ -32,16 +32,14 @@ export async function createRspackDevServer(config: CreateFinalRspackConfig) {
     sourceRspackModulesResult: {
       rspack: { module: rspack },
     },
+    devServerConfig: {
+      cypressConfig: { devServerPublicPathRoute },
+    },
   } = config
 
   const finalRspackConfig = await makeRspackConfig(config)
   const rspackCompiler = rspack(finalRspackConfig, undefined)
 
-  const {
-    devServerConfig: {
-      cypressConfig: { devServerPublicPathRoute },
-    },
-  } = config
   const isOpenMode = !config.devServerConfig.cypressConfig.isTextTerminal
   const RspackDevServer = config.sourceRspackModulesResult.rspackDevServer.module
   const rspackDevServerConfig: Configuration = {

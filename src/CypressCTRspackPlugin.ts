@@ -5,7 +5,7 @@ import fs, { PathLike } from 'fs-extra'
 import path from 'path'
 import debugLib from 'debug'
 
-const debug = debugLib('cypress:rspack-dev-server:rspackPlugin')
+const debug = debugLib('cypress-rspack-dev-server:rspackPlugin')
 
 type UtimesSync = (
   path: PathLike,

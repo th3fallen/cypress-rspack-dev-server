@@ -10,7 +10,7 @@ import {
 } from './helpers/sourceRelativeRspackModules'
 import type { RspackDevServer } from '@rspack/dev-server'
 
-const debug = debugLib('cypress:rspack-dev-server:devServer')
+const debug = debugLib('cypress-rspack-dev-server:devServer')
 
 export type Frameworks = Extract<
   Cypress.DevServerConfigOptions,
@@ -69,7 +69,7 @@ export function devServer(
           return reject(new Error(`Expected port ${result.server.options.port} to be a number`))
         }
 
-        debug('Component testing rspack server 4 started on port %s', result.server.options.port)
+        debug('Component testing rspack server started on port %s', result.server.options.port)
 
         resolve({
           port: result.server.options.port as number,

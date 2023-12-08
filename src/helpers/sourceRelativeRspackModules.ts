@@ -4,7 +4,7 @@ import type { DevServerConfig, Frameworks } from '../devServer'
 import debugFn from 'debug'
 import type { RspackDevServer } from '@rspack/dev-server'
 
-const debug = debugFn('cypress:rspack-dev-server:sourceRelativeRspackModules')
+const debug = debugFn('cypress-rspack-dev-server:sourceRelativeRspackModules')
 
 export type ModuleClass = typeof Module & {
   _load(id: string, parent: Module, isMain: boolean): any
@@ -58,7 +58,7 @@ const frameworkRspackMapper: FrameworkRspackMapper = {
   'create-react-app': 'react-scripts',
   'vue-cli': '@vue/cli-service',
   nuxt: '@nuxt/rspack',
-  react: undefined,
+  react: 'react',
   vue: undefined,
   next: 'next',
   angular: '@angular-devkit/build-angular',
@@ -111,7 +111,6 @@ export function sourceFramework(config: DevServerConfig): SourcedDependency | nu
 
 // Source the rspack module from the provided framework or projectRoot. We override the module resolution
 // so that other packages that import rspack resolve to the version we found.
-// If none is found, we fallback to the bundled version in '@cypress/rspack-batteries-included-preprocessor'.
 export function sourceRspack(
   config: DevServerConfig,
   framework: SourcedDependency | null,
@@ -176,7 +175,7 @@ export function sourceRspack(
   return rspack
 }
 
-// Source the rspack-dev-server module from the provided framework or projectRoot.
+// Source the @rspack/dev-server module from the provided framework or projectRoot.
 // If none is found, we fallback to the version bundled with this package.
 export function sourceRspackDevServer(
   config: DevServerConfig,
@@ -184,7 +183,7 @@ export function sourceRspackDevServer(
 ): SourcedRspackDevServer {
   const searchRoot = framework?.importPath ?? config.cypressConfig.projectRoot
 
-  debug('RspackDevServer: Attempting to source rspack-dev-server from %s', searchRoot)
+  debug('RspackDevServer: Attempting to source @rspack/dev-server from %s', searchRoot)
 
   const rspackDevServer = {} as SourcedRspackDevServer
   let rspackDevServerJsonPath: string
@@ -210,7 +209,7 @@ export function sourceRspackDevServer(
   rspackDevServer.packageJson = require(rspackDevServerJsonPath)
   rspackDevServer.module = require(rspackDevServer.importPath).RspackDevServer
 
-  debug('RspackDevServer: Successfully sourced rspack-dev-server - %o', rspackDevServer)
+  debug('RspackDevServer: Successfully sourced @rspack/dev-server - %o', rspackDevServer)
 
   return rspackDevServer
 }
@@ -226,20 +225,20 @@ export function sourceDefaultRspackDependencies(
   return { framework, rspack, rspackDevServer }
 }
 
-export function getMajorVersion<T extends number>(json: PackageJson, acceptedVersions: T[]): T {
-  const major = Number(json.version.split('.')[0])
+// export function getMajorVersion<T extends number>(json: PackageJson, acceptedVersions: T[]): T {
+//   const major = Number(json.version.split('.')[0])
 
-  if (!acceptedVersions.includes(major as T)) {
-    throw new Error(
-      `Unexpected major version of ${json.name}. ` +
-        `Cypress-rspack-dev-server works with ${json.name} versions ${acceptedVersions.join(
-          ', ',
-        )} - saw ${json.version}`,
-    )
-  }
+//   if (!acceptedVersions.includes(major as T)) {
+//     throw new Error(
+//       `Unexpected major version of ${json.name}. ` +
+//         `Cypress-rspack-dev-server works with ${json.name} versions ${acceptedVersions.join(
+//           ', ',
+//         )} - saw ${json.version}`,
+//     )
+//   }
 
-  return Number(major) as T
-}
+//   return Number(major) as T
+// }
 
 export function restoreLoadHook() {
   ;(Module as ModuleClass)._load = originalModuleLoad

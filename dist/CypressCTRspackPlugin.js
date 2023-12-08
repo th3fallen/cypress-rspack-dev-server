@@ -6,7 +6,7 @@ const isEqual_1 = tslib_1.__importDefault(require("lodash/isEqual"));
 const fs_extra_1 = tslib_1.__importDefault(require("fs-extra"));
 const path_1 = tslib_1.__importDefault(require("path"));
 const debug_1 = tslib_1.__importDefault(require("debug"));
-const debug = (0, debug_1.default)('cypress:rspack-dev-server:rspackPlugin');
+const debug = (0, debug_1.default)('cypress-rspack-dev-server:rspackPlugin');
 const normalizeError = (error) => {
     return typeof error === 'string' ? error : error.message;
 };

@@ -6,7 +6,7 @@ const tslib_1 = require("tslib");
 const createRspackDevServer_1 = require("./createRspackDevServer");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const sourceRelativeRspackModules_1 = require("./helpers/sourceRelativeRspackModules");
-const debug = (0, debug_1.default)('cypress:rspack-dev-server:devServer');
+const debug = (0, debug_1.default)('cypress-rspack-dev-server:devServer');
 /**
  * import { RspackDevServer } from '@rspack/dev-server'
  *
@@ -24,7 +24,7 @@ function devServer(devServerConfig) {
             if (!result.server.options.port) {
                 return reject(new Error(`Expected port ${result.server.options.port} to be a number`));
             }
-            debug('Component testing rspack server 4 started on port %s', result.server.options.port);
+            debug('Component testing rspack server started on port %s', result.server.options.port);
             resolve({
                 port: result.server.options.port,
                 // Close is for unit testing only. We kill this child process which will handle the closing of the server

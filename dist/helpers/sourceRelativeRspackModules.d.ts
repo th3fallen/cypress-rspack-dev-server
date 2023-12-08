@@ -35,5 +35,4 @@ export declare function sourceFramework(config: DevServerConfig): SourcedDepende
 export declare function sourceRspack(config: DevServerConfig, framework: SourcedDependency | null): SourcedRspack;
 export declare function sourceRspackDevServer(config: DevServerConfig, framework?: SourcedDependency | null): SourcedRspackDevServer;
 export declare function sourceDefaultRspackDependencies(config: DevServerConfig): SourceRelativeRspackResult;
-export declare function getMajorVersion<T extends number>(json: PackageJson, acceptedVersions: T[]): T;
 export declare function restoreLoadHook(): void;
