@@ -1,14 +1,13 @@
 /// <reference types="cypress" />
-
+import debugLib from 'debug'
+import type { RspackDevServer } from '@rspack/dev-server'
 import type { Compiler, Configuration } from '@rspack/core'
 
 import { createRspackDevServer } from './createRspackDevServer'
-import debugLib from 'debug'
 import {
   sourceDefaultRspackDependencies,
   SourceRelativeRspackResult,
 } from './helpers/sourceRelativeRspackModules'
-import type { RspackDevServer } from '@rspack/dev-server'
 
 const debug = debugLib('cypress-rspack-dev-server:devServer')
 
@@ -168,12 +167,7 @@ devServer.create = async function (devServerConfig: DevServerConfig) {
     sourceRspackModulesResult,
   })
 
-  const result = {
-    server,
-    compiler,
-  }
-
-  return result
+  return { server, compiler }
 }
 
 export default devServer

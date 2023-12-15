@@ -52,9 +52,7 @@ function makeCypressRspackConfig(config) {
     };
     if (isRunMode) {
         // Disable file watching when executing tests in `run` mode
-        finalConfig.watchOptions = {
-            ignored: '**/*',
-        };
+        finalConfig.watchOptions = { ignored: '**/*' };
     }
     return finalConfig;
 }

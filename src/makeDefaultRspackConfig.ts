@@ -73,9 +73,7 @@ export function makeCypressRspackConfig(config: CreateFinalRspackConfig): Config
 
   if (isRunMode) {
     // Disable file watching when executing tests in `run` mode
-    finalConfig.watchOptions = {
-      ignored: '**/*',
-    }
+    finalConfig.watchOptions = { ignored: '**/*' }
   }
 
   return finalConfig

@@ -38,15 +38,14 @@ export async function createRspackDevServer(config: CreateFinalRspackConfig) {
   } = config
 
   const finalRspackConfig = await makeRspackConfig(config)
-  const rspackCompiler = rspack(finalRspackConfig, undefined)
+  const rspackCompiler = rspack(finalRspackConfig)
 
   const isOpenMode = !config.devServerConfig.cypressConfig.isTextTerminal
   const RspackDevServer = config.sourceRspackModulesResult.rspackDevServer.module
   const rspackDevServerConfig: Configuration = {
     host: '127.0.0.1',
     port: 'auto',
-    // @ts-ignore
-    ...finalRspackConfig?.devServer,
+    ...finalRspackConfig.devServer,
     devMiddleware: {
       publicPath: devServerPublicPathRoute,
       stats: finalRspackConfig.stats ?? 'minimal',
@@ -54,9 +53,7 @@ export async function createRspackDevServer(config: CreateFinalRspackConfig) {
     hot: false,
     // Only enable file watching & reload when executing tests in `open` mode
     liveReload: isOpenMode,
-    client: {
-      overlay: false,
-    },
+    client: { overlay: false },
   }
 
   const server = new RspackDevServer(rspackDevServerConfig, rspackCompiler)

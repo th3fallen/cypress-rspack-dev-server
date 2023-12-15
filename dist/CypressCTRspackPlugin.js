@@ -12,7 +12,7 @@ const normalizeError = (error) => {
 };
 exports.normalizeError = normalizeError;
 /**
- * A rspack 4/5 compatible Cypress Component Testing Plugin
+ * A rspack compatible Cypress Component Testing Plugin
  *
  * @internal
  */
@@ -68,7 +68,6 @@ class CypressCTRspackPlugin {
             this.files = specs;
             const inputFileSystem = this.compilation.inputFileSystem;
             // TODO: don't use a sync fs method here
-            // eslint-disable-next-line no-restricted-syntax
             const utimesSync = (_a = inputFileSystem.fileSystem.utimesSync) !== null && _a !== void 0 ? _a : fs_extra_1.default.utimesSync;
             utimesSync(path_1.default.join(this.projectRoot, this.indexHtmlFile), new Date(), new Date());
         };
@@ -76,8 +75,7 @@ class CypressCTRspackPlugin {
          * The rspack compiler generates a new `compilation` each time it compiles, so
          * we have to apply hooks to it fresh each time
          *
-         * @param compilation rspack 4 `compilation.Compilation`, rspack 5
-         *   `Compilation`
+         * @param compilation `RspackCompilation`
          */
         this.addCompilationHooks = (compilation) => {
             this.compilation = compilation;
