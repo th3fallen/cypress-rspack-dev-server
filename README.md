@@ -4,25 +4,17 @@
 
 Based off the amazing work of the cypress team at https://github.com/cypress-io/cypress/blob/develop/npm/webpack-dev-server/
 
-Implements the APIs for the object-syntax of the Cypress Component-testing "rspack dev server".
+Implements the APIs for Cypress Component-testing with Rust-based web bundler [Rspack](https://www.rspack.dev/)'s dev server.
 
-Object API:
+## Installation
 
-```ts
-import { defineConfig } from 'cypress'
+Install the library to your devDependencies
 
-export default defineConfig({
-  component: {
-    devServer: {
-      framework: 'create-react-app',
-      bundler: 'rspack',
-      // rspackConfig?: Will try to infer, if passed it will be used as is
-    }
-  }
-})
+```bash
+npm install -D cypress-rspack-dev-server
 ```
 
-Function API:
+## Usage
 
 ```ts
 import { devServer } from 'cypress-rspack-dev-server'
@@ -41,24 +33,16 @@ export default defineConfig({
 })
 ```
 
-## Architecture
+## Dev server parameters
 
-There should be a single publicly-exported entrypoint for the module, `devServer`, all other types and functions should be considered internal/implementation details, and types stripped from the output.
-
-The `devServer` will first source the modules from the user's project, falling back to our own bundled versions of
-libraries. This ensures that the user has installed the current modules, and throws an error if the user does not have
-the library installed.
-
-From there, we check the "framework" field to source or define any known rspack transforms to aid in the compilation.
-
-We then merge the sourced config with the user's rspack config, and layer on our own transforms, and provide this to a
-rspack instance. The rspack instance used to create a rspack-dev-server, which is returned.
-
-## Compatibility
-
-| cypress-rspack-dev-server | cypress |
-| ------------------------- | ------- |
-| >= 0.3                    | >= v12  |
+| Option                      | NOTES                                                                                                                                                                                                     |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| framework                   | `react`, currently only `react`, will support other frameworks                                                                                                                                            |
+| cypressConfig               | [Cypress Plugin Configuration](https://github.com/cypress-io/cypress/blob/6766a146dbcad98da2777d4005bc182c9d0475b8/cli/types/cypress.d.ts#L3539)                                                          |
+| specs                       | Array of [Cypress Spec](https://github.com/cypress-io/cypress/blob/6766a146dbcad98da2777d4005bc182c9d0475b8/cli/types/cypress.d.ts#L292C19-L292C19)                                                       |
+| devServerEvents             | [Nodejs EventEmitter](https://nodejs.org/en/learn/asynchronous-work/the-nodejs-event-emitter)                                                                                                             |
+| rspackConfig (Optional)     | [Rspack Configuration](https://github.com/web-infra-dev/rspack/blob/12dbc8659f9e9bd16b4bba7ee6135e63364f3975/packages/rspack/src/config/zod.ts#L1180C3-L1180C3), can be `require` from rspack config file |
+| onConfigNotFound (Optional) | The callback function when config not found                                                                                                                                                               |
 
 ## License
 
