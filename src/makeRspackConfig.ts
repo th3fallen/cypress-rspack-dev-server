@@ -8,7 +8,7 @@ import type { CreateFinalRspackConfig } from './createRspackDevServer'
 import { configFiles } from './constants'
 import { dynamicImport } from './dynamic-import'
 
-const debug = debugFn('cypress:rspack-dev-server:makeRspackConfig')
+const debug = debugFn('cypress-rspack-dev-server:makeRspackConfig')
 
 const removeList = [
   // We provide a webpack-html-plugin config pinned to a specific version (4.x)

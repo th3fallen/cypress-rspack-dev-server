@@ -6,12 +6,12 @@ const path_1 = tslib_1.__importDefault(require("path"));
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const core_1 = require("@rspack/core");
 const CypressCTRspackPlugin_1 = require("./CypressCTRspackPlugin");
-const debug = (0, debug_1.default)('cypress:rspack-dev-server:makeDefaultRspackConfig');
+const debug = (0, debug_1.default)('cypress-rspack-dev-server:makeDefaultRspackConfig');
 const OUTPUT_PATH = path_1.default.join(__dirname, 'dist');
 const OsSeparatorRE = RegExp(`\\${path_1.default.sep}`, 'g');
 const posixSeparator = '/';
 function makeCypressRspackConfig(config) {
-    const { devServerConfig: { cypressConfig: { projectRoot, devServerPublicPathRoute, supportFile, indexHtmlFile, isTextTerminal: isRunMode, }, specs: files, devServerEvents, framework, }, sourceRspackModulesResult: { rspack: { module: rspack }, }, } = config;
+    const { devServerConfig: { cypressConfig: { projectRoot, devServerPublicPathRoute, supportFile, indexHtmlFile, isTextTerminal: isRunMode, }, specs: files, devServerEvents, }, sourceRspackModulesResult: { rspack: { module: rspack }, }, } = config;
     const optimization = {
         // To prevent files from being tree shaken by rspack, we set optimization.sideEffects: false ensuring that
         // rspack does not recognize the sideEffects flag in the package.json and thus files are not unintentionally
@@ -52,11 +52,8 @@ function makeCypressRspackConfig(config) {
     };
     if (isRunMode) {
         // Disable file watching when executing tests in `run` mode
-        finalConfig.watchOptions = {
-            ignored: '**/*',
-        };
+        finalConfig.watchOptions = { ignored: '**/*' };
     }
-    // @ts-ignore
-    return Object.assign({}, finalConfig);
+    return finalConfig;
 }
 exports.makeCypressRspackConfig = makeCypressRspackConfig;

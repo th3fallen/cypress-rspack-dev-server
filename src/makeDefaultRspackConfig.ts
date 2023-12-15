@@ -4,7 +4,7 @@ import { HtmlRspackPlugin, type Configuration } from '@rspack/core'
 import type { CreateFinalRspackConfig } from './createRspackDevServer'
 import { CypressCTRspackPlugin } from './CypressCTRspackPlugin'
 
-const debug = debugLib('cypress:rspack-dev-server:makeDefaultRspackConfig')
+const debug = debugLib('cypress-rspack-dev-server:makeDefaultRspackConfig')
 
 const OUTPUT_PATH = path.join(__dirname, 'dist')
 
@@ -23,7 +23,6 @@ export function makeCypressRspackConfig(config: CreateFinalRspackConfig): Config
       },
       specs: files,
       devServerEvents,
-      framework,
     },
     sourceRspackModulesResult: {
       rspack: { module: rspack },
@@ -47,7 +46,7 @@ export function makeCypressRspackConfig(config: CreateFinalRspackConfig): Config
         // See https://github.com/cypress-io/cypress/issues/16097
         path.join(devServerPublicPathRoute, posixSeparator).replace(OsSeparatorRE, posixSeparator)
 
-  const finalConfig = {
+  const finalConfig: Configuration = {
     mode: 'development',
     optimization,
     output: {
@@ -70,17 +69,12 @@ export function makeCypressRspackConfig(config: CreateFinalRspackConfig): Config
       }),
     ],
     devtool: 'inline-source-map',
-  } as any
+  }
 
   if (isRunMode) {
     // Disable file watching when executing tests in `run` mode
-    finalConfig.watchOptions = {
-      ignored: '**/*',
-    }
+    finalConfig.watchOptions = { ignored: '**/*' }
   }
 
-  // @ts-ignore
-  return {
-    ...finalConfig,
-  }
+  return finalConfig
 }

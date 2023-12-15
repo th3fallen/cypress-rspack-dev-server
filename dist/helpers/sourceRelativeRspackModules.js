@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.restoreLoadHook = exports.getMajorVersion = exports.sourceDefaultRspackDependencies = exports.sourceRspackDevServer = exports.sourceRspack = exports.sourceFramework = exports.cypressRspackPath = void 0;
+exports.restoreLoadHook = exports.sourceDefaultRspackDependencies = exports.sourceRspackDevServer = exports.sourceRspack = exports.sourceFramework = exports.cypressRspackPath = void 0;
 const tslib_1 = require("tslib");
 const module_1 = tslib_1.__importDefault(require("module"));
 const path_1 = tslib_1.__importDefault(require("path"));
 const debug_1 = tslib_1.__importDefault(require("debug"));
-const debug = (0, debug_1.default)('cypress:rspack-dev-server:sourceRelativeRspackModules');
+const debug = (0, debug_1.default)('cypress-rspack-dev-server:sourceRelativeRspackModules');
 const originalModuleLoad = module_1.default._load;
 const originalModuleResolveFilename = module_1.default._resolveFilename;
 const cypressRspackPath = (config) => {
@@ -18,7 +18,7 @@ const frameworkRspackMapper = {
     'create-react-app': 'react-scripts',
     'vue-cli': '@vue/cli-service',
     nuxt: '@nuxt/rspack',
-    react: undefined,
+    react: 'react',
     vue: undefined,
     next: 'next',
     angular: '@angular-devkit/build-angular',
@@ -59,7 +59,6 @@ function sourceFramework(config) {
 exports.sourceFramework = sourceFramework;
 // Source the rspack module from the provided framework or projectRoot. We override the module resolution
 // so that other packages that import rspack resolve to the version we found.
-// If none is found, we fallback to the bundled version in '@cypress/rspack-batteries-included-preprocessor'.
 function sourceRspack(config, framework) {
     var _a;
     const searchRoot = (_a = framework === null || framework === void 0 ? void 0 : framework.importPath) !== null && _a !== void 0 ? _a : config.cypressConfig.projectRoot;
@@ -84,7 +83,6 @@ function sourceRspack(config, framework) {
     rspack.importPath = path_1.default.dirname(rspackJsonPath);
     rspack.packageJson = require(rspackJsonPath);
     rspack.module = require(rspack.importPath).rspack;
-    rspack.majorVersion = getMajorVersion(rspack.packageJson, [0]);
     debug('Rspack: Successfully sourced rspack - %o', rspack);
     module_1.default._load = function (request, parent, isMain) {
         if (request === 'rspack' || request.startsWith('rspack/')) {
@@ -109,12 +107,12 @@ function sourceRspack(config, framework) {
     return rspack;
 }
 exports.sourceRspack = sourceRspack;
-// Source the rspack-dev-server module from the provided framework or projectRoot.
+// Source the @rspack/dev-server module from the provided framework or projectRoot.
 // If none is found, we fallback to the version bundled with this package.
 function sourceRspackDevServer(config, framework) {
     var _a;
     const searchRoot = (_a = framework === null || framework === void 0 ? void 0 : framework.importPath) !== null && _a !== void 0 ? _a : config.cypressConfig.projectRoot;
-    debug('RspackDevServer: Attempting to source rspack-dev-server from %s', searchRoot);
+    debug('RspackDevServer: Attempting to source @rspack/dev-server from %s', searchRoot);
     const rspackDevServer = {};
     let rspackDevServerJsonPath;
     try {
@@ -135,8 +133,7 @@ function sourceRspackDevServer(config, framework) {
     rspackDevServer.importPath = path_1.default.dirname(rspackDevServerJsonPath);
     rspackDevServer.packageJson = require(rspackDevServerJsonPath);
     rspackDevServer.module = require(rspackDevServer.importPath).RspackDevServer;
-    rspackDevServer.majorVersion = getMajorVersion(rspackDevServer.packageJson, [0]);
-    debug('RspackDevServer: Successfully sourced rspack-dev-server - %o', rspackDevServer);
+    debug('RspackDevServer: Successfully sourced @rspack/dev-server - %o', rspackDevServer);
     return rspackDevServer;
 }
 exports.sourceRspackDevServer = sourceRspackDevServer;
@@ -148,15 +145,18 @@ function sourceDefaultRspackDependencies(config) {
     return { framework, rspack, rspackDevServer };
 }
 exports.sourceDefaultRspackDependencies = sourceDefaultRspackDependencies;
-function getMajorVersion(json, acceptedVersions) {
-    const major = Number(json.version.split('.')[0]);
-    if (!acceptedVersions.includes(major)) {
-        throw new Error(`Unexpected major version of ${json.name}. ` +
-            `Cypress-rspack-dev-server works with ${json.name} versions ${acceptedVersions.join(', ')} - saw ${json.version}`);
-    }
-    return Number(major);
-}
-exports.getMajorVersion = getMajorVersion;
+// export function getMajorVersion<T extends number>(json: PackageJson, acceptedVersions: T[]): T {
+//   const major = Number(json.version.split('.')[0])
+//   if (!acceptedVersions.includes(major as T)) {
+//     throw new Error(
+//       `Unexpected major version of ${json.name}. ` +
+//         `Cypress-rspack-dev-server works with ${json.name} versions ${acceptedVersions.join(
+//           ', ',
+//         )} - saw ${json.version}`,
+//     )
+//   }
+//   return Number(major) as T
+// }
 function restoreLoadHook() {
     ;
     module_1.default._load = originalModuleLoad;

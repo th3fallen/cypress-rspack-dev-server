@@ -9,7 +9,7 @@ const local_pkg_1 = require("local-pkg");
 const makeDefaultRspackConfig_1 = require("./makeDefaultRspackConfig");
 const constants_1 = require("./constants");
 const dynamic_import_1 = require("./dynamic-import");
-const debug = (0, debug_1.debug)('cypress:rspack-dev-server:makeRspackConfig');
+const debug = (0, debug_1.debug)('cypress-rspack-dev-server:makeRspackConfig');
 const removeList = [
     // We provide a webpack-html-plugin config pinned to a specific version (4.x)
     // that we have tested and are confident works with all common configurations.

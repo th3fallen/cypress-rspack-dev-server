@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const path = tslib_1.__importStar(require("path"));
-const debug = (0, debug_1.default)('cypress:rspack-dev-server:rspack');
+const debug = (0, debug_1.default)('cypress-rspack-dev-server:rspack');
 /**
  * @param {ComponentSpec} file spec to create import string from.
  * @param {string} filename name of the spec file - this is the same as file.name

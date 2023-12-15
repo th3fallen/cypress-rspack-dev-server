@@ -6,7 +6,7 @@ import * as path from 'path'
 import type { LoaderContext } from '@rspack/core'
 import type { CypressCTRspackContext } from './CypressCTRspackPlugin'
 
-const debug = debugFn('cypress:rspack-dev-server:rspack')
+const debug = debugFn('cypress-rspack-dev-server:rspack')
 
 /**
  * @param {ComponentSpec} file spec to create import string from.

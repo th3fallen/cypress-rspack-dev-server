@@ -1,16 +1,15 @@
 /// <reference types="cypress" />
-
+import debugLib from 'debug'
+import type { RspackDevServer } from '@rspack/dev-server'
 import type { Compiler, Configuration } from '@rspack/core'
 
 import { createRspackDevServer } from './createRspackDevServer'
-import debugLib from 'debug'
 import {
   sourceDefaultRspackDependencies,
   SourceRelativeRspackResult,
 } from './helpers/sourceRelativeRspackModules'
-import type { RspackDevServer } from '@rspack/dev-server'
 
-const debug = debugLib('cypress:rspack-dev-server:devServer')
+const debug = debugLib('cypress-rspack-dev-server:devServer')
 
 export type Frameworks = Extract<
   Cypress.DevServerConfigOptions,
@@ -44,7 +43,6 @@ export type DevServerConfig = {
  * @internal
  */
 type DevServerCreateResult = {
-  version: 0
   server: RspackDevServer
   compiler: Compiler
 }
@@ -70,7 +68,7 @@ export function devServer(
           return reject(new Error(`Expected port ${result.server.options.port} to be a number`))
         }
 
-        debug('Component testing rspack server 4 started on port %s', result.server.options.port)
+        debug('Component testing rspack server started on port %s', result.server.options.port)
 
         resolve({
           port: result.server.options.port as number,
@@ -169,13 +167,7 @@ devServer.create = async function (devServerConfig: DevServerConfig) {
     sourceRspackModulesResult,
   })
 
-  const result = {
-    server,
-    compiler,
-    version: sourceRspackModulesResult.rspackDevServer.majorVersion,
-  }
-
-  return result
+  return { server, compiler }
 }
 
 export default devServer

@@ -1,9 +1,9 @@
 /// <reference types="cypress" />
 /// <reference types="cypress" />
 /// <reference types="node" />
+import type { RspackDevServer } from '@rspack/dev-server';
 import type { Configuration } from '@rspack/core';
 import { SourceRelativeRspackResult } from './helpers/sourceRelativeRspackModules';
-import type { RspackDevServer } from '@rspack/dev-server';
 export type Frameworks = Extract<Cypress.DevServerConfigOptions, {
     bundler: 'webpack';
 }>['framework'];
@@ -36,7 +36,6 @@ export declare namespace devServer {
     var create: (devServerConfig: DevServerConfig) => Promise<{
         server: RspackDevServer;
         compiler: any;
-        version: 0;
     }>;
 }
 export type PresetHandlerResult = {
