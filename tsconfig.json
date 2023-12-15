@@ -10,6 +10,7 @@
     ] /* Specify library files to be included in the compilation:  */,
     // "checkJs": true,                       /* Report errors in .js files. */
     // "jsx": "preserve",                     /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
+    "skipLibCheck": true,                     /* Skip type checking of declaration files. */
     "declaration": true /* Generates corresponding '.d.ts' file. */,
     // "sourceMap": true,                     /* Generates corresponding '.map' file. */
     // "outFile": "./",                       /* Concatenate and emit output to single file. */
