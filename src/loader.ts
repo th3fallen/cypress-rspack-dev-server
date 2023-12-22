@@ -24,7 +24,13 @@ const makeImport = (
   const magicComments = chunkName ? `/* rspackChunkName: "${chunkName}" */` : ''
 
   return `"${filename}": {
-    shouldLoad: () => decodeURI(document.location.pathname).includes("${file.absolute}"),
+    shouldLoad: () => {
+      const newLoad = new URLSearchParams(document.location.search).get("specPath") === "${
+        file.absolute
+      }";
+      const oldLoad = decodeURI(document.location.pathname).includes("${file.absolute}");
+      return newLoad | oldLoad;
+    },
     load: () => import(${magicComments} "${file.absolute}"),
     absolute: "${file.absolute.split(path.sep).join(path.posix.sep)}",
     relative: "${file.relative.split(path.sep).join(path.posix.sep)}",
@@ -39,7 +45,13 @@ const makeImport = (
  * @returns {Record<string, ReturnType<makeImport>}
  * {
  *   "App.spec.js": {
- *     shouldLoad: () => document.location.pathname.includes('cypress/component/App.spec.js'),
+ *     shouldLoad: () => {
+         const newLoad = new URLSearchParams(document.location.search).get("specPath") === "${
+           file.absolute
+         }";
+         const oldLoad = decodeURI(document.location.pathname).includes("${file.absolute}");
+         return newLoad | oldLoad;
+       },
  *     load: () => {
  *       return import("/Users/projects/my-app/cypress/component/App.spec.js" \/* rspackChunkName: "spec-0" *\/)
  *     },
