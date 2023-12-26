@@ -25,7 +25,7 @@ const removeList = [
 exports.CYPRESS_RSPACK_ENTRYPOINT = path.resolve(__dirname, 'browser.js');
 /**
  * Removes and/or modifies certain plugins known to conflict
- * when used with cypress-rspack-dev-server.
+ * when used with @rspack/dev-server.
  */
 function modifyRspackConfigForCypress(rspackConfig) {
     if (rspackConfig === null || rspackConfig === void 0 ? void 0 : rspackConfig.plugins) {
@@ -40,7 +40,7 @@ async function getRspackConfigFromProjectRoot(projectRoot) {
     return await findUp(constants_1.configFiles, { cwd: projectRoot });
 }
 /**
- * Creates a rspack 0 compatible rspack "configuration"
+ * Creates a rspack compatible rspack "configuration"
  * to pass to the sourced rspack function
  */
 async function makeRspackConfig(config) {

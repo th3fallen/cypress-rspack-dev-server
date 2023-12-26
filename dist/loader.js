@@ -61,7 +61,7 @@ function buildSpecs(projectRoot, files = []) {
 // Runs the tests inside the iframe
 function loader() {
     const ctx = this;
-    // In Webpack 5, a spec added after the dev-server is created won't
+    // A spec added after the dev-server is created won't
     // be included in the compilation. Disabling the caching of this loader ensures
     // we regenerate our specs and include any new ones in the compilation.
     ctx.cacheable(false);
