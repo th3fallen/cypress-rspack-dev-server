@@ -75,7 +75,7 @@ function buildSpecs(projectRoot: string, files: Cypress.Cypress['spec'][] = []):
 export default function loader(this: unknown) {
   const ctx = this as CypressCTRspackContext & LoaderContext<void>
 
-  // In Webpack 5, a spec added after the dev-server is created won't
+  // A spec added after the dev-server is created won't
   // be included in the compilation. Disabling the caching of this loader ensures
   // we regenerate our specs and include any new ones in the compilation.
   ctx.cacheable(false)

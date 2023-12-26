@@ -29,7 +29,7 @@ export const CYPRESS_RSPACK_ENTRYPOINT = path.resolve(__dirname, 'browser.js')
 
 /**
  * Removes and/or modifies certain plugins known to conflict
- * when used with cypress-rspack-dev-server.
+ * when used with @rspack/dev-server.
  */
 function modifyRspackConfigForCypress(rspackConfig: Partial<Configuration>) {
   if (rspackConfig?.plugins) {
@@ -52,7 +52,7 @@ async function getRspackConfigFromProjectRoot(projectRoot: string) {
 }
 
 /**
- * Creates a rspack 0 compatible rspack "configuration"
+ * Creates a rspack compatible rspack "configuration"
  * to pass to the sourced rspack function
  */
 export async function makeRspackConfig(config: CreateFinalRspackConfig) {

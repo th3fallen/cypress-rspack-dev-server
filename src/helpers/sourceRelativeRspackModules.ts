@@ -225,21 +225,6 @@ export function sourceDefaultRspackDependencies(
   return { framework, rspack, rspackDevServer }
 }
 
-// export function getMajorVersion<T extends number>(json: PackageJson, acceptedVersions: T[]): T {
-//   const major = Number(json.version.split('.')[0])
-
-//   if (!acceptedVersions.includes(major as T)) {
-//     throw new Error(
-//       `Unexpected major version of ${json.name}. ` +
-//         `Cypress-rspack-dev-server works with ${json.name} versions ${acceptedVersions.join(
-//           ', ',
-//         )} - saw ${json.version}`,
-//     )
-//   }
-
-//   return Number(major) as T
-// }
-
 export function restoreLoadHook() {
   ;(Module as ModuleClass)._load = originalModuleLoad
   ;(Module as ModuleClass)._resolveFilename = originalModuleResolveFilename
