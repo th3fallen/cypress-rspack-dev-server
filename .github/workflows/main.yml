@@ -32,3 +32,6 @@ jobs:
 
       - name: Test
         run: pnpm run test
+
+      - name: Cypress Test
+        run: pnpm run cypress:run
