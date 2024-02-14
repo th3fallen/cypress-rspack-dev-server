@@ -17,7 +17,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@rspack/cli": "^0.4.5",
+    "@rspack/cli": "^0.5.4",
     "find-up": "6.3.0",
     "local-pkg": "0.4.1",
     "tslib": "^2.3.1",
