@@ -1,4 +1,3 @@
-import path from 'path'
 import { describe, expect } from '@jest/globals'
 import EventEmitter from 'events'
 import { CreateFinalRspackConfig } from '../src/createRspackDevServer'

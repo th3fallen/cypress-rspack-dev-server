@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 import debugLib from 'debug'
+import type { EventEmitter } from 'events'
 import type { RspackDevServer } from '@rspack/dev-server'
 import type { Compiler, Configuration } from '@rspack/core'
 
@@ -34,7 +35,7 @@ export type ConfigHandler =
 export type DevServerConfig = {
   specs: Cypress.Spec[]
   cypressConfig: Cypress.PluginConfigOptions
-  devServerEvents: NodeJS.EventEmitter
+  devServerEvents: EventEmitter
   onConfigNotFound?: (devServer: 'rspack', cwd: string, lookedIn: string[]) => void
   rspackConfig?: ConfigHandler // Derived from the user's rspack config
 } & FrameworkConfig
