@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
-/// <reference types="cypress" />
 /// <reference types="node" />
+import type { EventEmitter } from 'events';
 import type { RspackDevServer } from '@rspack/dev-server';
 import type { Configuration } from '@rspack/core';
 import { SourceRelativeRspackResult } from './helpers/sourceRelativeRspackModules';
@@ -19,7 +19,7 @@ export type ConfigHandler = Partial<Configuration> | (() => Partial<Configuratio
 export type DevServerConfig = {
     specs: Cypress.Spec[];
     cypressConfig: Cypress.PluginConfigOptions;
-    devServerEvents: NodeJS.EventEmitter;
+    devServerEvents: EventEmitter;
     onConfigNotFound?: (devServer: 'rspack', cwd: string, lookedIn: string[]) => void;
     rspackConfig?: ConfigHandler;
 } & FrameworkConfig;

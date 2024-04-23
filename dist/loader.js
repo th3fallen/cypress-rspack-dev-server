@@ -19,7 +19,7 @@ const makeImport = (file, filename, chunkName, projectRoot) => {
     shouldLoad: () => {
       const newLoad = new URLSearchParams(document.location.search).get("specPath") === "${file.absolute}";
       const oldLoad = decodeURI(document.location.pathname).includes("${file.absolute}");
-      return newLoad | oldLoad;
+      return newLoad || oldLoad;
     },
     load: () => import(${magicComments} "${file.absolute}"),
     absolute: "${file.absolute.split(path.sep).join(path.posix.sep)}",

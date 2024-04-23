@@ -20,7 +20,7 @@ class CypressCTRspackPlugin {
     constructor(options) {
         this.files = [];
         this.compilation = null;
-        this.addLoaderContext = (loaderContext, module) => {
+        this.addLoaderContext = (loaderContext) => {
             ;
             loaderContext._cypress = {
                 files: this.files,

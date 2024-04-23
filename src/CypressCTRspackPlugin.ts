@@ -70,7 +70,7 @@ export class CypressCTRspackPlugin {
     this.indexHtmlFile = options.indexHtmlFile
   }
 
-  private addLoaderContext = (loaderContext: object, module: any) => {
+  private addLoaderContext = (loaderContext: object) => {
     ;(loaderContext as CypressCTRspackContext)._cypress = {
       files: this.files,
       projectRoot: this.projectRoot,

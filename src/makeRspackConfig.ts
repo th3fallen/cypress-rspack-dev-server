@@ -35,6 +35,7 @@ function modifyRspackConfigForCypress(rspackConfig: Partial<Configuration>) {
   if (rspackConfig?.plugins) {
     rspackConfig.plugins = rspackConfig.plugins.filter(
       (plugin) =>
+        plugin &&
         !removeList.includes('raw' in plugin ? plugin.raw().name : plugin.constructor.name),
     )
   }
@@ -52,8 +53,7 @@ async function getRspackConfigFromProjectRoot(projectRoot: string) {
 }
 
 /**
- * Creates a rspack compatible rspack "configuration"
- * to pass to the sourced rspack function
+ * Creates a rspack compatible rspack "configuration" to pass to the sourced rspack function
  */
 export async function makeRspackConfig(config: CreateFinalRspackConfig) {
   let userRspackConfig = config.devServerConfig.rspackConfig
@@ -88,7 +88,8 @@ export async function makeRspackConfig(config: CreateFinalRspackConfig) {
         process.exit(0)
       } else {
         throw new Error(
-          `Your Cypress devServer config is missing a required rspackConfig property, since we could not automatically detect one.\nPlease add one to your ${config.devServerConfig.cypressConfig.configFile}`,
+          `Your Cypress devServer config is missing a required rspackConfig property, since we could not automatically detect one.\n
+          Please add one to your ${config.devServerConfig.cypressConfig.configFile}`,
         )
       }
     }
@@ -119,7 +120,7 @@ export async function makeRspackConfig(config: CreateFinalRspackConfig) {
   // Angular loads global styles and polyfills via script injection in the index.html
   if (framework === 'angular') {
     mergedConfig.entry = {
-      ...((mergedConfig.entry as EntryObject) || {}),
+      ...(mergedConfig.entry as EntryObject),
       'cypress-entry': CYPRESS_RSPACK_ENTRYPOINT,
     }
   } else {
