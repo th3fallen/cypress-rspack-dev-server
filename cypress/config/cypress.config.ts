@@ -4,6 +4,7 @@ import { devServer } from '../../dist/devServer'
 export default defineConfig({
   component: {
     video: false,
+    screenshotOnRunFailure: false,
     supportFile: './support/component.ts',
     specPattern: './component/*.cy.{tsx,jsx,js,ts}',
     indexHtmlFile: '../support/component-index.html',
