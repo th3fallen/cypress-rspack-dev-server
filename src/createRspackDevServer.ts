@@ -31,17 +31,17 @@ export async function createRspackDevServer(config: CreateFinalRspackConfig) {
   const {
     sourceRspackModulesResult: {
       rspack: { module: rspack },
+      rspackDevServer: { module: RspackDevServer },
     },
     devServerConfig: {
-      cypressConfig: { devServerPublicPathRoute },
+      cypressConfig: { devServerPublicPathRoute, isTextTerminal },
     },
   } = config
 
   const finalRspackConfig = await makeRspackConfig(config)
   const rspackCompiler = rspack(finalRspackConfig)
 
-  const isOpenMode = !config.devServerConfig.cypressConfig.isTextTerminal
-  const RspackDevServer = config.sourceRspackModulesResult.rspackDevServer.module
+  const isOpenMode = !isTextTerminal
   const rspackDevServerConfig: Configuration = {
     host: '127.0.0.1',
     port: 'auto',

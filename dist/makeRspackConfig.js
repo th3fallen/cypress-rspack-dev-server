@@ -29,7 +29,8 @@ exports.CYPRESS_RSPACK_ENTRYPOINT = path.resolve(__dirname, 'browser.js');
  */
 function modifyRspackConfigForCypress(rspackConfig) {
     if (rspackConfig === null || rspackConfig === void 0 ? void 0 : rspackConfig.plugins) {
-        rspackConfig.plugins = rspackConfig.plugins.filter((plugin) => !removeList.includes('raw' in plugin ? plugin.raw().name : plugin.constructor.name));
+        rspackConfig.plugins = rspackConfig.plugins.filter((plugin) => plugin &&
+            !removeList.includes('raw' in plugin ? plugin.raw().name : plugin.constructor.name));
     }
     delete rspackConfig.entry;
     delete rspackConfig.output;
@@ -40,8 +41,7 @@ async function getRspackConfigFromProjectRoot(projectRoot) {
     return await findUp(constants_1.configFiles, { cwd: projectRoot });
 }
 /**
- * Creates a rspack compatible rspack "configuration"
- * to pass to the sourced rspack function
+ * Creates a rspack compatible rspack "configuration" to pass to the sourced rspack function
  */
 async function makeRspackConfig(config) {
     var _a, _b, _c;
@@ -68,7 +68,8 @@ async function makeRspackConfig(config) {
                 process.exit(0);
             }
             else {
-                throw new Error(`Your Cypress devServer config is missing a required rspackConfig property, since we could not automatically detect one.\nPlease add one to your ${config.devServerConfig.cypressConfig.configFile}`);
+                throw new Error(`Your Cypress devServer config is missing a required rspackConfig property, since we could not automatically detect one.\n
+          Please add one to your ${config.devServerConfig.cypressConfig.configFile}`);
             }
         }
     }
@@ -86,7 +87,7 @@ async function makeRspackConfig(config) {
     (_c = mergedConfig.output) === null || _c === void 0 ? true : delete _c.chunkFilename;
     // Angular loads global styles and polyfills via script injection in the index.html
     if (framework === 'angular') {
-        mergedConfig.entry = Object.assign(Object.assign({}, (mergedConfig.entry || {})), { 'cypress-entry': exports.CYPRESS_RSPACK_ENTRYPOINT });
+        mergedConfig.entry = Object.assign(Object.assign({}, mergedConfig.entry), { 'cypress-entry': exports.CYPRESS_RSPACK_ENTRYPOINT });
     }
     else {
         mergedConfig.entry = exports.CYPRESS_RSPACK_ENTRYPOINT;

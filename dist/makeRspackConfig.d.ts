@@ -2,8 +2,7 @@
 import type { CreateFinalRspackConfig } from './createRspackDevServer';
 export declare const CYPRESS_RSPACK_ENTRYPOINT: string;
 /**
- * Creates a rspack compatible rspack "configuration"
- * to pass to the sourced rspack function
+ * Creates a rspack compatible rspack "configuration" to pass to the sourced rspack function
  */
 export declare function makeRspackConfig(config: CreateFinalRspackConfig): Promise<{
     name?: string | undefined;
@@ -83,6 +82,7 @@ export declare function makeRspackConfig(config: CreateFinalRspackConfig): Promi
             root?: string | undefined;
         } | undefined;
         module?: boolean | undefined;
+        strictModuleExceptionHandling?: boolean | undefined;
         strictModuleErrorHandling?: boolean | undefined;
         globalObject?: string | undefined;
         importFunctionName?: string | undefined;
@@ -99,21 +99,21 @@ export declare function makeRspackConfig(config: CreateFinalRspackConfig): Promi
         sourceMapFilename?: string | undefined;
         hashDigest?: string | undefined;
         hashDigestLength?: number | undefined;
-        hashFunction?: string | undefined;
+        hashFunction?: "md4" | "xxhash64" | undefined;
         hashSalt?: string | undefined;
         asyncChunks?: boolean | undefined;
         workerChunkLoading?: string | false | undefined;
         workerWasmLoading?: string | false | undefined;
         workerPublicPath?: string | undefined;
+        scriptType?: false | "module" | "text/javascript" | undefined;
+        devtoolNamespace?: string | undefined;
+        devtoolModuleFilenameTemplate?: string | ((args_0: any) => any) | undefined;
+        devtoolFallbackModuleFilenameTemplate?: string | ((args_0: any) => any) | undefined;
     } | undefined;
-    target?: false | "node" | "async-node" | "web" | "webworker" | "es3" | "es5" | "es2015" | "es2016" | "es2017" | "es2018" | "es2019" | "es2020" | "es2021" | "es2022" | "browserslist" | `node${number}` | `async-node${number}` | `node${number}.${number}` | `async-node${number}.${number}` | "electron-main" | `electron${number}-main` | `electron${number}.${number}-main` | "electron-renderer" | `electron${number}-renderer` | `electron${number}.${number}-renderer` | "electron-preload" | `electron${number}-preload` | `electron${number}.${number}-preload` | ("node" | "async-node" | "web" | "webworker" | "es3" | "es5" | "es2015" | "es2016" | "es2017" | "es2018" | "es2019" | "es2020" | "es2021" | "es2022" | "browserslist" | `node${number}` | `async-node${number}` | `node${number}.${number}` | `async-node${number}.${number}` | "electron-main" | `electron${number}-main` | `electron${number}.${number}-main` | "electron-renderer" | `electron${number}-renderer` | `electron${number}.${number}-renderer` | "electron-preload" | `electron${number}-preload` | `electron${number}.${number}-preload`)[] | undefined;
-    mode?: "none" | "development" | "production" | undefined;
+    target?: false | "node" | "async-node" | "es5" | "web" | "webworker" | "es3" | "es2015" | "es2016" | "es2017" | "es2018" | "es2019" | "es2020" | "es2021" | "es2022" | "browserslist" | `node${number}` | `async-node${number}` | `node${number}.${number}` | `async-node${number}.${number}` | "electron-main" | `electron${number}-main` | `electron${number}.${number}-main` | "electron-renderer" | `electron${number}-renderer` | `electron${number}.${number}-renderer` | "electron-preload" | `electron${number}-preload` | `electron${number}.${number}-preload` | ("node" | "async-node" | "es5" | "web" | "webworker" | "es3" | "es2015" | "es2016" | "es2017" | "es2018" | "es2019" | "es2020" | "es2021" | "es2022" | "browserslist" | `node${number}` | `async-node${number}` | `node${number}.${number}` | `async-node${number}.${number}` | "electron-main" | `electron${number}-main` | `electron${number}.${number}-main` | "electron-renderer" | `electron${number}-renderer` | `electron${number}.${number}-renderer` | "electron-preload" | `electron${number}-preload` | `electron${number}.${number}-preload`)[] | undefined;
+    mode?: "production" | "development" | "none" | undefined;
     experiments?: {
         lazyCompilation?: boolean | undefined;
-        incrementalRebuild?: boolean | {
-            make?: boolean | undefined;
-            emitAsset?: boolean | undefined;
-        } | undefined;
         asyncWebAssembly?: boolean | undefined;
         outputModule?: boolean | undefined;
         topLevelAwait?: boolean | undefined;
@@ -121,16 +121,19 @@ export declare function makeRspackConfig(config: CreateFinalRspackConfig): Promi
         css?: boolean | undefined;
         futureDefaults?: boolean | undefined;
         rspackFuture?: {
-            newResolver?: boolean | undefined;
             newTreeshaking?: boolean | undefined;
-            disableTransformByDefault?: boolean | undefined;
+            disableApplyEntryLazily?: boolean | undefined;
+            bundlerInfo?: {
+                version?: string | undefined;
+                force?: boolean | "version"[] | undefined;
+            } | undefined;
         } | undefined;
     } | undefined;
     externals?: string | RegExp | Record<string, string | boolean | string[] | Record<string, string | string[]>> | ((args_0: {
         context?: string | undefined;
         dependencyType?: string | undefined;
         request?: string | undefined;
-    }, args_1: (args_0: Error | undefined, args_1: string | boolean | string[] | Record<string, string | string[]> | undefined, args_2: "module" | "promise" | "jsonp" | "import" | "amd" | "commonjs" | "commonjs2" | "var" | "assign" | "this" | "window" | "self" | "global" | "commonjs-module" | "commonjs-static" | "amd-require" | "umd" | "umd2" | "system" | "script" | "node-commonjs" | undefined, ...args_3: unknown[]) => void, ...args_2: unknown[]) => unknown) | ((args_0: {
+    }, args_1: (args_0: Error | undefined, args_1: string | boolean | string[] | Record<string, string | string[]> | undefined, args_2: "module" | "promise" | "script" | "commonjs" | "jsonp" | "import" | "amd" | "commonjs2" | "var" | "assign" | "this" | "window" | "self" | "global" | "commonjs-module" | "commonjs-static" | "amd-require" | "umd" | "umd2" | "system" | "node-commonjs" | undefined, ...args_3: unknown[]) => void, ...args_2: unknown[]) => unknown) | ((args_0: {
         context?: string | undefined;
         dependencyType?: string | undefined;
         request?: string | undefined;
@@ -138,12 +141,12 @@ export declare function makeRspackConfig(config: CreateFinalRspackConfig): Promi
         context?: string | undefined;
         dependencyType?: string | undefined;
         request?: string | undefined;
-    }, args_1: (args_0: Error | undefined, args_1: string | boolean | string[] | Record<string, string | string[]> | undefined, args_2: "module" | "promise" | "jsonp" | "import" | "amd" | "commonjs" | "commonjs2" | "var" | "assign" | "this" | "window" | "self" | "global" | "commonjs-module" | "commonjs-static" | "amd-require" | "umd" | "umd2" | "system" | "script" | "node-commonjs" | undefined, ...args_3: unknown[]) => void, ...args_2: unknown[]) => unknown) | ((args_0: {
+    }, args_1: (args_0: Error | undefined, args_1: string | boolean | string[] | Record<string, string | string[]> | undefined, args_2: "module" | "promise" | "script" | "commonjs" | "jsonp" | "import" | "amd" | "commonjs2" | "var" | "assign" | "this" | "window" | "self" | "global" | "commonjs-module" | "commonjs-static" | "amd-require" | "umd" | "umd2" | "system" | "node-commonjs" | undefined, ...args_3: unknown[]) => void, ...args_2: unknown[]) => unknown) | ((args_0: {
         context?: string | undefined;
         dependencyType?: string | undefined;
         request?: string | undefined;
     }, ...args_1: unknown[]) => Promise<string | boolean | string[] | Record<string, string | string[]>>))[] | undefined;
-    externalsType?: "module" | "promise" | "jsonp" | "import" | "amd" | "commonjs" | "commonjs2" | "var" | "assign" | "this" | "window" | "self" | "global" | "commonjs-module" | "commonjs-static" | "amd-require" | "umd" | "umd2" | "system" | "script" | "node-commonjs" | undefined;
+    externalsType?: "module" | "promise" | "script" | "commonjs" | "jsonp" | "import" | "amd" | "commonjs2" | "var" | "assign" | "this" | "window" | "self" | "global" | "commonjs-module" | "commonjs-static" | "amd-require" | "umd" | "umd2" | "system" | "node-commonjs" | undefined;
     externalsPresets?: {
         node?: boolean | undefined;
         web?: boolean | undefined;
@@ -163,7 +166,7 @@ export declare function makeRspackConfig(config: CreateFinalRspackConfig): Promi
     } | undefined;
     cache?: boolean | undefined;
     context?: string | undefined;
-    devtool?: false | "cheap-source-map" | "cheap-module-source-map" | "source-map" | "inline-cheap-source-map" | "inline-cheap-module-source-map" | "inline-source-map" | "inline-nosources-cheap-module-source-map" | "inline-nosources-source-map" | "nosources-cheap-source-map" | "nosources-cheap-module-source-map" | "nosources-source-map" | "hidden-nosources-cheap-source-map" | "hidden-nosources-cheap-module-source-map" | "hidden-nosources-source-map" | "hidden-cheap-source-map" | "hidden-cheap-module-source-map" | "hidden-source-map" | "eval-cheap-source-map" | "eval-cheap-module-source-map" | "eval-source-map" | "eval-nosources-cheap-source-map" | "eval-nosources-cheap-module-source-map" | "eval-nosources-source-map" | undefined;
+    devtool?: false | "eval" | "cheap-source-map" | "cheap-module-source-map" | "source-map" | "inline-cheap-source-map" | "inline-cheap-module-source-map" | "inline-source-map" | "inline-nosources-cheap-source-map" | "inline-nosources-cheap-module-source-map" | "inline-nosources-source-map" | "nosources-cheap-source-map" | "nosources-cheap-module-source-map" | "nosources-source-map" | "hidden-nosources-cheap-source-map" | "hidden-nosources-cheap-module-source-map" | "hidden-nosources-source-map" | "hidden-cheap-source-map" | "hidden-cheap-module-source-map" | "hidden-source-map" | "eval-cheap-source-map" | "eval-cheap-module-source-map" | "eval-source-map" | "eval-nosources-cheap-source-map" | "eval-nosources-cheap-module-source-map" | "eval-nosources-source-map" | undefined;
     node?: false | {
         __dirname?: boolean | "warn-mock" | "mock" | "eval-only" | undefined;
         __filename?: boolean | "warn-mock" | "mock" | "eval-only" | undefined;
@@ -209,6 +212,10 @@ export declare function makeRspackConfig(config: CreateFinalRspackConfig): Promi
         loggingDebug?: string | boolean | RegExp | ((args_0: string, ...args_1: unknown[]) => boolean) | (string | RegExp | ((args_0: string, ...args_1: unknown[]) => boolean))[] | undefined;
         loggingTrace?: boolean | undefined;
         runtimeModules?: boolean | undefined;
+        children?: boolean | undefined;
+        usedExports?: boolean | undefined;
+        providedExports?: boolean | undefined;
+        optimizationBailout?: boolean | undefined;
     } | undefined;
     snapshot?: {
         module?: {
@@ -224,26 +231,30 @@ export declare function makeRspackConfig(config: CreateFinalRspackConfig): Promi
         moduleIds?: "named" | "deterministic" | undefined;
         chunkIds?: "named" | "deterministic" | undefined;
         minimize?: boolean | undefined;
-        minimizer?: (import("@rspack/core").RspackPluginInstance | import("@rspack/core").RspackPluginFunction | "...")[] | undefined;
-        splitChunks?: {
-            chunks?: RegExp | "all" | "async" | "initial" | undefined;
+        minimizer?: (false | "" | 0 | import("@rspack/core").RspackPluginInstance | import("@rspack/core").RspackPluginFunction | "..." | null | undefined)[] | undefined;
+        mergeDuplicateChunks?: boolean | undefined;
+        splitChunks?: false | {
+            chunks?: RegExp | "all" | "async" | "initial" | ((args_0: import("@rspack/core/dist/Chunk").Chunk, ...args_1: unknown[]) => boolean) | undefined;
             minChunks?: number | undefined;
-            name?: string | false | undefined;
+            name?: string | false | ((args_0: import("@rspack/core/dist/Module").Module | undefined, ...args_1: unknown[]) => unknown) | undefined;
             minSize?: number | undefined;
             maxSize?: number | undefined;
             maxAsyncSize?: number | undefined;
             maxInitialSize?: number | undefined;
+            automaticNameDelimiter?: string | undefined;
             cacheGroups?: Record<string, false | {
-                chunks?: RegExp | "all" | "async" | "initial" | undefined;
+                chunks?: RegExp | "all" | "async" | "initial" | ((args_0: import("@rspack/core/dist/Chunk").Chunk, ...args_1: unknown[]) => boolean) | undefined;
                 minChunks?: number | undefined;
-                name?: string | false | undefined;
+                name?: string | false | ((args_0: import("@rspack/core/dist/Module").Module | undefined, ...args_1: unknown[]) => unknown) | undefined;
                 minSize?: number | undefined;
                 maxSize?: number | undefined;
                 maxAsyncSize?: number | undefined;
                 maxInitialSize?: number | undefined;
-                test?: string | RegExp | undefined;
+                automaticNameDelimiter?: string | undefined;
+                test?: string | RegExp | ((args_0: import("@rspack/core/dist/Module").Module, ...args_1: unknown[]) => unknown) | undefined;
                 priority?: number | undefined;
                 enforce?: boolean | undefined;
+                filename?: string | undefined;
                 reuseExistingChunk?: boolean | undefined;
                 type?: string | RegExp | undefined;
                 idHint?: string | undefined;
@@ -251,14 +262,16 @@ export declare function makeRspackConfig(config: CreateFinalRspackConfig): Promi
             maxAsyncRequests?: number | undefined;
             maxInitialRequests?: number | undefined;
             fallbackCacheGroup?: {
-                chunks?: RegExp | "all" | "async" | "initial" | undefined;
+                chunks?: RegExp | "all" | "async" | "initial" | ((args_0: import("@rspack/core/dist/Chunk").Chunk, ...args_1: unknown[]) => boolean) | undefined;
                 minSize?: number | undefined;
                 maxSize?: number | undefined;
                 maxAsyncSize?: number | undefined;
                 maxInitialSize?: number | undefined;
+                automaticNameDelimiter?: string | undefined;
             } | undefined;
+            hidePathInfo?: boolean | undefined;
         } | undefined;
-        runtimeChunk?: boolean | "single" | "multiple" | {
+        runtimeChunk?: boolean | "multiple" | "single" | {
             name?: string | ((...args: unknown[]) => string | undefined) | undefined;
         } | undefined;
         removeAvailableModules?: boolean | undefined;
@@ -266,17 +279,20 @@ export declare function makeRspackConfig(config: CreateFinalRspackConfig): Promi
         realContentHash?: boolean | undefined;
         sideEffects?: boolean | "flag" | undefined;
         providedExports?: boolean | undefined;
+        concatenateModules?: boolean | undefined;
         innerGraph?: boolean | undefined;
         usedExports?: boolean | "global" | undefined;
+        mangleExports?: boolean | "deterministic" | "size" | undefined;
+        nodeEnv?: string | false | undefined;
     } | undefined;
     resolve?: import("@rspack/core").ResolveOptions | undefined;
     resolveLoader?: import("@rspack/core").ResolveOptions | undefined;
-    plugins?: (import("@rspack/core").RspackPluginInstance | import("@rspack/core").RspackPluginFunction)[] | undefined;
+    plugins?: (false | "" | 0 | import("@rspack/core").RspackPluginInstance | import("@rspack/core").RspackPluginFunction | null | undefined)[] | undefined;
     devServer?: import("@rspack/core").DevServer | undefined;
     builtins?: import("@rspack/core/dist/builtin-plugin").Builtins | undefined;
     module?: {
-        defaultRules?: ("..." | import("@rspack/core").RuleSetRule)[] | undefined;
-        rules?: ("..." | import("@rspack/core").RuleSetRule)[] | undefined;
+        defaultRules?: (false | "" | 0 | "..." | import("@rspack/core").RuleSetRule | null | undefined)[] | undefined;
+        rules?: (false | "" | 0 | "..." | import("@rspack/core").RuleSetRule | null | undefined)[] | undefined;
         parser?: {
             asset?: {
                 dataUrlCondition?: {
@@ -285,6 +301,9 @@ export declare function makeRspackConfig(config: CreateFinalRspackConfig): Promi
             } | undefined;
             javascript?: {
                 dynamicImportMode?: "eager" | "lazy" | undefined;
+                dynamicImportPreload?: number | boolean | undefined;
+                dynamicImportPrefetch?: number | boolean | undefined;
+                url?: boolean | "relative" | undefined;
             } | undefined;
         } | Record<string, Record<string, any>> | undefined;
         generator?: Record<string, Record<string, any>> | {
@@ -292,7 +311,10 @@ export declare function makeRspackConfig(config: CreateFinalRspackConfig): Promi
                 dataUrl?: {
                     encoding?: false | "base64" | undefined;
                     mimetype?: string | undefined;
-                } | undefined;
+                } | ((args_0: {
+                    filename: string;
+                    content: string;
+                }, ...args_1: unknown[]) => string) | undefined;
                 filename?: string | undefined;
                 publicPath?: string | undefined;
             } | undefined;
@@ -300,13 +322,18 @@ export declare function makeRspackConfig(config: CreateFinalRspackConfig): Promi
                 dataUrl?: {
                     encoding?: false | "base64" | undefined;
                     mimetype?: string | undefined;
-                } | undefined;
+                } | ((args_0: {
+                    filename: string;
+                    content: string;
+                }, ...args_1: unknown[]) => string) | undefined;
             } | undefined;
             "asset/resource"?: {
                 filename?: string | undefined;
                 publicPath?: string | undefined;
             } | undefined;
         } | undefined;
+        noParse?: string | RegExp | ((args_0: string, ...args_1: unknown[]) => boolean) | (string | RegExp | ((args_0: string, ...args_1: unknown[]) => boolean))[] | undefined;
     } | undefined;
     profile?: boolean | undefined;
+    bail?: boolean | undefined;
 }>;
