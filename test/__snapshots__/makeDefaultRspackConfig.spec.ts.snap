@@ -22,6 +22,7 @@ exports[`makeCypressRspackConfig should return a valid Configuration object 1`] 
       "_events": {},
       "_eventsCount": 0,
       "_maxListeners": undefined,
+      Symbol(shapeMode): false,
       Symbol(kCapture): false,
     },
     "files": [],
