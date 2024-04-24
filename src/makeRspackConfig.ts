@@ -55,7 +55,7 @@ async function getRspackConfigFromProjectRoot(projectRoot: string) {
 /**
  * Creates a rspack compatible rspack "configuration" to pass to the sourced rspack function
  */
-export async function makeRspackConfig(config: CreateFinalRspackConfig) {
+export async function makeRspackConfig(config: CreateFinalRspackConfig): Promise<Configuration> {
   let userRspackConfig = config.devServerConfig.rspackConfig
   const frameworkRspackConfig = config.frameworkConfig as Partial<Configuration>
   const {
