@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-/// <reference types="node" />
 import type { EventEmitter } from 'events';
 import type { RspackDevServer } from '@rspack/dev-server';
 import type { Configuration } from '@rspack/core';

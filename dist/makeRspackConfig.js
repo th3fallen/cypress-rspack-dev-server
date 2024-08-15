@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.makeRspackConfig = exports.CYPRESS_RSPACK_ENTRYPOINT = void 0;
+exports.CYPRESS_RSPACK_ENTRYPOINT = void 0;
+exports.makeRspackConfig = makeRspackConfig;
 const tslib_1 = require("tslib");
 const debug_1 = require("debug");
 const path = tslib_1.__importStar(require("path"));
@@ -30,7 +31,7 @@ exports.CYPRESS_RSPACK_ENTRYPOINT = path.resolve(__dirname, 'browser.js');
 function modifyRspackConfigForCypress(rspackConfig) {
     if (rspackConfig === null || rspackConfig === void 0 ? void 0 : rspackConfig.plugins) {
         rspackConfig.plugins = rspackConfig.plugins.filter((plugin) => plugin &&
-            !removeList.includes('raw' in plugin ? plugin.raw().name : plugin.constructor.name));
+            !removeList.includes('raw' in plugin ? plugin.raw({ options: { output: {} } }).name : plugin.constructor.name));
     }
     delete rspackConfig.entry;
     delete rspackConfig.output;
@@ -95,4 +96,3 @@ async function makeRspackConfig(config) {
     debug('Merged rspack config %o', mergedConfig);
     return mergedConfig;
 }
-exports.makeRspackConfig = makeRspackConfig;

@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import Module from 'module';
 import type { DevServerConfig } from '../devServer';
 import type { RspackDevServer } from '@rspack/dev-server';

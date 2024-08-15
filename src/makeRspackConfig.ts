@@ -36,7 +36,9 @@ function modifyRspackConfigForCypress(rspackConfig: Partial<Configuration>) {
     rspackConfig.plugins = rspackConfig.plugins.filter(
       (plugin) =>
         plugin &&
-        !removeList.includes('raw' in plugin ? plugin.raw().name : plugin.constructor.name),
+        !removeList.includes(
+          'raw' in plugin ? plugin.raw({ options: { output: {} } }).name : plugin.constructor.name,
+        ),
     )
   }
 

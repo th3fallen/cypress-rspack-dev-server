@@ -2,6 +2,7 @@
 /* global Cypress */
 /// <reference types="cypress" />
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = loader;
 const tslib_1 = require("tslib");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const path = tslib_1.__importStar(require("path"));
@@ -99,4 +100,3 @@ function loader() {
   `;
     return result;
 }
-exports.default = loader;

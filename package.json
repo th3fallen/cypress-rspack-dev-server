@@ -17,7 +17,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@rspack/cli": "0.7.4",
+    "@rspack/cli": "v1.0.0-beta.4",
     "find-up": "6.3.0",
     "local-pkg": "0.4.1",
     "tslib": "^2.3.1",
@@ -28,8 +28,8 @@
     "@babel/preset-env": "^7.24.4",
     "@babel/preset-typescript": "^7.24.1",
     "@jest/globals": "^29.7.0",
-    "@rspack/core": "0.7.4",
-    "@rspack/dev-server": "0.7.4",
+    "@rspack/core": "v1.0.0-beta.4",
+    "@rspack/dev-server": "v1.0.0-beta.4",
     "@types/debug": "^4.1.12",
     "@types/fs-extra": "^11.0.4",
     "@types/jest": "^29.5.12",
@@ -56,7 +56,7 @@
     "sinon": "^13.0.1",
     "snap-shot-it": "^7.9.6",
     "ts-node": "^10.9.1",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.4"
   },
   "files": [
     "dist"

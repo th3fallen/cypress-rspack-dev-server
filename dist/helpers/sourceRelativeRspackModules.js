@@ -1,6 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.restoreLoadHook = exports.sourceDefaultRspackDependencies = exports.sourceRspackDevServer = exports.sourceRspack = exports.sourceFramework = exports.cypressRspackPath = void 0;
+exports.cypressRspackPath = void 0;
+exports.sourceFramework = sourceFramework;
+exports.sourceRspack = sourceRspack;
+exports.sourceRspackDevServer = sourceRspackDevServer;
+exports.sourceDefaultRspackDependencies = sourceDefaultRspackDependencies;
+exports.restoreLoadHook = restoreLoadHook;
 const tslib_1 = require("tslib");
 const module_1 = tslib_1.__importDefault(require("module"));
 const path_1 = tslib_1.__importDefault(require("path"));
@@ -56,7 +61,6 @@ function sourceFramework(config) {
         return null;
     }
 }
-exports.sourceFramework = sourceFramework;
 // Source the rspack module from the provided framework or projectRoot. We override the module resolution
 // so that other packages that import rspack resolve to the version we found.
 function sourceRspack(config, framework) {
@@ -106,7 +110,6 @@ function sourceRspack(config, framework) {
     };
     return rspack;
 }
-exports.sourceRspack = sourceRspack;
 // Source the @rspack/dev-server module from the provided framework or projectRoot.
 // If none is found, we fallback to the version bundled with this package.
 function sourceRspackDevServer(config, framework) {
@@ -136,7 +139,6 @@ function sourceRspackDevServer(config, framework) {
     debug('RspackDevServer: Successfully sourced @rspack/dev-server - %o', rspackDevServer);
     return rspackDevServer;
 }
-exports.sourceRspackDevServer = sourceRspackDevServer;
 // Most frameworks follow a similar path for sourcing rspack dependencies so this is a utility to handle all the sourcing.
 function sourceDefaultRspackDependencies(config) {
     const framework = sourceFramework(config);
@@ -144,10 +146,8 @@ function sourceDefaultRspackDependencies(config) {
     const rspackDevServer = sourceRspackDevServer(config, framework);
     return { framework, rspack, rspackDevServer };
 }
-exports.sourceDefaultRspackDependencies = sourceDefaultRspackDependencies;
 function restoreLoadHook() {
     ;
     module_1.default._load = originalModuleLoad;
     module_1.default._resolveFilename = originalModuleResolveFilename;
 }
-exports.restoreLoadHook = restoreLoadHook;

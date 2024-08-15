@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.makeCypressRspackConfig = void 0;
+exports.makeCypressRspackConfig = makeCypressRspackConfig;
 const tslib_1 = require("tslib");
 const path_1 = tslib_1.__importDefault(require("path"));
 const debug_1 = tslib_1.__importDefault(require("debug"));
@@ -56,4 +56,3 @@ function makeCypressRspackConfig(config) {
     }
     return finalConfig;
 }
-exports.makeCypressRspackConfig = makeCypressRspackConfig;

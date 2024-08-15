@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-/// <reference types="node" />
 import type { EventEmitter } from 'events';
 export interface CypressCTRspackPluginOptions {
     files: Cypress.Cypress['spec'][];

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createRspackDevServer = void 0;
+exports.createRspackDevServer = createRspackDevServer;
 const tslib_1 = require("tslib");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const makeRspackConfig_1 = require("./makeRspackConfig");
@@ -20,4 +20,3 @@ async function createRspackDevServer(config) {
     const server = new RspackDevServer(rspackDevServerConfig, rspackCompiler);
     return { server, compiler: rspackCompiler };
 }
-exports.createRspackDevServer = createRspackDevServer;

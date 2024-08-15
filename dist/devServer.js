@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isThirdPartyDefinition = exports.devServer = void 0;
+exports.devServer = devServer;
+exports.isThirdPartyDefinition = isThirdPartyDefinition;
 const tslib_1 = require("tslib");
 /// <reference types="cypress" />
 const debug_1 = tslib_1.__importDefault(require("debug"));
@@ -43,7 +44,6 @@ function devServer(devServerConfig) {
             .catch(reject);
     });
 }
-exports.devServer = devServer;
 const thirdPartyDefinitionPrefixes = {
     // matches @org/cypress-ct-*
     namespacedPrefixRe: /^@.+?\/cypress-ct-.+/,
@@ -53,7 +53,6 @@ function isThirdPartyDefinition(framework) {
     return (framework.startsWith(thirdPartyDefinitionPrefixes.globalPrefix) ||
         thirdPartyDefinitionPrefixes.namespacedPrefixRe.test(framework));
 }
-exports.isThirdPartyDefinition = isThirdPartyDefinition;
 async function getPreset(devServerConfig) {
     const defaultRspackModules = () => ({
         sourceRspackModulesResult: (0, sourceRelativeRspackModules_1.sourceDefaultRspackDependencies)(devServerConfig),

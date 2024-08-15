@@ -1,7 +1,7 @@
 "use strict";
 /* eslint-env browser */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.init = void 0;
+exports.init = init;
 function init(importPromises, parent = window.opener || window.parent) {
     // @ts-expect-error
     const Cypress = (window.Cypress = parent.Cypress);
@@ -11,4 +11,3 @@ function init(importPromises, parent = window.opener || window.parent) {
     Cypress.onSpecWindow(window, importPromises);
     Cypress.action('app:window:before:load', window);
 }
-exports.init = init;
