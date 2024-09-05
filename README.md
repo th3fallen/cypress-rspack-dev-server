@@ -33,6 +33,20 @@ export default defineConfig({
 })
 ```
 
+## Relationship to Rspack
+
+| Rspack Version (including later version) | Cypress-rspack-dev-server Version |
+| ---------------------------------------- | --------------------------------- |
+| 0.3.11                                   | 0.0.4                             |
+| 0.6.3                                    | 0.0.5                             |
+| 1.0.0-beta.4                             | 0.0.6                             |
+
+In the `Cypress-rspack-dev-server Version` column, it lists the corresponding versions that are compatible with the `Rspack` versions.
+
+For example:
+
+> For Rspack version 1.0.0-beta.4 or later, use Cypress-rspack-dev-server version 0.0.6.
+
 ## Dev server parameters
 
 | Option                      | NOTES                                                                                                                                                                                                     |
