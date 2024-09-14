@@ -15,6 +15,7 @@ export function makeCypressRspackConfig(config: CreateFinalRspackConfig): Config
   const {
     devServerConfig: {
       cypressConfig: {
+        experimentalJustInTimeCompile,
         projectRoot,
         devServerPublicPathRoute,
         supportFile,
@@ -72,8 +73,11 @@ export function makeCypressRspackConfig(config: CreateFinalRspackConfig): Config
   }
 
   if (isRunMode) {
+    // if experimentalJustInTimeCompile is configured, we need to watch for file changes as the spec entries are going to be updated per test
+    const ignored = experimentalJustInTimeCompile ? /node_modules/ : '**/*'
+
     // Disable file watching when executing tests in `run` mode
-    finalConfig.watchOptions = { ignored: '**/*' }
+    finalConfig.watchOptions = { ignored }
   }
 
   return finalConfig

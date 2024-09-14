@@ -3,6 +3,7 @@ import EventEmitter from 'events'
 import { CreateFinalRspackConfig } from '../src/createRspackDevServer'
 import { makeCypressRspackConfig } from '../src/makeDefaultRspackConfig'
 import { createModuleMatrixResult } from './test-helper/createModuleMatrixResult'
+import { makeRspackConfig } from '../src/makeRspackConfig'
 
 describe('makeCypressRspackConfig', () => {
   // Returns a valid Configuration object with mode, optimization, output, plugins and devtool properties
@@ -59,4 +60,35 @@ describe('makeCypressRspackConfig', () => {
   //   expect(result.output.publicPath).toBe('/public/')
   //   path.sep = originalPathSep
   // })
+})
+
+describe('experimentalJustInTimeCompile', () => {
+  const devServerConfig: CreateFinalRspackConfig['devServerConfig'] = {
+    specs: [],
+    cypressConfig: {
+      projectRoot: '.',
+      devServerPublicPathRoute: '/test-public-path',
+      experimentalJustInTimeCompile: true,
+      baseUrl: null,
+    } as Cypress.PluginConfigOptions,
+    rspackConfig: {
+      entry: { main: 'src/index.js' },
+    },
+    devServerEvents: new EventEmitter(),
+  }
+
+  describe('run mode', () => {
+    beforeEach(() => {
+      devServerConfig.cypressConfig.isTextTerminal = true
+    })
+
+    it('enables watching', async () => {
+      const actual = await makeRspackConfig({
+        devServerConfig,
+        sourceRspackModulesResult: createModuleMatrixResult(),
+      })
+
+      expect(actual.watchOptions?.ignored).toStrictEqual(/node_modules/)
+    })
+  })
 })
