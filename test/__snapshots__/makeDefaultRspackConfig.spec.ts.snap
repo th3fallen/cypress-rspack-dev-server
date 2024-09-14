@@ -28,9 +28,6 @@ exports[`makeCypressRspackConfig should return a valid Configuration object 1`] 
     "indexHtmlFile": "path/to/indexHtmlFile",
     "onSpecsChange": [Function],
     "projectRoot": "path/to/project",
-    "rspack": {
-      "RspackDevServer": [Function],
-    },
     "supportFile": "path/to/supportFile",
   },
 ]

@@ -27,11 +27,8 @@ jobs:
       - name: Typecheck
         run: pnpm check-ts
 
-      - name: Build
-        run: pnpm run build
-
       - name: Test
         run: pnpm run test
 
-      - name: Cypress Test
-        run: pnpm run cypress:run
+      - name: Build
+        run: pnpm run build

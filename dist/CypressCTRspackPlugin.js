@@ -79,17 +79,13 @@ class CypressCTRspackPlugin {
          */
         this.addCompilationHooks = (compilation) => {
             this.compilation = compilation;
-            /* istanbul ignore next */
-            if ('NormalModule' in this.compilation.compiler.webpack) {
-                const loader = this.compilation.compiler.webpack.NormalModule.getCompilationHooks(compilation).loader;
-                loader.tap('CypressCTPlugin', this.addLoaderContext);
-            }
+            const loader = this.compilation.compiler.rspack.NormalModule.getCompilationHooks(compilation).loader;
+            loader.tap('CypressCTPlugin', this.addLoaderContext);
         };
         this.files = options.files;
         this.supportFile = options.supportFile;
         this.projectRoot = options.projectRoot;
         this.devServerEvents = options.devServerEvents;
-        this.rspack = options.rspack;
         this.indexHtmlFile = options.indexHtmlFile;
     }
     /**
