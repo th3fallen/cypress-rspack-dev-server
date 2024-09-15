@@ -18,7 +18,6 @@ export interface CypressCTRspackPluginOptions {
   projectRoot: string
   supportFile: string | false
   devServerEvents: EventEmitter
-  rspack: Function
   indexHtmlFile: string
 }
 
@@ -138,8 +137,14 @@ export class CypressCTRspackPlugin {
   private addCompilationHooks = (compilation: RspackCompilation) => {
     this.compilation = compilation
 
-    const loader =
-      this.compilation.compiler.rspack.NormalModule.getCompilationHooks(compilation).loader
+    // still use legacy `webpack` here since in version 0.x.x does not have rspack
+    const compiler = (
+      'rspack' in this.compilation.compiler
+        ? this.compilation.compiler.rspack
+        : (this.compilation.compiler as Compiler).webpack
+    ) as Compiler['webpack']
+
+    const loader = compiler.NormalModule.getCompilationHooks(compilation).loader
 
     loader.tap('CypressCTPlugin', this.addLoaderContext)
   }

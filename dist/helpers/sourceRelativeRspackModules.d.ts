@@ -29,7 +29,6 @@ export interface SourceRelativeRspackResult {
     rspack: SourcedRspack;
     rspackDevServer: SourcedRspackDevServer;
 }
-export declare const cypressRspackPath: (config: DevServerConfig) => string;
 export declare function sourceFramework(config: DevServerConfig): SourcedDependency | null;
 export declare function sourceRspack(config: DevServerConfig, framework: SourcedDependency | null): SourcedRspack;
 export declare function sourceRspackDevServer(config: DevServerConfig, framework?: SourcedDependency | null): SourcedRspackDevServer;

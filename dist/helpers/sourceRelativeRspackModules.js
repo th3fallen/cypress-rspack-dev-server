@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cypressRspackPath = void 0;
 exports.sourceFramework = sourceFramework;
 exports.sourceRspack = sourceRspack;
 exports.sourceRspackDevServer = sourceRspackDevServer;
@@ -13,12 +12,6 @@ const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('cypress-rspack-dev-server:sourceRelativeRspackModules');
 const originalModuleLoad = module_1.default._load;
 const originalModuleResolveFilename = module_1.default._resolveFilename;
-const cypressRspackPath = (config) => {
-    return require.resolve('@cypress/rspack-batteries-included-preprocessor', {
-        paths: [config.cypressConfig.cypressBinaryRoot],
-    });
-};
-exports.cypressRspackPath = cypressRspackPath;
 const frameworkRspackMapper = {
     'create-react-app': 'react-scripts',
     'vue-cli': '@vue/cli-service',
@@ -68,22 +61,9 @@ function sourceRspack(config, framework) {
     const searchRoot = (_a = framework === null || framework === void 0 ? void 0 : framework.importPath) !== null && _a !== void 0 ? _a : config.cypressConfig.projectRoot;
     debug('Rspack: Attempting to source rspack from %s', searchRoot);
     const rspack = {};
-    let rspackJsonPath;
-    try {
-        rspackJsonPath = require.resolve('@rspack/core/package.json', {
-            paths: [searchRoot],
-        });
-    }
-    catch (e) {
-        if (e.code !== 'MODULE_NOT_FOUND') {
-            debug('Rspack: Failed to source rspack - %s', e);
-            throw e;
-        }
-        debug('rspack: Falling back to bundled version');
-        rspackJsonPath = require.resolve('@rspack/core/package.json', {
-            paths: [(0, exports.cypressRspackPath)(config)],
-        });
-    }
+    const rspackJsonPath = require.resolve('@rspack/core/package.json', {
+        paths: [searchRoot],
+    });
     rspack.importPath = path_1.default.dirname(rspackJsonPath);
     rspack.packageJson = require(rspackJsonPath);
     rspack.module = require(rspack.importPath).rspack;
