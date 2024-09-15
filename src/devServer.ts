@@ -1,4 +1,3 @@
-/// <reference types="cypress" />
 import debugLib from 'debug'
 import type { EventEmitter } from 'events'
 import type { RspackDevServer } from '@rspack/dev-server'
@@ -28,7 +27,7 @@ type FrameworkConfig =
       }
     }
 
-export type ConfigHandler =
+type ConfigHandler =
   | Partial<Configuration>
   | (() => Partial<Configuration> | Promise<Partial<Configuration>>)
 
@@ -90,7 +89,7 @@ export function devServer(
   })
 }
 
-export type PresetHandlerResult = {
+type PresetHandlerResult = {
   frameworkConfig: Configuration
   sourceRspackModulesResult: SourceRelativeRspackResult
 }
@@ -103,7 +102,7 @@ const thirdPartyDefinitionPrefixes = {
   globalPrefix: 'cypress-ct-',
 }
 
-export function isThirdPartyDefinition(framework: string) {
+function isThirdPartyDefinition(framework: string) {
   return (
     framework.startsWith(thirdPartyDefinitionPrefixes.globalPrefix) ||
     thirdPartyDefinitionPrefixes.namespacedPrefixRe.test(framework)
@@ -170,5 +169,3 @@ devServer.create = async function (devServerConfig: DevServerConfig) {
 
   return { server, compiler }
 }
-
-export default devServer

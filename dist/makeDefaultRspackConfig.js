@@ -17,9 +17,7 @@ function makeCypressRspackConfig(config) {
         // rspack does not recognize the sideEffects flag in the package.json and thus files are not unintentionally
         // dropped during testing in production mode.
         sideEffects: false,
-        splitChunks: {
-            chunks: 'all',
-        },
+        splitChunks: { chunks: 'all' },
     };
     const publicPath = path_1.default.sep === posixSeparator
         ? path_1.default.join(devServerPublicPathRoute, posixSeparator)
@@ -44,7 +42,6 @@ function makeCypressRspackConfig(config) {
                 projectRoot,
                 devServerEvents,
                 supportFile,
-                rspack,
                 indexHtmlFile,
             }),
         ],

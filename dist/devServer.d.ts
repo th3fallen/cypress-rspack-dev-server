@@ -1,7 +1,6 @@
 import type { EventEmitter } from 'events';
 import type { RspackDevServer } from '@rspack/dev-server';
 import type { Configuration } from '@rspack/core';
-import { SourceRelativeRspackResult } from './helpers/sourceRelativeRspackModules';
 export type Frameworks = Extract<Cypress.DevServerConfigOptions, {
     bundler: 'webpack';
 }>['framework'];
@@ -13,7 +12,7 @@ type FrameworkConfig = {
         projectConfig: Cypress.AngularDevServerProjectConfig;
     };
 };
-export type ConfigHandler = Partial<Configuration> | (() => Partial<Configuration> | Promise<Partial<Configuration>>);
+type ConfigHandler = Partial<Configuration> | (() => Partial<Configuration> | Promise<Partial<Configuration>>);
 export type DevServerConfig = {
     specs: Cypress.Spec[];
     cypressConfig: Cypress.PluginConfigOptions;
@@ -36,9 +35,4 @@ export declare namespace devServer {
         compiler: any;
     }>;
 }
-export type PresetHandlerResult = {
-    frameworkConfig: Configuration;
-    sourceRspackModulesResult: SourceRelativeRspackResult;
-};
-export declare function isThirdPartyDefinition(framework: string): boolean;
-export default devServer;
+export {};

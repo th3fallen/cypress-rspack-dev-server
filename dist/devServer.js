@@ -1,9 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.devServer = devServer;
-exports.isThirdPartyDefinition = isThirdPartyDefinition;
 const tslib_1 = require("tslib");
-/// <reference types="cypress" />
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const createRspackDevServer_1 = require("./createRspackDevServer");
 const sourceRelativeRspackModules_1 = require("./helpers/sourceRelativeRspackModules");
@@ -97,4 +95,3 @@ devServer.create = async function (devServerConfig) {
     });
     return { server, compiler };
 };
-exports.default = devServer;

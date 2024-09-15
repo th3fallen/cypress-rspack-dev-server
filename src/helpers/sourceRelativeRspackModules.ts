@@ -46,12 +46,6 @@ export interface SourceRelativeRspackResult {
 const originalModuleLoad = (Module as ModuleClass)._load
 const originalModuleResolveFilename = (Module as ModuleClass)._resolveFilename
 
-export const cypressRspackPath = (config: DevServerConfig) => {
-  return require.resolve('@cypress/rspack-batteries-included-preprocessor', {
-    paths: [config.cypressConfig.cypressBinaryRoot],
-  })
-}
-
 type FrameworkRspackMapper = { [Property in Frameworks]: string | undefined }
 
 const frameworkRspackMapper: FrameworkRspackMapper = {
@@ -121,24 +115,9 @@ export function sourceRspack(
 
   const rspack = {} as SourcedRspack
 
-  let rspackJsonPath: string
-
-  try {
-    rspackJsonPath = require.resolve('@rspack/core/package.json', {
-      paths: [searchRoot],
-    })
-  } catch (e) {
-    if ((e as { code?: string }).code !== 'MODULE_NOT_FOUND') {
-      debug('Rspack: Failed to source rspack - %s', e)
-      throw e
-    }
-
-    debug('rspack: Falling back to bundled version')
-
-    rspackJsonPath = require.resolve('@rspack/core/package.json', {
-      paths: [cypressRspackPath(config)],
-    })
-  }
+  const rspackJsonPath: string = require.resolve('@rspack/core/package.json', {
+    paths: [searchRoot],
+  })
 
   rspack.importPath = path.dirname(rspackJsonPath)
   rspack.packageJson = require(rspackJsonPath)
