@@ -30,8 +30,7 @@ exports.CYPRESS_RSPACK_ENTRYPOINT = path.resolve(__dirname, 'browser.js');
  */
 function modifyRspackConfigForCypress(rspackConfig) {
     if (rspackConfig === null || rspackConfig === void 0 ? void 0 : rspackConfig.plugins) {
-        rspackConfig.plugins = rspackConfig.plugins.filter((plugin) => plugin &&
-            !removeList.includes('raw' in plugin ? plugin.raw({ options: { output: {} } }).name : plugin.constructor.name));
+        rspackConfig.plugins = rspackConfig.plugins.filter((plugin) => plugin && !removeList.includes(plugin.constructor.name));
     }
     delete rspackConfig.entry;
     delete rspackConfig.output;

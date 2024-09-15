@@ -34,11 +34,7 @@ export const CYPRESS_RSPACK_ENTRYPOINT = path.resolve(__dirname, 'browser.js')
 function modifyRspackConfigForCypress(rspackConfig: Partial<Configuration>) {
   if (rspackConfig?.plugins) {
     rspackConfig.plugins = rspackConfig.plugins.filter(
-      (plugin) =>
-        plugin &&
-        !removeList.includes(
-          'raw' in plugin ? plugin.raw({ options: { output: {} } }).name : plugin.constructor.name,
-        ),
+      (plugin) => plugin && !removeList.includes(plugin.constructor.name),
     )
   }
 
