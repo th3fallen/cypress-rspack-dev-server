@@ -25,9 +25,6 @@ export function makeCypressRspackConfig(config: CreateFinalRspackConfig): Config
       specs: files,
       devServerEvents,
     },
-    sourceRspackModulesResult: {
-      rspack: { module: rspack },
-    },
   } = config
 
   const optimization: Record<string, any> = {

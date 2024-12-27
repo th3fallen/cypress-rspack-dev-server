@@ -37,7 +37,8 @@ function modifyRspackConfigForCypress(rspackConfig: Partial<Configuration>) {
       if (plugin) {
         let pluginName: string = ''
         try {
-          // NOTE: this is to be compatible the old version htmlRspackPlugin, to get its correct name
+          // NOTE: this is to be compatible the old version HtmlRspackPlugin, to get its correct name
+          // sth changed for HtmlRspackPlugin in 1.0.1 which would cause the error during calling `raw`
           pluginName =
             'raw' in plugin ? plugin.raw({ options: { output: {} } }).name : plugin.constructor.name
         } catch {
