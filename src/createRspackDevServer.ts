@@ -1,5 +1,6 @@
 import debugLib from 'debug'
 import type { Configuration } from '@rspack/dev-server'
+import type { StatsOptions } from 'webpack'
 import type { DevServerConfig } from './devServer'
 import type { SourceRelativeRspackResult } from './helpers/sourceRelativeRspackModules'
 import { makeRspackConfig } from './makeRspackConfig'
@@ -48,7 +49,7 @@ export async function createRspackDevServer(config: CreateFinalRspackConfig) {
     ...finalRspackConfig.devServer,
     devMiddleware: {
       publicPath: devServerPublicPathRoute,
-      stats: finalRspackConfig.stats ?? 'minimal',
+      stats: (finalRspackConfig.stats ?? 'minimal') as StatsOptions,
     },
     hot: false,
     // Only enable file watching & reload when executing tests in `open` mode

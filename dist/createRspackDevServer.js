@@ -13,7 +13,7 @@ async function createRspackDevServer(config) {
     const isOpenMode = !isTextTerminal;
     const rspackDevServerConfig = Object.assign(Object.assign({ host: '127.0.0.1', port: 'auto' }, finalRspackConfig.devServer), { devMiddleware: {
             publicPath: devServerPublicPathRoute,
-            stats: (_a = finalRspackConfig.stats) !== null && _a !== void 0 ? _a : 'minimal',
+            stats: ((_a = finalRspackConfig.stats) !== null && _a !== void 0 ? _a : 'minimal'),
         }, hot: false, 
         // Only enable file watching & reload when executing tests in `open` mode
         liveReload: isOpenMode, client: { overlay: false } });

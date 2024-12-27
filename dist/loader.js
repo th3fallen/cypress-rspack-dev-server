@@ -90,7 +90,6 @@ function loader() {
     var supportFile = {
       absolute: ${supportFileAbsolutePath},
       relative: ${supportFileRelativePath},
-      relativeUrl: "/__cypress/src/cypress-support-file.js",
       load: () => import(/* rspackChunkName: "cypress-support-file" */ ${supportFileAbsolutePath}),
     }
     scriptLoaders.unshift(supportFile)
