@@ -29,7 +29,7 @@ class CypressCTRspackPlugin {
                 indexHtmlFile: this.indexHtmlFile,
             };
         };
-        this.beforeCompile = async (compilationParams, callback) => {
+        this.beforeCompile = async (_compilationParams, callback) => {
             if (!this.compilation) {
                 callback();
                 return;
@@ -62,10 +62,10 @@ class CypressCTRspackPlugin {
          */
         this.onSpecsChange = async (specs) => {
             var _a;
-            if (!this.compilation || (0, isEqual_1.default)(specs, this.files)) {
+            if (!this.compilation || (0, isEqual_1.default)(specs.specs, this.files)) {
                 return;
             }
-            this.files = specs;
+            this.files = specs.specs;
             const inputFileSystem = this.compilation.inputFileSystem;
             // TODO: don't use a sync fs method here
             const utimesSync = (_a = inputFileSystem.fileSystem.utimesSync) !== null && _a !== void 0 ? _a : fs_extra_1.default.utimesSync;

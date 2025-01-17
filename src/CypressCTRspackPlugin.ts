@@ -13,6 +13,11 @@ type UtimesSync = (
   mtime: string | number | Date,
 ) => void
 
+type CypressSpecsWithOptions = {
+  specs: Cypress.Cypress['spec'][]
+  options: { neededForJustInTimeCompile?: boolean }
+}
+
 export interface CypressCTRspackPluginOptions {
   files: Cypress.Cypress['spec'][]
   projectRoot: string
@@ -21,10 +26,7 @@ export interface CypressCTRspackPluginOptions {
   indexHtmlFile: string
 }
 
-export type CypressCTContextOptions = Omit<
-  CypressCTRspackPluginOptions,
-  'devServerEvents' | 'rspack'
->
+export type CypressCTContextOptions = Omit<CypressCTRspackPluginOptions, 'devServerEvents'>
 
 export interface CypressCTRspackContext {
   _cypress: CypressCTContextOptions
@@ -76,7 +78,7 @@ export class CypressCTRspackPlugin {
     }
   }
 
-  private beforeCompile = async (compilationParams: object, callback: Function) => {
+  private beforeCompile = async (_compilationParams: object, callback: Function) => {
     if (!this.compilation) {
       callback()
 
@@ -115,12 +117,12 @@ export class CypressCTRspackPlugin {
    *
    * See https://github.com/cypress-io/cypress/issues/24398
    */
-  private onSpecsChange = async (specs: Cypress.Cypress['spec'][]) => {
-    if (!this.compilation || isEqual(specs, this.files)) {
+  private onSpecsChange = async (specs: CypressSpecsWithOptions) => {
+    if (!this.compilation || isEqual(specs.specs, this.files)) {
       return
     }
 
-    this.files = specs
+    this.files = specs.specs
     const inputFileSystem = this.compilation.inputFileSystem
     // TODO: don't use a sync fs method here
     const utimesSync: UtimesSync = inputFileSystem.fileSystem.utimesSync ?? fs.utimesSync
