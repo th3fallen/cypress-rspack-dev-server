@@ -61,12 +61,6 @@ async function getPreset(devServerConfig) {
     }
     switch (devServerConfig.framework) {
         // todo - add support for other frameworks
-        case 'create-react-app':
-        // return createReactAppHandler(devServerConfig);
-        case 'nuxt':
-        // return await nuxtHandler(devServerConfig)
-        case 'vue-cli':
-        // return await vueCliHandler(devServerConfig)
         case 'next':
         // return await nextHandler(devServerConfig)
         case 'angular':

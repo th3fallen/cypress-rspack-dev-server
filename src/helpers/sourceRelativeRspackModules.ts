@@ -49,9 +49,6 @@ const originalModuleResolveFilename = (Module as ModuleClass)._resolveFilename
 type FrameworkRspackMapper = { [Property in Frameworks]: string | undefined }
 
 const frameworkRspackMapper: FrameworkRspackMapper = {
-  'create-react-app': 'react-scripts',
-  'vue-cli': '@vue/cli-service',
-  nuxt: '@nuxt/rspack',
   react: 'react',
   vue: undefined,
   next: 'next',

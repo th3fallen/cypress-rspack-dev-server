@@ -68,7 +68,7 @@ describe('experimentalJustInTimeCompile', () => {
     cypressConfig: {
       projectRoot: '.',
       devServerPublicPathRoute: '/test-public-path',
-      experimentalJustInTimeCompile: true,
+      justInTimeCompile: true,
       baseUrl: null,
     } as Cypress.PluginConfigOptions,
     rspackConfig: {

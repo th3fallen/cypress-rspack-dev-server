@@ -13,9 +13,6 @@ const debug = (0, debug_1.default)('cypress-rspack-dev-server:sourceRelativeRspa
 const originalModuleLoad = module_1.default._load;
 const originalModuleResolveFilename = module_1.default._resolveFilename;
 const frameworkRspackMapper = {
-    'create-react-app': 'react-scripts',
-    'vue-cli': '@vue/cli-service',
-    nuxt: '@nuxt/rspack',
     react: 'react',
     vue: undefined,
     next: 'next',
