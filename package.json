@@ -1,6 +1,6 @@
 {
   "name": "cypress-rspack-dev-server",
-  "version": "0.0.7",
+  "version": "1.0.0",
   "description": "Launches Rspack Dev Server for Component Testing",
   "main": "dist/index.js",
   "scripts": {

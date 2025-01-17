@@ -44,6 +44,11 @@ export default defineConfig({
 | rspackConfig (Optional)     | [Rspack Configuration](https://github.com/web-infra-dev/rspack/blob/12dbc8659f9e9bd16b4bba7ee6135e63364f3975/packages/rspack/src/config/zod.ts#L1180C3-L1180C3), can be `require` from rspack config file |
 | onConfigNotFound (Optional) | The callback function when config not found                                                                                                                                                               |
 
+## Migration to v1
+
+In version 1, we supports the [Cypress 14 's justInTimeCompile](https://docs.cypress.io/app/references/changelog#14-0-0), the specs structure has been updated.
+If you still use Cypress <= 13, please use the version 0.0.x.
+
 ## License
 
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/cypress-io/cypress/blob/develop/LICENSE)
