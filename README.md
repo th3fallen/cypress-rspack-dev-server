@@ -46,7 +46,7 @@ export default defineConfig({
 
 ## Rsbuild Support
 
-````
+```
 import config from './rsbuild.config.ts';
 
 async devServer(devServerConfig) {
