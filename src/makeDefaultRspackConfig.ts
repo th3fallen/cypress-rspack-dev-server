@@ -52,7 +52,7 @@ export function makeCypressRspackConfig(config: CreateFinalRspackConfig): Config
     },
     plugins: [
       new HtmlRspackPlugin({
-        template: indexHtmlFile,
+        template: path.join(projectRoot, indexHtmlFile),
         filename: 'index.html',
       }),
       new CypressCTRspackPlugin({
