@@ -6,7 +6,7 @@ exports[`makeCypressRspackConfig should return a valid Configuration object 1`] 
     "_args": [
       {
         "filename": "index.html",
-        "template": "path/to/indexHtmlFile",
+        "template": "path/to/project/path/to/indexHtmlFile",
       },
     ],
     "affectedHooks": undefined,

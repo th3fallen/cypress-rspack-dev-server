@@ -67,6 +67,7 @@ describe('experimentalJustInTimeCompile', () => {
     specs: [],
     cypressConfig: {
       projectRoot: '.',
+      indexHtmlFile: 'path/to/supportFile',
       devServerPublicPathRoute: '/test-public-path',
       justInTimeCompile: true,
       baseUrl: null,
