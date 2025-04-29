@@ -34,7 +34,7 @@ function makeCypressRspackConfig(config) {
         },
         plugins: [
             new core_1.HtmlRspackPlugin({
-                template: indexHtmlFile,
+                template: path_1.default.posix.join(projectRoot, indexHtmlFile),
                 filename: 'index.html',
             }),
             new CypressCTRspackPlugin_1.CypressCTRspackPlugin({
