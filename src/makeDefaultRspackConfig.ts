@@ -46,7 +46,7 @@ export function makeCypressRspackConfig(config: CreateFinalRspackConfig): Config
     mode: 'development',
     optimization,
     output: {
-      filename: '[name].js',
+      filename: '[name].[contenthash].js',
       path: OUTPUT_PATH,
       publicPath,
     },
