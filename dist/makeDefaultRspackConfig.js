@@ -28,7 +28,7 @@ function makeCypressRspackConfig(config) {
         mode: 'development',
         optimization,
         output: {
-            filename: '[name].js',
+            filename: '[name].[contenthash].js',
             path: OUTPUT_PATH,
             publicPath,
         },
