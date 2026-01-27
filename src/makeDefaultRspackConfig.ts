@@ -1,12 +1,9 @@
 import path from 'path'
-import debugLib from 'debug'
 import { HtmlRspackPlugin, type Configuration } from '@rspack/core'
 import type { CreateFinalRspackConfig } from './createRspackDevServer'
 import { CypressCTRspackPlugin } from './CypressCTRspackPlugin'
 
-const debug = debugLib('cypress-rspack-dev-server:makeDefaultRspackConfig')
-
-const OUTPUT_PATH = path.join(__dirname, 'dist')
+const OUTPUT_PATH = __dirname
 
 const OsSeparatorRE = RegExp(`\\${path.sep}`, 'g')
 const posixSeparator = '/'

@@ -1,3 +1,5 @@
+import type { RspackDevServer } from '@rspack/dev-server';
+import type { Compiler } from '@rspack/core';
 import type { DevServerConfig } from './devServer';
 import type { SourceRelativeRspackResult } from './helpers/sourceRelativeRspackModules';
 /**
@@ -21,6 +23,6 @@ export interface CreateFinalRspackConfig {
     frameworkConfig?: unknown;
 }
 export declare function createRspackDevServer(config: CreateFinalRspackConfig): Promise<{
-    server: import("@rspack/dev-server").RspackDevServer;
-    compiler: any;
+    server: RspackDevServer;
+    compiler: Compiler;
 }>;

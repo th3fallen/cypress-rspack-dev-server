@@ -1,5 +1,5 @@
-import debugLib from 'debug'
-import type { Configuration } from '@rspack/dev-server'
+import type { Configuration, RspackDevServer } from '@rspack/dev-server'
+import type { Compiler } from '@rspack/core'
 import type { DevServerConfig } from './devServer'
 import type { SourceRelativeRspackResult } from './helpers/sourceRelativeRspackModules'
 import { makeRspackConfig } from './makeRspackConfig'
@@ -25,7 +25,9 @@ export interface CreateFinalRspackConfig {
   frameworkConfig?: unknown
 }
 
-export async function createRspackDevServer(config: CreateFinalRspackConfig) {
+export async function createRspackDevServer(
+  config: CreateFinalRspackConfig,
+): Promise<{ server: RspackDevServer; compiler: Compiler }> {
   const {
     sourceRspackModulesResult: {
       rspack: { module: rspack },
@@ -41,7 +43,7 @@ export async function createRspackDevServer(config: CreateFinalRspackConfig) {
 
   const isOpenMode = !isTextTerminal
   const rspackDevServerConfig: Configuration = {
-    host: '127.0.0.1',
+    host: 'localhost',
     port: 'auto',
     ...finalRspackConfig.devServer,
     devMiddleware: {
