@@ -8,7 +8,7 @@ async function createRspackDevServer(config) {
     const finalRspackConfig = await (0, makeRspackConfig_1.makeRspackConfig)(config);
     const rspackCompiler = rspack(finalRspackConfig);
     const isOpenMode = !isTextTerminal;
-    const rspackDevServerConfig = Object.assign(Object.assign({ host: '127.0.0.1', port: 'auto' }, finalRspackConfig.devServer), { devMiddleware: {
+    const rspackDevServerConfig = Object.assign(Object.assign({ host: 'localhost', port: 'auto' }, finalRspackConfig.devServer), { devMiddleware: {
             publicPath: devServerPublicPathRoute,
             stats: (_a = finalRspackConfig.stats) !== null && _a !== void 0 ? _a : 'minimal',
         }, hot: false, 

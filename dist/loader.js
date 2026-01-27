@@ -11,9 +11,8 @@ const debug = (0, debug_1.default)('cypress-rspack-dev-server:rspack');
  * @param {ComponentSpec} file spec to create import string from.
  * @param {string} filename name of the spec file - this is the same as file.name
  * @param {string} chunkName rspack chunk name. eg: 'spec-0'
- * @param {string} projectRoot absolute path to the project root. eg: /Users/<username>/my-app
  */
-const makeImport = (file, filename, chunkName, projectRoot) => {
+const makeImport = (file, filename, chunkName) => {
     // If we want to rename the chunks, we can use this
     const magicComments = chunkName ? `/* rspackChunkName: "${chunkName}" */` : '';
     return `"${filename}": {
@@ -49,13 +48,13 @@ const makeImport = (file, filename, chunkName, projectRoot) => {
  *   }
  * }
  */
-function buildSpecs(projectRoot, files = []) {
+function buildSpecs(files = []) {
     if (!Array.isArray(files))
         return `{}`;
-    debug(`projectRoot: ${projectRoot}, files: ${files.map((f) => f.absolute).join(',')}`);
+    debug(`files: ${files.map((f) => f.absolute).join(',')}`);
     return `{${files
         .map((f, i) => {
-        return makeImport(f, f.name, `spec-${i}`, projectRoot);
+        return makeImport(f, f.name, `spec-${i}`);
     })
         .join(',')}}`;
 }
@@ -74,7 +73,7 @@ function loader() {
         ? JSON.stringify(path.relative(projectRoot, supportFileAbsolutePath || ''))
         : undefined;
     const result = `
-  var allTheSpecs = ${buildSpecs(projectRoot, files)};
+  var allTheSpecs = ${buildSpecs(files)};
 
   var { init } = require(${JSON.stringify(require.resolve('./aut-runner'))})
 
