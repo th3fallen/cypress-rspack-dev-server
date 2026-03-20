@@ -112,13 +112,16 @@ function isThirdPartyDefinition(framework: string) {
 async function getPreset(
   devServerConfig: DevServerConfig,
 ): Promise<Optional<PresetHandlerResult, 'frameworkConfig'>> {
-  const defaultRspackModules = () => ({
-    sourceRspackModulesResult: sourceDefaultRspackDependencies(devServerConfig),
-  })
+  const defaultRspackModules = async () => {
+    const sourceRspackModulesResult = await sourceDefaultRspackDependencies(devServerConfig)
+    return ({
+      sourceRspackModulesResult
+    })
+  }
 
   // Third party library (eg solid-js, lit, etc)
   if (devServerConfig.framework && isThirdPartyDefinition(devServerConfig.framework)) {
-    return defaultRspackModules()
+    return await defaultRspackModules()
   }
 
   switch (devServerConfig.framework) {
@@ -133,12 +136,11 @@ async function getPreset(
     case 'vue':
     case 'svelte':
     case undefined:
-      return defaultRspackModules()
+      return await defaultRspackModules()
 
     default:
       throw new Error(
-        `Unexpected framework ${
-          (devServerConfig as any).framework
+        `Unexpected framework ${(devServerConfig as any).framework
         }, please visit https://on.cypress.io/component-framework-configuration to see a list of supported frameworks`,
       )
   }

@@ -1,4 +1,5 @@
 import path from 'path'
+import debugLib from 'debug'
 import { HtmlRspackPlugin, type Configuration } from '@rspack/core'
 import type { CreateFinalRspackConfig } from './createRspackDevServer'
 import { CypressCTRspackPlugin } from './CypressCTRspackPlugin'
@@ -7,6 +8,8 @@ const OUTPUT_PATH = __dirname
 
 const OsSeparatorRE = RegExp(`\\${path.sep}`, 'g')
 const posixSeparator = '/'
+
+const debug = debugLib('cypress-rspack-dev-server:makeDefaultRspackConfig')
 
 export function makeCypressRspackConfig(config: CreateFinalRspackConfig): Configuration {
   const {
@@ -24,6 +27,7 @@ export function makeCypressRspackConfig(config: CreateFinalRspackConfig): Config
     },
   } = config
 
+
   const optimization: Record<string, any> = {
     // To prevent files from being tree shaken by rspack, we set optimization.sideEffects: false ensuring that
     // rspack does not recognize the sideEffects flag in the package.json and thus files are not unintentionally
@@ -36,8 +40,8 @@ export function makeCypressRspackConfig(config: CreateFinalRspackConfig): Config
     path.sep === posixSeparator
       ? path.join(devServerPublicPathRoute, posixSeparator)
       : // The second line here replaces backslashes on windows with posix compatible slash
-        // See https://github.com/cypress-io/cypress/issues/16097
-        path.join(devServerPublicPathRoute, posixSeparator).replace(OsSeparatorRE, posixSeparator)
+      // See https://github.com/cypress-io/cypress/issues/16097
+      path.join(devServerPublicPathRoute, posixSeparator).replace(OsSeparatorRE, posixSeparator)
 
   const finalConfig: Configuration = {
     mode: 'development',

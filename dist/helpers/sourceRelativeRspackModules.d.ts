@@ -30,7 +30,7 @@ export interface SourceRelativeRspackResult {
     rspackDevServer: SourcedRspackDevServer;
 }
 export declare function sourceFramework(config: DevServerConfig): SourcedDependency | null;
-export declare function sourceRspack(config: DevServerConfig, framework: SourcedDependency | null): SourcedRspack;
-export declare function sourceRspackDevServer(config: DevServerConfig, framework?: SourcedDependency | null): SourcedRspackDevServer;
-export declare function sourceDefaultRspackDependencies(config: DevServerConfig): SourceRelativeRspackResult;
+export declare function sourceRspack(config: DevServerConfig, framework: SourcedDependency | null): Promise<SourcedRspack>;
+export declare function sourceRspackDevServer(config: DevServerConfig, framework?: SourcedDependency | null): Promise<SourcedRspackDevServer>;
+export declare function sourceDefaultRspackDependencies(config: DevServerConfig): Promise<SourceRelativeRspackResult>;
 export declare function restoreLoadHook(): void;

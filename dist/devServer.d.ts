@@ -30,6 +30,9 @@ export type DevServerConfig = {
  */
 export declare function devServer(devServerConfig: DevServerConfig): Promise<Cypress.ResolvedDevServerConfig>;
 export declare namespace devServer {
-    var create;
+    var create: (devServerConfig: DevServerConfig) => Promise<{
+        server: RspackDevServer<ConnectApplication, import("node:http").Server<typeof import("node:http").IncomingMessage, typeof import("node:http").ServerResponse>>;
+        compiler: Compiler;
+    }>;
 }
 export {};

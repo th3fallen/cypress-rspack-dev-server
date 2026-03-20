@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CypressCTRspackPlugin = exports.normalizeError = void 0;
 const tslib_1 = require("tslib");
-const isEqual_1 = tslib_1.__importDefault(require("lodash/isEqual"));
+const lodash_1 = require("lodash");
 const fs_extra_1 = tslib_1.__importDefault(require("fs-extra"));
 const path_1 = tslib_1.__importDefault(require("path"));
 const debug_1 = tslib_1.__importDefault(require("debug"));
@@ -62,7 +62,7 @@ class CypressCTRspackPlugin {
          */
         this.onSpecsChange = async (specs) => {
             var _a;
-            if (!this.compilation || (0, isEqual_1.default)(specs.specs, this.files)) {
+            if (!this.compilation || (0, lodash_1.isEqual)(specs.specs, this.files)) {
                 return;
             }
             this.files = specs.specs;

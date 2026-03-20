@@ -1,6 +1,6 @@
 import type { Compilation, Compiler } from '@rspack/core'
 import type { EventEmitter } from 'events'
-import isEqual from 'lodash/isEqual'
+import { isEqual } from 'lodash'
 import fs, { PathLike } from 'fs-extra'
 import path from 'path'
 import debugLib from 'debug'
