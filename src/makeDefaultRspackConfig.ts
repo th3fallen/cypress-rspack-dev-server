@@ -46,6 +46,7 @@ export function makeCypressRspackConfig(config: CreateFinalRspackConfig): Config
       filename: '[name].js',
       path: OUTPUT_PATH,
       publicPath,
+      uniqueName: 'cypress-rspack-dev-server',
     },
     plugins: [
       new HtmlRspackPlugin({
