@@ -3,7 +3,7 @@ import path from 'path'
 import type { DevServerConfig, Frameworks } from '../devServer'
 import debugFn from 'debug'
 import type { RspackDevServer } from '@rspack/dev-server'
-import { pathToFileURL } from 'url'
+import { dynamicAbsoluteImport } from '../dynamic-import'
 
 const debug = debugFn('cypress-rspack-dev-server:sourceRelativeRspackModules')
 
@@ -130,31 +130,20 @@ export async function sourceRspack(
     paths: [searchRoot],
   })
 
-  debug('Rspack: Found rspack package.json at %s', rspackJsonPath)
-
   rspack.importPath = path.dirname(rspackJsonPath)
-
-  debug('rspack importPath:', rspack.importPath)
 
   rspack.packageJson = require(rspackJsonPath)
 
-  debug('rspack packageJson:', rspack.packageJson)
-
   const rspackEntryPath = resolveEntryPoint(rspack.importPath, rspack.packageJson)
 
-  debug('rspack entry path:', rspackEntryPath)
+  const mod = await dynamicAbsoluteImport(rspackEntryPath)
+  rspack.module = mod.rspack
 
-  const mod = await import(pathToFileURL(rspackEntryPath).href)
-  rspack.module = mod.rspack;
-
-  debug('Rspack: Successfully sourced rspack - %o', rspack)
     ; (Module as ModuleClass)._load = function (request, parent, isMain) {
       if (request === 'rspack' || request.startsWith('rspack/')) {
         const resolvePath = require.resolve(request, {
           paths: [rspack.importPath],
         })
-
-        debug('Rspack: Module._load resolvePath - %s', resolvePath)
 
         return originalModuleLoad(resolvePath, parent, isMain)
       }
@@ -166,8 +155,6 @@ export async function sourceRspack(
         const resolveFilename = originalModuleResolveFilename(request, parent, isMain, {
           paths: [rspack.importPath],
         })
-
-        debug('Rspack: Module._resolveFilename resolveFilename - %s', resolveFilename)
 
         return resolveFilename
       }
@@ -185,8 +172,6 @@ export async function sourceRspackDevServer(
   framework?: SourcedDependency | null,
 ): Promise<SourcedRspackDevServer> {
   const searchRoot = framework?.importPath ?? config.cypressConfig.projectRoot
-
-  debug('RspackDevServer: Attempting to source @rspack/dev-server from %s', searchRoot)
 
   const rspackDevServer = {} as SourcedRspackDevServer
   let rspackDevServerJsonPath: string
@@ -211,7 +196,8 @@ export async function sourceRspackDevServer(
   rspackDevServer.importPath = path.dirname(rspackDevServerJsonPath)
   rspackDevServer.packageJson = require(rspackDevServerJsonPath)
   const rspackDevServerEntryPath = resolveEntryPoint(rspackDevServer.importPath, rspackDevServer.packageJson)
-  const mod = await import(pathToFileURL(rspackDevServerEntryPath).href)
+  // WORKAROUND: see import comment at top of file
+  const mod = await dynamicAbsoluteImport(rspackDevServerEntryPath)
   rspackDevServer.module = mod.RspackDevServer
 
   debug('RspackDevServer: Successfully sourced @rspack/dev-server - %o', rspackDevServer)

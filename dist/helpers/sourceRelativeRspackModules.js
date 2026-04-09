@@ -9,7 +9,7 @@ const tslib_1 = require("tslib");
 const module_1 = tslib_1.__importDefault(require("module"));
 const path_1 = tslib_1.__importDefault(require("path"));
 const debug_1 = tslib_1.__importDefault(require("debug"));
-const url_1 = require("url");
+const dynamic_import_1 = require("../dynamic-import");
 const debug = (0, debug_1.default)('cypress-rspack-dev-server:sourceRelativeRspackModules');
 const originalModuleLoad = module_1.default._load;
 const originalModuleResolveFilename = module_1.default._resolveFilename;
@@ -75,22 +75,16 @@ async function sourceRspack(config, framework) {
     const rspackJsonPath = require.resolve('@rspack/core/package.json', {
         paths: [searchRoot],
     });
-    debug('Rspack: Found rspack package.json at %s', rspackJsonPath);
     rspack.importPath = path_1.default.dirname(rspackJsonPath);
-    debug('rspack importPath:', rspack.importPath);
     rspack.packageJson = require(rspackJsonPath);
-    debug('rspack packageJson:', rspack.packageJson);
     const rspackEntryPath = resolveEntryPoint(rspack.importPath, rspack.packageJson);
-    debug('rspack entry path:', rspackEntryPath);
-    const mod = await Promise.resolve(`${(0, url_1.pathToFileURL)(rspackEntryPath).href}`).then(s => tslib_1.__importStar(require(s)));
+    const mod = await (0, dynamic_import_1.dynamicAbsoluteImport)(rspackEntryPath);
     rspack.module = mod.rspack;
-    debug('Rspack: Successfully sourced rspack - %o', rspack);
     module_1.default._load = function (request, parent, isMain) {
         if (request === 'rspack' || request.startsWith('rspack/')) {
             const resolvePath = require.resolve(request, {
                 paths: [rspack.importPath],
             });
-            debug('Rspack: Module._load resolvePath - %s', resolvePath);
             return originalModuleLoad(resolvePath, parent, isMain);
         }
         return originalModuleLoad(request, parent, isMain);
@@ -100,7 +94,6 @@ async function sourceRspack(config, framework) {
             const resolveFilename = originalModuleResolveFilename(request, parent, isMain, {
                 paths: [rspack.importPath],
             });
-            debug('Rspack: Module._resolveFilename resolveFilename - %s', resolveFilename);
             return resolveFilename;
         }
         return originalModuleResolveFilename(request, parent, isMain, options);
@@ -112,7 +105,6 @@ async function sourceRspack(config, framework) {
 async function sourceRspackDevServer(config, framework) {
     var _a;
     const searchRoot = (_a = framework === null || framework === void 0 ? void 0 : framework.importPath) !== null && _a !== void 0 ? _a : config.cypressConfig.projectRoot;
-    debug('RspackDevServer: Attempting to source @rspack/dev-server from %s', searchRoot);
     const rspackDevServer = {};
     let rspackDevServerJsonPath;
     try {
@@ -133,7 +125,8 @@ async function sourceRspackDevServer(config, framework) {
     rspackDevServer.importPath = path_1.default.dirname(rspackDevServerJsonPath);
     rspackDevServer.packageJson = require(rspackDevServerJsonPath);
     const rspackDevServerEntryPath = resolveEntryPoint(rspackDevServer.importPath, rspackDevServer.packageJson);
-    const mod = await Promise.resolve(`${(0, url_1.pathToFileURL)(rspackDevServerEntryPath).href}`).then(s => tslib_1.__importStar(require(s)));
+    // WORKAROUND: see import comment at top of file
+    const mod = await (0, dynamic_import_1.dynamicAbsoluteImport)(rspackDevServerEntryPath);
     rspackDevServer.module = mod.RspackDevServer;
     debug('RspackDevServer: Successfully sourced @rspack/dev-server - %o', rspackDevServer);
     return rspackDevServer;
