@@ -1,4 +1,5 @@
 import path from 'path'
+import { vi } from 'vitest'
 import type { SourceRelativeRspackResult } from '../../src/helpers/sourceRelativeRspackModules'
 
 export function createModuleMatrixResult(): SourceRelativeRspackResult {
@@ -10,12 +11,12 @@ export function createModuleMatrixResult(): SourceRelativeRspackResult {
     rspack: {
       importPath: rspackImportPath,
       packageJson: require('@rspack/core/package.json'),
-      module: jest.fn(),
+      module: vi.fn(),
     },
     rspackDevServer: {
       importPath: rspackDevServerImportPath,
       packageJson: require('@rspack/dev-server/package.json'),
-      module: jest.fn() as any,
+      module: vi.fn() as any,
     },
   }
 }
