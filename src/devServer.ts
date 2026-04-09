@@ -152,7 +152,7 @@ async function getPreset(
  *
  * @internal
  */
-devServer.create = async function (devServerConfig: DevServerConfig) {
+devServer.create = async function (devServerConfig: DevServerConfig): Promise<DevServerCreateResult> {
   const { frameworkConfig, sourceRspackModulesResult } = await getPreset(devServerConfig)
 
   const { server, compiler } = await createRspackDevServer({

@@ -1,6 +1,5 @@
 import type { EventEmitter } from 'events';
-import type { RspackDevServer } from '@rspack/dev-server';
-import type { Compiler, Configuration } from '@rspack/core';
+import type { Configuration } from '@rspack/core';
 export type Frameworks = Extract<Cypress.DevServerConfigOptions, {
     bundler: 'webpack';
 }>['framework'];
@@ -30,9 +29,6 @@ export type DevServerConfig = {
  */
 export declare function devServer(devServerConfig: DevServerConfig): Promise<Cypress.ResolvedDevServerConfig>;
 export declare namespace devServer {
-    var create: (devServerConfig: DevServerConfig) => Promise<{
-        server: RspackDevServer<ConnectApplication, import("node:http").Server<typeof import("node:http").IncomingMessage, typeof import("node:http").ServerResponse>>;
-        compiler: Compiler;
-    }>;
+    var create: (devServerConfig: DevServerConfig) => Promise<DevServerCreateResult>;
 }
 export {};

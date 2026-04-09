@@ -27,7 +27,6 @@ export function makeCypressRspackConfig(config: CreateFinalRspackConfig): Config
     },
   } = config
 
-
   const optimization: Record<string, any> = {
     // To prevent files from being tree shaken by rspack, we set optimization.sideEffects: false ensuring that
     // rspack does not recognize the sideEffects flag in the package.json and thus files are not unintentionally
