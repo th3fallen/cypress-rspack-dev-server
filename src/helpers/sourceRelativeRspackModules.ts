@@ -1,8 +1,10 @@
 import Module from 'module'
 import path from 'path'
-import type { DevServerConfig, Frameworks } from '../devServer'
-import debugFn from 'debug'
+
 import type { RspackDevServer } from '@rspack/dev-server'
+import debugFn from 'debug'
+
+import type { DevServerConfig, Frameworks } from '../devServer'
 import { dynamicAbsoluteImport } from '../dynamic-import'
 
 const debug = debugFn('cypress-rspack-dev-server:sourceRelativeRspackModules')

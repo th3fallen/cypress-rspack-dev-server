@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest'
+
 import { normalizeError } from '../src/CypressCTRspackPlugin'
 
 describe('normalizeError', () => {

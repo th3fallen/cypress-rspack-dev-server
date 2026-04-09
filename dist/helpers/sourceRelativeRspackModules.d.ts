@@ -1,6 +1,6 @@
 import Module from 'module';
-import type { DevServerConfig } from '../devServer';
 import type { RspackDevServer } from '@rspack/dev-server';
+import type { DevServerConfig } from '../devServer';
 export type ModuleClass = typeof Module & {
     _load(id: string, parent: Module, isMain: boolean): any;
     _resolveFilename(request: string, parent: Module, isMain: boolean, options?: {

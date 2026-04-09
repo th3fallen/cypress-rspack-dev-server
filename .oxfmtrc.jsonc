@@ -4,5 +4,6 @@
   "singleQuote": true,
   "semi": false,
   "sortPackageJson": false,
-  "ignorePatterns": ["dist", "pnpm-lock.yaml", "CODEOWNERS"]
+  "sortImports": true,
+  "ignorePatterns": ["dist", "node_modules"],
 }

@@ -1,9 +1,10 @@
-import { describe, it, expect, vi } from 'vitest'
 import EventEmitter from 'events'
 
+import { describe, it, expect, vi } from 'vitest'
+
+import type { CreateFinalRspackConfig } from '../src/createRspackDevServer'
 import { makeRspackConfig, CYPRESS_RSPACK_ENTRYPOINT } from '../src/makeRspackConfig'
 import { createModuleMatrixResult } from './test-helper/createModuleMatrixResult'
-import type { CreateFinalRspackConfig } from '../src/createRspackDevServer'
 
 vi.mock('@rspack/core', () => ({
   HtmlRspackPlugin: class HtmlRspackPlugin {

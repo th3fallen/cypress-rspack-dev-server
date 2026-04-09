@@ -1,5 +1,6 @@
-import { describe, it, expect, vi } from 'vitest'
 import EventEmitter from 'events'
+
+import { describe, it, expect, vi } from 'vitest'
 
 vi.mock('@rspack/core', () => ({
   HtmlRspackPlugin: class HtmlRspackPlugin {

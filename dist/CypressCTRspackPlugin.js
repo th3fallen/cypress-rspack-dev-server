@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CypressCTRspackPlugin = exports.normalizeError = void 0;
 const tslib_1 = require("tslib");
-const lodash_1 = require("lodash");
-const fs_extra_1 = tslib_1.__importDefault(require("fs-extra"));
 const path_1 = tslib_1.__importDefault(require("path"));
+const fs_extra_1 = tslib_1.__importDefault(require("fs-extra"));
+const lodash_1 = require("lodash");
 const normalizeError = (error) => {
     return typeof error === 'string' ? error : error.message;
 };

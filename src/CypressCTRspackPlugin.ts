@@ -1,8 +1,9 @@
-import type { Compilation, Compiler } from '@rspack/core'
 import type { EventEmitter } from 'events'
-import { isEqual } from 'lodash'
-import fs, { PathLike } from 'fs-extra'
 import path from 'path'
+
+import type { Compilation, Compiler } from '@rspack/core'
+import fs, { PathLike } from 'fs-extra'
+import { isEqual } from 'lodash'
 
 type UtimesSync = (
   path: PathLike,

@@ -3,13 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CYPRESS_RSPACK_ENTRYPOINT = void 0;
 exports.makeRspackConfig = makeRspackConfig;
 const tslib_1 = require("tslib");
-const debug_1 = require("debug");
 const path = tslib_1.__importStar(require("path"));
-const webpack_merge_1 = require("webpack-merge");
+const debug_1 = require("debug");
 const local_pkg_1 = require("local-pkg");
-const makeDefaultRspackConfig_1 = require("./makeDefaultRspackConfig");
+const webpack_merge_1 = require("webpack-merge");
 const constants_1 = require("./constants");
 const dynamic_import_1 = require("./dynamic-import");
+const makeDefaultRspackConfig_1 = require("./makeDefaultRspackConfig");
 const debug = (0, debug_1.debug)('cypress-rspack-dev-server:makeRspackConfig');
 const removeList = [
     // We provide a webpack-html-plugin config pinned to a specific version (4.x)

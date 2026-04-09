@@ -1,7 +1,8 @@
-import debugLib from 'debug'
 import type { EventEmitter } from 'events'
-import type { RspackDevServer } from '@rspack/dev-server'
+
 import type { Compiler, Configuration } from '@rspack/core'
+import type { RspackDevServer } from '@rspack/dev-server'
+import debugLib from 'debug'
 
 import { createRspackDevServer } from './createRspackDevServer'
 import {

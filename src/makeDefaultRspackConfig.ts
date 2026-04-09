@@ -1,5 +1,7 @@
 import path from 'path'
+
 import { HtmlRspackPlugin, type Configuration } from '@rspack/core'
+
 import type { CreateFinalRspackConfig } from './createRspackDevServer'
 import { CypressCTRspackPlugin } from './CypressCTRspackPlugin'
 

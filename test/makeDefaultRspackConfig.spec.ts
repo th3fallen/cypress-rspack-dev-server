@@ -1,5 +1,6 @@
-import { describe, test, it, expect, beforeEach, vi } from 'vitest'
 import EventEmitter from 'events'
+
+import { describe, test, it, expect, beforeEach, vi } from 'vitest'
 
 // Mock @rspack/core since it's a pure ESM package that can't be loaded directly
 vi.mock('@rspack/core', () => ({
@@ -14,8 +15,8 @@ vi.mock('@rspack/core', () => ({
 
 import { CreateFinalRspackConfig } from '../src/createRspackDevServer'
 import { makeCypressRspackConfig } from '../src/makeDefaultRspackConfig'
-import { createModuleMatrixResult } from './test-helper/createModuleMatrixResult'
 import { makeRspackConfig } from '../src/makeRspackConfig'
+import { createModuleMatrixResult } from './test-helper/createModuleMatrixResult'
 
 describe('makeCypressRspackConfig', () => {
   test('should return a valid Configuration object', () => {

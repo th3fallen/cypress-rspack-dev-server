@@ -1,5 +1,7 @@
-import { describe, it, expect, vi } from 'vitest'
 import EventEmitter from 'events'
+
+import { describe, it, expect, vi } from 'vitest'
+
 import { CypressCTRspackPlugin } from '../src/CypressCTRspackPlugin'
 
 vi.mock('fs-extra', () => ({

@@ -1,4 +1,5 @@
 import { defineConfig } from 'cypress'
+
 import { devServer } from '../../dist/devServer'
 
 export default defineConfig({

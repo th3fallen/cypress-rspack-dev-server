@@ -1,5 +1,7 @@
 import path from 'path'
+
 import { vi } from 'vitest'
+
 import type { SourceRelativeRspackResult } from '../../src/helpers/sourceRelativeRspackModules'
 
 export function createModuleMatrixResult(): SourceRelativeRspackResult {

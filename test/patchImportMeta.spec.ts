@@ -1,5 +1,6 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import Module from 'module'
+
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 
 describe('patchImportMeta', () => {
   let originalExtension: any
