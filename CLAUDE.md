@@ -49,6 +49,7 @@ Two workarounds are in place (TODO: remove once [tsx#782](https://github.com/pri
 2. **`dynamicAbsoluteImport`** in `sourceRelativeRspackModules.ts` — uses `new Function('specifier', 'return import(specifier)')` to preserve native `import()` at runtime, preventing tsc (CommonJS target) from converting `import()` to `require()`.
 
 Related issues:
+
 - https://github.com/privatenumber/tsx/issues/781
 - https://github.com/web-infra-dev/rspack/issues/13420
 

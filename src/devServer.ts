@@ -114,9 +114,9 @@ async function getPreset(
 ): Promise<Optional<PresetHandlerResult, 'frameworkConfig'>> {
   const defaultRspackModules = async () => {
     const sourceRspackModulesResult = await sourceDefaultRspackDependencies(devServerConfig)
-    return ({
-      sourceRspackModulesResult
-    })
+    return {
+      sourceRspackModulesResult,
+    }
   }
 
   // Third party library (eg solid-js, lit, etc)
@@ -140,7 +140,8 @@ async function getPreset(
 
     default:
       throw new Error(
-        `Unexpected framework ${(devServerConfig as any).framework
+        `Unexpected framework ${
+          (devServerConfig as any).framework
         }, please visit https://on.cypress.io/component-framework-configuration to see a list of supported frameworks`,
       )
   }
@@ -152,7 +153,9 @@ async function getPreset(
  *
  * @internal
  */
-devServer.create = async function (devServerConfig: DevServerConfig): Promise<DevServerCreateResult> {
+devServer.create = async function (
+  devServerConfig: DevServerConfig,
+): Promise<DevServerCreateResult> {
   const { frameworkConfig, sourceRspackModulesResult } = await getPreset(devServerConfig)
 
   const { server, compiler } = await createRspackDevServer({

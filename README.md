@@ -17,20 +17,20 @@ npm install -D cypress-rspack-dev-server
 ## Usage
 
 ```ts
-import { devServer } from "cypress-rspack-dev-server";
-import { defineConfig } from "cypress";
+import { devServer } from 'cypress-rspack-dev-server'
+import { defineConfig } from 'cypress'
 
 export default defineConfig({
   component: {
     devServer(devServerConfig) {
       return devServer({
         ...devServerConfig,
-        framework: "react",
-        rspackConfig: require("./rspack.config.js"),
-      });
+        framework: 'react',
+        rspackConfig: require('./rspack.config.js'),
+      })
     },
   },
-});
+})
 ```
 
 ## Dev server parameters
@@ -85,4 +85,6 @@ If you still use Cypress <= 13, please use the version 0.0.x.
 
 This project is licensed under the terms of the [MIT license](/LICENSE).
 
-````
+```
+
+```

@@ -34,7 +34,7 @@ export interface SourcedRspack extends SourcedDependency {
 
 export interface SourcedRspackDevServer extends SourcedDependency {
   module: {
-    new(...args: unknown[]): RspackDevServer
+    new (...args: unknown[]): RspackDevServer
   }
 }
 
@@ -138,29 +138,28 @@ export async function sourceRspack(
 
   const mod = await dynamicAbsoluteImport(rspackEntryPath)
   rspack.module = mod.rspack
+  ;(Module as ModuleClass)._load = function (request, parent, isMain) {
+    if (request === 'rspack' || request.startsWith('rspack/')) {
+      const resolvePath = require.resolve(request, {
+        paths: [rspack.importPath],
+      })
 
-    ; (Module as ModuleClass)._load = function (request, parent, isMain) {
-      if (request === 'rspack' || request.startsWith('rspack/')) {
-        const resolvePath = require.resolve(request, {
-          paths: [rspack.importPath],
-        })
-
-        return originalModuleLoad(resolvePath, parent, isMain)
-      }
-
-      return originalModuleLoad(request, parent, isMain)
+      return originalModuleLoad(resolvePath, parent, isMain)
     }
-    ; (Module as ModuleClass)._resolveFilename = function (request, parent, isMain, options) {
-      if (request === 'rspack' || (request.startsWith('rspack/') && !options?.paths)) {
-        const resolveFilename = originalModuleResolveFilename(request, parent, isMain, {
-          paths: [rspack.importPath],
-        })
 
-        return resolveFilename
-      }
+    return originalModuleLoad(request, parent, isMain)
+  }
+  ;(Module as ModuleClass)._resolveFilename = function (request, parent, isMain, options) {
+    if (request === 'rspack' || (request.startsWith('rspack/') && !options?.paths)) {
+      const resolveFilename = originalModuleResolveFilename(request, parent, isMain, {
+        paths: [rspack.importPath],
+      })
 
-      return originalModuleResolveFilename(request, parent, isMain, options)
+      return resolveFilename
     }
+
+    return originalModuleResolveFilename(request, parent, isMain, options)
+  }
 
   return rspack
 }
@@ -195,7 +194,10 @@ export async function sourceRspackDevServer(
 
   rspackDevServer.importPath = path.dirname(rspackDevServerJsonPath)
   rspackDevServer.packageJson = require(rspackDevServerJsonPath)
-  const rspackDevServerEntryPath = resolveEntryPoint(rspackDevServer.importPath, rspackDevServer.packageJson)
+  const rspackDevServerEntryPath = resolveEntryPoint(
+    rspackDevServer.importPath,
+    rspackDevServer.packageJson,
+  )
   // WORKAROUND: see import comment at top of file
   const mod = await dynamicAbsoluteImport(rspackDevServerEntryPath)
   rspackDevServer.module = mod.RspackDevServer
@@ -217,6 +219,6 @@ export async function sourceDefaultRspackDependencies(
 }
 
 export function restoreLoadHook() {
-  ; (Module as ModuleClass)._load = originalModuleLoad
-    ; (Module as ModuleClass)._resolveFilename = originalModuleResolveFilename
+  ;(Module as ModuleClass)._load = originalModuleLoad
+  ;(Module as ModuleClass)._resolveFilename = originalModuleResolveFilename
 }

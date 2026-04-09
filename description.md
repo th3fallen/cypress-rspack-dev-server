@@ -5,6 +5,7 @@
 This project implements a development server for Cypress using Rspack as the bundler. Here's a comprehensive breakdown of its architecture and components:
 
 ### Core Purpose
+
 - Development server specifically designed for Cypress component testing
 - Uses Rspack (Rust-based bundler) as a faster alternative to Webpack
 
@@ -29,8 +30,8 @@ This project implements a development server for Cypress using Rspack as the bun
    - Manages dev server instance creation and setup
 
 ### Notable Features
+
 - Framework-agnostic design
 - Smart configuration merging
 - Built-in optimization
 - Debug support through 'debug' library
-
