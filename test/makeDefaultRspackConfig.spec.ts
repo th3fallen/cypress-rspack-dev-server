@@ -1,5 +1,17 @@
 import { describe, expect } from '@jest/globals'
 import EventEmitter from 'events'
+
+// Mock @rspack/core since it's a pure ESM package that can't be loaded by Jest
+jest.mock('@rspack/core', () => ({
+  HtmlRspackPlugin: class HtmlRspackPlugin {
+    name = 'HtmlRspackPlugin'
+    _args: any[]
+    constructor(...args: any[]) {
+      this._args = args
+    }
+  },
+}))
+
 import { CreateFinalRspackConfig } from '../src/createRspackDevServer'
 import { makeCypressRspackConfig } from '../src/makeDefaultRspackConfig'
 import { createModuleMatrixResult } from './test-helper/createModuleMatrixResult'
