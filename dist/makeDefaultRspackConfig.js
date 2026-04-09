@@ -3,11 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.makeCypressRspackConfig = makeCypressRspackConfig;
 const tslib_1 = require("tslib");
 const path_1 = tslib_1.__importDefault(require("path"));
+const debug_1 = tslib_1.__importDefault(require("debug"));
 const core_1 = require("@rspack/core");
 const CypressCTRspackPlugin_1 = require("./CypressCTRspackPlugin");
 const OUTPUT_PATH = __dirname;
 const OsSeparatorRE = RegExp(`\\${path_1.default.sep}`, 'g');
 const posixSeparator = '/';
+const debug = (0, debug_1.default)('cypress-rspack-dev-server:makeDefaultRspackConfig');
 function makeCypressRspackConfig(config) {
     const { devServerConfig: { cypressConfig: { justInTimeCompile, projectRoot, devServerPublicPathRoute, supportFile, indexHtmlFile, isTextTerminal: isRunMode, }, specs: files, devServerEvents, }, } = config;
     const optimization = {

@@ -52,12 +52,15 @@ function isThirdPartyDefinition(framework) {
         thirdPartyDefinitionPrefixes.namespacedPrefixRe.test(framework));
 }
 async function getPreset(devServerConfig) {
-    const defaultRspackModules = () => ({
-        sourceRspackModulesResult: (0, sourceRelativeRspackModules_1.sourceDefaultRspackDependencies)(devServerConfig),
-    });
+    const defaultRspackModules = async () => {
+        const sourceRspackModulesResult = await (0, sourceRelativeRspackModules_1.sourceDefaultRspackDependencies)(devServerConfig);
+        return ({
+            sourceRspackModulesResult
+        });
+    };
     // Third party library (eg solid-js, lit, etc)
     if (devServerConfig.framework && isThirdPartyDefinition(devServerConfig.framework)) {
-        return defaultRspackModules();
+        return await defaultRspackModules();
     }
     switch (devServerConfig.framework) {
         // todo - add support for other frameworks
@@ -69,7 +72,7 @@ async function getPreset(devServerConfig) {
         case 'vue':
         case 'svelte':
         case undefined:
-            return defaultRspackModules();
+            return await defaultRspackModules();
         default:
             throw new Error(`Unexpected framework ${devServerConfig.framework}, please visit https://on.cypress.io/component-framework-configuration to see a list of supported frameworks`);
     }

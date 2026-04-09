@@ -9,7 +9,6 @@ exports[`makeCypressRspackConfig should return a valid Configuration object 1`] 
         "template": "path/to/project/path/to/indexHtmlFile",
       },
     ],
-    "affectedHooks": undefined,
     "name": "HtmlRspackPlugin",
   },
   CypressCTRspackPlugin {

@@ -3,6 +3,7 @@ import path from 'path'
 import type { DevServerConfig, Frameworks } from '../devServer'
 import debugFn from 'debug'
 import type { RspackDevServer } from '@rspack/dev-server'
+import { dynamicAbsoluteImport } from '../dynamic-import'
 
 const debug = debugFn('cypress-rspack-dev-server:sourceRelativeRspackModules')
 
@@ -33,7 +34,7 @@ export interface SourcedRspack extends SourcedDependency {
 
 export interface SourcedRspackDevServer extends SourcedDependency {
   module: {
-    new (...args: unknown[]): RspackDevServer
+    new(...args: unknown[]): RspackDevServer
   }
 }
 
@@ -54,6 +55,19 @@ const frameworkRspackMapper: FrameworkRspackMapper = {
   next: 'next',
   angular: '@angular-devkit/build-angular',
   svelte: undefined,
+}
+
+function resolveEntryPoint(importPath: string, packageJson: any): string {
+  let entryFile = packageJson.main || 'index.js'
+  if (packageJson.exports) {
+    const exportsDot = packageJson.exports['.'] || packageJson.exports
+    if (typeof exportsDot === 'string') {
+      entryFile = exportsDot
+    } else if (typeof exportsDot === 'object') {
+      entryFile = exportsDot.import || exportsDot.default || exportsDot.require || entryFile
+    }
+  }
+  return path.resolve(importPath, entryFile)
 }
 
 // Source the users framework from the provided projectRoot. The framework, if available, will serve
@@ -102,10 +116,10 @@ export function sourceFramework(config: DevServerConfig): SourcedDependency | nu
 
 // Source the rspack module from the provided framework or projectRoot. We override the module resolution
 // so that other packages that import rspack resolve to the version we found.
-export function sourceRspack(
+export async function sourceRspack(
   config: DevServerConfig,
   framework: SourcedDependency | null,
-): SourcedRspack {
+): Promise<SourcedRspack> {
   const searchRoot = framework?.importPath ?? config.cypressConfig.projectRoot
 
   debug('Rspack: Attempting to source rspack from %s', searchRoot)
@@ -117,49 +131,47 @@ export function sourceRspack(
   })
 
   rspack.importPath = path.dirname(rspackJsonPath)
+
   rspack.packageJson = require(rspackJsonPath)
-  rspack.module = require(rspack.importPath).rspack
 
-  debug('Rspack: Successfully sourced rspack - %o', rspack)
-  ;(Module as ModuleClass)._load = function (request, parent, isMain) {
-    if (request === 'rspack' || request.startsWith('rspack/')) {
-      const resolvePath = require.resolve(request, {
-        paths: [rspack.importPath],
-      })
+  const rspackEntryPath = resolveEntryPoint(rspack.importPath, rspack.packageJson)
 
-      debug('Rspack: Module._load resolvePath - %s', resolvePath)
+  const mod = await dynamicAbsoluteImport(rspackEntryPath)
+  rspack.module = mod.rspack
 
-      return originalModuleLoad(resolvePath, parent, isMain)
+    ; (Module as ModuleClass)._load = function (request, parent, isMain) {
+      if (request === 'rspack' || request.startsWith('rspack/')) {
+        const resolvePath = require.resolve(request, {
+          paths: [rspack.importPath],
+        })
+
+        return originalModuleLoad(resolvePath, parent, isMain)
+      }
+
+      return originalModuleLoad(request, parent, isMain)
     }
+    ; (Module as ModuleClass)._resolveFilename = function (request, parent, isMain, options) {
+      if (request === 'rspack' || (request.startsWith('rspack/') && !options?.paths)) {
+        const resolveFilename = originalModuleResolveFilename(request, parent, isMain, {
+          paths: [rspack.importPath],
+        })
 
-    return originalModuleLoad(request, parent, isMain)
-  }
-  ;(Module as ModuleClass)._resolveFilename = function (request, parent, isMain, options) {
-    if (request === 'rspack' || (request.startsWith('rspack/') && !options?.paths)) {
-      const resolveFilename = originalModuleResolveFilename(request, parent, isMain, {
-        paths: [rspack.importPath],
-      })
+        return resolveFilename
+      }
 
-      debug('Rspack: Module._resolveFilename resolveFilename - %s', resolveFilename)
-
-      return resolveFilename
+      return originalModuleResolveFilename(request, parent, isMain, options)
     }
-
-    return originalModuleResolveFilename(request, parent, isMain, options)
-  }
 
   return rspack
 }
 
 // Source the @rspack/dev-server module from the provided framework or projectRoot.
 // If none is found, we fallback to the version bundled with this package.
-export function sourceRspackDevServer(
+export async function sourceRspackDevServer(
   config: DevServerConfig,
   framework?: SourcedDependency | null,
-): SourcedRspackDevServer {
+): Promise<SourcedRspackDevServer> {
   const searchRoot = framework?.importPath ?? config.cypressConfig.projectRoot
-
-  debug('RspackDevServer: Attempting to source @rspack/dev-server from %s', searchRoot)
 
   const rspackDevServer = {} as SourcedRspackDevServer
   let rspackDevServerJsonPath: string
@@ -183,7 +195,10 @@ export function sourceRspackDevServer(
 
   rspackDevServer.importPath = path.dirname(rspackDevServerJsonPath)
   rspackDevServer.packageJson = require(rspackDevServerJsonPath)
-  rspackDevServer.module = require(rspackDevServer.importPath).RspackDevServer
+  const rspackDevServerEntryPath = resolveEntryPoint(rspackDevServer.importPath, rspackDevServer.packageJson)
+  // WORKAROUND: see import comment at top of file
+  const mod = await dynamicAbsoluteImport(rspackDevServerEntryPath)
+  rspackDevServer.module = mod.RspackDevServer
 
   debug('RspackDevServer: Successfully sourced @rspack/dev-server - %o', rspackDevServer)
 
@@ -191,17 +206,17 @@ export function sourceRspackDevServer(
 }
 
 // Most frameworks follow a similar path for sourcing rspack dependencies so this is a utility to handle all the sourcing.
-export function sourceDefaultRspackDependencies(
+export async function sourceDefaultRspackDependencies(
   config: DevServerConfig,
-): SourceRelativeRspackResult {
+): Promise<SourceRelativeRspackResult> {
   const framework = sourceFramework(config)
-  const rspack = sourceRspack(config, framework)
-  const rspackDevServer = sourceRspackDevServer(config, framework)
+  const rspack = await sourceRspack(config, framework)
+  const rspackDevServer = await sourceRspackDevServer(config, framework)
 
   return { framework, rspack, rspackDevServer }
 }
 
 export function restoreLoadHook() {
-  ;(Module as ModuleClass)._load = originalModuleLoad
-  ;(Module as ModuleClass)._resolveFilename = originalModuleResolveFilename
+  ; (Module as ModuleClass)._load = originalModuleLoad
+    ; (Module as ModuleClass)._resolveFilename = originalModuleResolveFilename
 }
