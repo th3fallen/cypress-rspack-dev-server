@@ -3,9 +3,6 @@ import type { EventEmitter } from 'events'
 import { isEqual } from 'lodash'
 import fs, { PathLike } from 'fs-extra'
 import path from 'path'
-import debugLib from 'debug'
-
-const debug = debugLib('cypress-rspack-dev-server:rspackPlugin')
 
 type UtimesSync = (
   path: PathLike,
@@ -94,7 +91,7 @@ export class CypressCTRspackPlugin {
           const exists = await fs.pathExists(file.absolute)
 
           return exists ? file : null
-        } catch (e) {
+        } catch {
           return null
         }
       }),
