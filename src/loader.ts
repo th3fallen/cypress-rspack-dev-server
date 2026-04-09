@@ -15,7 +15,7 @@ const debug = debugFn('cypress-rspack-dev-server:rspack')
  */
 const makeImport = (file: Cypress.Cypress['spec'], filename: string, chunkName: string) => {
   // If we want to rename the chunks, we can use this
-  const magicComments = chunkName ? `/* rspackChunkName: "${chunkName}" */` : ''
+  const magicComments = chunkName ? `/* webpackChunkName: "${chunkName}" */` : ''
 
   return `"${filename}": {
     shouldLoad: () => {
@@ -47,7 +47,7 @@ const makeImport = (file: Cypress.Cypress['spec'], filename: string, chunkName: 
          return newLoad | oldLoad;
        },
  *     load: () => {
- *       return import("/Users/projects/my-app/cypress/component/App.spec.js" \/* rspackChunkName: "spec-0" *\/)
+ *       return import("/Users/projects/my-app/cypress/component/App.spec.js" \/* webpackChunkName: "spec-0" *\/)
  *     },
  *     chunkName: "spec-0"
  *   }
@@ -99,7 +99,7 @@ export default function loader(this: unknown) {
     var supportFile = {
       absolute: ${supportFileAbsolutePath},
       relative: ${supportFileRelativePath},
-      load: () => import(/* rspackChunkName: "cypress-support-file" */ ${supportFileAbsolutePath}),
+      load: () => import(/* webpackChunkName: "cypress-support-file" */ ${supportFileAbsolutePath}),
     }
     scriptLoaders.unshift(supportFile)
   }
