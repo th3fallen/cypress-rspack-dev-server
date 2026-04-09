@@ -1,8 +1,9 @@
-import { describe, expect } from '@jest/globals'
 import EventEmitter from 'events'
 
-// Mock @rspack/core since it's a pure ESM package that can't be loaded by Jest
-jest.mock('@rspack/core', () => ({
+import { describe, test, it, expect, beforeEach, vi } from 'vitest'
+
+// Mock @rspack/core since it's a pure ESM package that can't be loaded directly
+vi.mock('@rspack/core', () => ({
   HtmlRspackPlugin: class HtmlRspackPlugin {
     name = 'HtmlRspackPlugin'
     _args: any[]
@@ -14,11 +15,10 @@ jest.mock('@rspack/core', () => ({
 
 import { CreateFinalRspackConfig } from '../src/createRspackDevServer'
 import { makeCypressRspackConfig } from '../src/makeDefaultRspackConfig'
-import { createModuleMatrixResult } from './test-helper/createModuleMatrixResult'
 import { makeRspackConfig } from '../src/makeRspackConfig'
+import { createModuleMatrixResult } from './test-helper/createModuleMatrixResult'
 
 describe('makeCypressRspackConfig', () => {
-  // Returns a valid Configuration object with mode, optimization, output, plugins and devtool properties
   test('should return a valid Configuration object', () => {
     const config: CreateFinalRspackConfig = {
       devServerConfig: {
@@ -46,32 +46,6 @@ describe('makeCypressRspackConfig', () => {
     expect(result.devtool).toBe('inline-source-map')
     expect(result.optimization?.sideEffects).toBe(false)
   })
-
-  // test('should replace backslashes with posixSeparator in the publicPath when path.sep is not equal to posixSeparator', () => {
-  //   const originalPathSep = path.sep
-  //   path.sep = '\\'
-
-  //   const config: CreateFinalRspackConfig = {
-  //     devServerConfig: {
-  //       cypressConfig: {
-  //         projectRoot: 'path/to/project',
-  //         devServerPublicPathRoute: '/public',
-  //         supportFile: 'path/to/supportFile',
-  //         indexHtmlFile: 'path/to/indexHtmlFile',
-  //         isTextTerminal: true,
-  //       } as Cypress.PluginConfigOptions,
-  //       specs: ['path/to/spec1', 'path/to/spec2'],
-  //       devServerEvents: new EventEmitter(),
-  //       framework: 'react',
-  //     },
-  //     sourceRspackModulesResult: createModuleMatrixResult(),
-  //   }
-
-  //   const result = makeCypressRspackConfig(config)
-
-  //   expect(result.output.publicPath).toBe('/public/')
-  //   path.sep = originalPathSep
-  // })
 })
 
 describe('experimentalJustInTimeCompile', () => {

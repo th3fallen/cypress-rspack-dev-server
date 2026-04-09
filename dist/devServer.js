@@ -54,9 +54,9 @@ function isThirdPartyDefinition(framework) {
 async function getPreset(devServerConfig) {
     const defaultRspackModules = async () => {
         const sourceRspackModulesResult = await (0, sourceRelativeRspackModules_1.sourceDefaultRspackDependencies)(devServerConfig);
-        return ({
-            sourceRspackModulesResult
-        });
+        return {
+            sourceRspackModulesResult,
+        };
     };
     // Third party library (eg solid-js, lit, etc)
     if (devServerConfig.framework && isThirdPartyDefinition(devServerConfig.framework)) {

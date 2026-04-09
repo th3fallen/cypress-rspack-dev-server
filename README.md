@@ -17,20 +17,20 @@ npm install -D cypress-rspack-dev-server
 ## Usage
 
 ```ts
-import { devServer } from "cypress-rspack-dev-server";
-import { defineConfig } from "cypress";
+import { devServer } from 'cypress-rspack-dev-server'
+import { defineConfig } from 'cypress'
 
 export default defineConfig({
   component: {
     devServer(devServerConfig) {
       return devServer({
         ...devServerConfig,
-        framework: "react",
-        rspackConfig: require("./rspack.config.js"),
-      });
+        framework: 'react',
+        rspackConfig: require('./rspack.config.js'),
+      })
     },
   },
-});
+})
 ```
 
 ## Dev server parameters
@@ -74,15 +74,19 @@ async devServer(devServerConfig) {
 }
 ```
 
-## Migration to v1
+## Migration
 
-In version 1, we supports the [Cypress 14 's justInTimeCompile](https://docs.cypress.io/app/references/changelog#14-0-0), the specs structure has been updated.
+### v1 (Cypress 14+)
+
+In version 1, we support the [Cypress 14 's justInTimeCompile](https://docs.cypress.io/app/references/changelog#14-0-0), the specs structure has been updated.
 If you still use Cypress <= 13, please use the version 0.0.x.
+
+### v2 (Rspack v2 support)
+
+In version 2, we support Rspack v2 (2.0.0-rc and above). If you are using Rspack v1, please use the version 1.x.x.
 
 ## License
 
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/cypress-io/cypress/blob/develop/LICENSE)
 
 This project is licensed under the terms of the [MIT license](/LICENSE).
-
-````

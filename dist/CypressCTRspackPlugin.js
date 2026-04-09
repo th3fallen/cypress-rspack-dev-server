@@ -2,11 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CypressCTRspackPlugin = exports.normalizeError = void 0;
 const tslib_1 = require("tslib");
-const lodash_1 = require("lodash");
-const fs_extra_1 = tslib_1.__importDefault(require("fs-extra"));
 const path_1 = tslib_1.__importDefault(require("path"));
-const debug_1 = tslib_1.__importDefault(require("debug"));
-const debug = (0, debug_1.default)('cypress-rspack-dev-server:rspackPlugin');
+const fs_extra_1 = tslib_1.__importDefault(require("fs-extra"));
+const lodash_1 = require("lodash");
 const normalizeError = (error) => {
     return typeof error === 'string' ? error : error.message;
 };
@@ -41,7 +39,7 @@ class CypressCTRspackPlugin {
                     const exists = await fs_extra_1.default.pathExists(file.absolute);
                     return exists ? file : null;
                 }
-                catch (e) {
+                catch (_a) {
                     return null;
                 }
             }));

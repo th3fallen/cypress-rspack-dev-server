@@ -1,5 +1,5 @@
-import type { RspackDevServer } from '@rspack/dev-server';
 import type { Compiler } from '@rspack/core';
+import type { RspackDevServer } from '@rspack/dev-server';
 import type { DevServerConfig } from './devServer';
 import type { SourceRelativeRspackResult } from './helpers/sourceRelativeRspackModules';
 /**

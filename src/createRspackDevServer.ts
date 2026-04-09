@@ -1,5 +1,6 @@
-import type { Configuration, RspackDevServer } from '@rspack/dev-server'
 import type { Compiler } from '@rspack/core'
+import type { Configuration, RspackDevServer } from '@rspack/dev-server'
+
 import type { DevServerConfig } from './devServer'
 import type { SourceRelativeRspackResult } from './helpers/sourceRelativeRspackModules'
 import { makeRspackConfig } from './makeRspackConfig'

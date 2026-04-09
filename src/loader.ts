@@ -1,9 +1,11 @@
 /* global Cypress */
 /// <reference types="cypress" />
 
-import debugFn from 'debug'
 import * as path from 'path'
+
 import type { LoaderContext } from '@rspack/core'
+import debugFn from 'debug'
+
 import type { CypressCTRspackContext } from './CypressCTRspackPlugin'
 
 const debug = debugFn('cypress-rspack-dev-server:rspack')

@@ -1,12 +1,14 @@
-import { debug as debugFn } from 'debug'
 import * as path from 'path'
-import { merge } from 'webpack-merge'
-import { importModule } from 'local-pkg'
+
 import type { Configuration, EntryObject } from '@rspack/core'
-import { makeCypressRspackConfig } from './makeDefaultRspackConfig'
-import type { CreateFinalRspackConfig } from './createRspackDevServer'
+import { debug as debugFn } from 'debug'
+import { importModule } from 'local-pkg'
+import { merge } from 'webpack-merge'
+
 import { configFiles } from './constants'
+import type { CreateFinalRspackConfig } from './createRspackDevServer'
 import { dynamicImport } from './dynamic-import'
+import { makeCypressRspackConfig } from './makeDefaultRspackConfig'
 
 const debug = debugFn('cypress-rspack-dev-server:makeRspackConfig')
 
