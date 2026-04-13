@@ -40,7 +40,7 @@ describe('makeCypressRspackConfig', () => {
     expect(result.mode).toBe('development')
     expect(result.optimization).toEqual({
       sideEffects: false,
-      splitChunks: { chunks: 'all' },
+      splitChunks: false,
     })
     expect(result.plugins).toMatchSnapshot()
     expect(result.devtool).toBe('inline-source-map')
