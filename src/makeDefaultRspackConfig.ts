@@ -31,7 +31,7 @@ export function makeCypressRspackConfig(config: CreateFinalRspackConfig): Config
     // rspack does not recognize the sideEffects flag in the package.json and thus files are not unintentionally
     // dropped during testing in production mode.
     sideEffects: false,
-    splitChunks: { chunks: 'all' },
+    splitChunks: false,
   }
 
   const publicPath =
