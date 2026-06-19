@@ -19,6 +19,9 @@
     "test": "vitest run",
     "prepare": "husky"
   },
+  "peerDependencies": {
+    "cypress": ">=15.17.0"
+  },
   "dependencies": {
     "find-up": "6.3.0",
     "local-pkg": "1.2.1",
