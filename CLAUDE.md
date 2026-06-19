@@ -20,7 +20,6 @@ A Cypress component testing dev server that uses Rspack as the bundler. Based on
 
 The entry point is `src/index.ts` which exports `devServer()`. The flow:
 
-0. **`patchImportMeta.ts`** — imported first by `index.ts`. Patches `Module._extensions['.js']` to fix tsx/esbuild's broken `import.meta.dirname` handling (see Workarounds section below)
 1. **`devServer.ts`** — detects framework (react/vue/svelte/angular/next), resolves presets, orchestrates everything
 2. **`helpers/sourceRelativeRspackModules.ts`** — sources `@rspack/core` and `@rspack/dev-server` from the user's project (or framework) via `dynamicAbsoluteImport`, installs `Module._load`/`_resolveFilename` hooks to ensure consistent rspack resolution
 3. **`makeRspackConfig.ts`** — auto-discovers user's rspack/webpack config via `find-up`, merges user + framework + Cypress configs with `webpack-merge`, removes conflicting plugins (HtmlWebpackPlugin, HtmlRspackPlugin, HMR)
@@ -38,15 +37,17 @@ The entry point is `src/index.ts` which exports `devServer()`. The flow:
 
 **Config auto-discovery** — searches for `rspack.config.{ts,js,mjs,cjs}` first, falls back to `webpack.config.{ts,js,mjs,cjs}` (defined in `constants.ts`).
 
-## Workarounds (tsx / import.meta.dirname)
+## Loading Rspack v2's ESM modules from a CommonJS build
 
-Rspack v2 is a pure ESM package that uses `import.meta.dirname` internally. Cypress uses tsx to load config files. tsx/esbuild transforms `import.meta` into `const import_meta = {}` (an empty object) when converting ESM to CJS, leaving `import.meta.dirname` undefined and crashing Rspack.
+Rspack v2 (`@rspack/core`/`@rspack/dev-server`) and `find-up` are pure ESM packages, but this project compiles to CommonJS (`tsconfig.json` has `module: commonjs`). tsc would convert any `import()` in the source into `require()`, which cannot load an ESM-only package at runtime.
 
-Two workarounds are in place (TODO: remove once [tsx#782](https://github.com/privatenumber/tsx/pull/782) is merged and Cypress ships with the fixed tsx):
+**`dynamic-import.ts`** — uses `new Function('specifier', 'return import(specifier)')` to preserve a native `import()` at runtime that tsc cannot rewrite to `require()`. Used via `dynamicAbsoluteImport` in `sourceRelativeRspackModules.ts` (sourcing rspack) and via `dynamicImport` in `makeRspackConfig.ts` (loading `find-up`). This is fundamental to the CJS→ESM bridge and is unrelated to the historical tsx workaround below.
 
-1. **`patchImportMeta.ts`** — wraps `Module._extensions['.js']` to detect the empty `import_meta={}` in tsx-transformed code and inject correct `dirname`/`filename`/`url` values. Must be the first import in `index.ts` so it's active before any `@rspack/*` modules are required (including from user config files).
+### Removed tsx workaround (historical note)
 
-2. **`dynamicAbsoluteImport`** in `sourceRelativeRspackModules.ts` — uses `new Function('specifier', 'return import(specifier)')` to preserve native `import()` at runtime, preventing tsc (CommonJS target) from converting `import()` to `require()`.
+Rspack v2 uses `import.meta.dirname` internally. Older tsx (< 4.21.1, which Cypress used to bundle) transformed `import.meta` into an empty `const import_meta = {}` when converting ESM to CJS, leaving `import.meta.dirname` undefined and crashing Rspack. A `patchImportMeta.ts` module patched `Module._extensions['.js']` to inject the correct values.
+
+This was removed once tsx fixed it ([tsx 4.21.1](https://github.com/privatenumber/tsx/issues/781)) and Cypress shipped the fixed tsx (4.22.4) starting in **v15.17.0** — hence the `cypress: ^15.17.0` floor in `package.json`. Do not reintroduce `patchImportMeta.ts` unless the minimum Cypress version is lowered below 15.17.0.
 
 Related issues:
 

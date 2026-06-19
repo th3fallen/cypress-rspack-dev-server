@@ -14,6 +14,11 @@ Install the library to your devDependencies
 npm install -D cypress-rspack-dev-server
 ```
 
+> **Requires Cypress >= 15.17.0.** Rspack v2 relies on `import.meta.dirname`,
+> which is only handled correctly by the tsx version bundled with Cypress
+> 15.17.0 and later. On older Cypress releases the dev server will fail to
+> start. If you must stay on Cypress < 15.17.0, use `cypress-rspack-dev-server@2.0.0`.
+
 ## Usage
 
 ```ts
@@ -84,6 +89,14 @@ If you still use Cypress <= 13, please use the version 0.0.x.
 ### v2 (Rspack v2 support)
 
 In version 2, we support Rspack v2 (2.0.0-rc and above). If you are using Rspack v1, please use the version 1.x.x.
+
+### v2.1 (Cypress 15.17+ required)
+
+Version 2.1.0 removed an internal workaround for a tsx `import.meta.dirname`
+bug. The fix now lives in Cypress itself (which bundles tsx >= 4.21.1 starting
+in **Cypress 15.17.0**), so this package now requires **Cypress >= 15.17.0**.
+If you are on an older Cypress, stay on `cypress-rspack-dev-server@2.0.0` until
+you can upgrade Cypress.
 
 ## License
 

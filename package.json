@@ -1,6 +1,6 @@
 {
   "name": "cypress-rspack-dev-server",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Launches Rspack Dev Server for Component Testing",
   "main": "dist/index.js",
   "scripts": {
@@ -19,6 +19,9 @@
     "test": "vitest run",
     "prepare": "husky"
   },
+  "peerDependencies": {
+    "cypress": ">=15.17.0"
+  },
   "dependencies": {
     "find-up": "6.3.0",
     "local-pkg": "1.2.1",
@@ -32,7 +35,7 @@
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.23",
     "cross-env": "^7.0.3",
-    "cypress": "^15.9.0",
+    "cypress": "^15.17.0",
     "debug": "^4.4.3",
     "fs-extra": "9.1.0",
     "husky": "^9.1.7",
