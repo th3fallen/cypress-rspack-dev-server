@@ -1,6 +1,6 @@
 {
   "name": "cypress-rspack-dev-server",
-  "version": "2.0.0-rc.2",
+  "version": "2.0.0",
   "description": "Launches Rspack Dev Server for Component Testing",
   "main": "dist/index.js",
   "scripts": {
@@ -21,13 +21,13 @@
   },
   "dependencies": {
     "find-up": "6.3.0",
-    "local-pkg": "0.4.1",
+    "local-pkg": "1.2.1",
     "tslib": "^2.8.1",
     "webpack-merge": "^5.10.0"
   },
   "devDependencies": {
-    "@rspack/core": "2.0.0-rc.1",
-    "@rspack/dev-server": "2.0.0-rc.2",
+    "@rspack/core": "2.0.8",
+    "@rspack/dev-server": "2.0.3",
     "@types/debug": "^4.1.12",
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.23",
@@ -37,12 +37,12 @@
     "fs-extra": "9.1.0",
     "husky": "^9.1.7",
     "lodash": "^4.17.23",
-    "oxfmt": "^0.44.0",
-    "oxlint": "^1.59.0",
+    "oxfmt": "^0.55.0",
+    "oxlint": "^1.70.0",
     "path": "^0.12.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "typescript": "^5.9.3",
+    "typescript": "6.0.3",
     "vitest": "^4.1.4"
   },
   "files": [
@@ -62,5 +62,5 @@
     "dev-server",
     "component test"
   ],
-  "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319"
+  "packageManager": "pnpm@11.8.0+sha512.c1f5e7c4cb241c8f174b743851d82f42b802324afc8b0f116b96adb15aa06664948dde36960a3ba1079ba5b4b29dd0140135b94b5b5f5263592249d68e555f26"
 }
