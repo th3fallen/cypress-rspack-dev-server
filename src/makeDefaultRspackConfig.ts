@@ -63,7 +63,6 @@ export function makeCypressRspackConfig(config: CreateFinalRspackConfig): Config
         indexHtmlFile,
       }),
     ],
-    devtool: 'inline-source-map',
   }
 
   if (isRunMode) {

@@ -43,7 +43,8 @@ describe('makeCypressRspackConfig', () => {
       splitChunks: false,
     })
     expect(result.plugins).toMatchSnapshot()
-    expect(result.devtool).toBe('inline-source-map')
+    // devtool is defaulted in makeRspackConfig, not here (this config is merged last).
+    expect(result.devtool).toBeUndefined()
     expect(result.optimization?.sideEffects).toBe(false)
   })
 })
