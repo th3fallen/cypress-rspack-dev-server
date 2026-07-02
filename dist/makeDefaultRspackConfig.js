@@ -44,7 +44,6 @@ function makeCypressRspackConfig(config) {
                 indexHtmlFile,
             }),
         ],
-        devtool: 'inline-source-map',
     };
     if (isRunMode) {
         // if justInTimeCompile is configured, we need to watch for file changes

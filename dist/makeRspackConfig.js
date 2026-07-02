@@ -96,6 +96,12 @@ async function makeRspackConfig(config) {
     debug(`Project root`, projectRoot);
     debug(`Support file`, supportFile);
     const mergedConfig = (0, webpack_merge_1.merge)(userAndFrameworkRspackConfig, (0, makeDefaultRspackConfig_1.makeCypressRspackConfig)(config));
+    // Default to `eval-cheap-source-map` (line-accurate maps, but far lighter than
+    // inline-source-map) only when the user/framework config didn't set one. Not set in
+    // makeCypressRspackConfig because that is merged last and would clobber the user's choice.
+    if (mergedConfig.devtool === undefined) {
+        mergedConfig.devtool = 'eval-cheap-source-map';
+    }
     // Some frameworks (like Next.js) change this value which changes the path we would need to use to fetch our spec.
     // (eg, http://localhost:xxxx/<dev-server-public-path>/static/chunks/spec-<x>.js). Deleting this key to normalize
     // the spec URL to `*/spec-<x>.js` which we need to know up-front so we can fetch the sourcemaps.

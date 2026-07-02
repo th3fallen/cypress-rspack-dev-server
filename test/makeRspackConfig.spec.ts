@@ -49,6 +49,27 @@ describe('makeRspackConfig', () => {
     expect(result.resolve?.alias).toEqual({ '@': '/src' })
   })
 
+  it('defaults devtool to `eval-cheap-source-map` when the user config does not set one', async () => {
+    const result = await makeRspackConfig({
+      devServerConfig: { ...baseDevServerConfig, rspackConfig: {} },
+      sourceRspackModulesResult: createModuleMatrixResult(),
+    })
+
+    expect(result.devtool).toBe('eval-cheap-source-map')
+  })
+
+  it('respects the user-provided devtool over the default', async () => {
+    const result = await makeRspackConfig({
+      devServerConfig: {
+        ...baseDevServerConfig,
+        rspackConfig: { devtool: 'eval-cheap-module-source-map' },
+      },
+      sourceRspackModulesResult: createModuleMatrixResult(),
+    })
+
+    expect(result.devtool).toBe('eval-cheap-module-source-map')
+  })
+
   it('accepts rspack config as a function', async () => {
     const rspackConfig = () => ({
       resolve: { alias: { '@fn': '/fn-src' } },

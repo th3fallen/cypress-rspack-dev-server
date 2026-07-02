@@ -23,7 +23,7 @@ The entry point is `src/index.ts` which exports `devServer()`. The flow:
 1. **`devServer.ts`** — detects framework (react/vue/svelte/angular/next), resolves presets, orchestrates everything
 2. **`helpers/sourceRelativeRspackModules.ts`** — sources `@rspack/core` and `@rspack/dev-server` from the user's project (or framework) via `dynamicAbsoluteImport`, installs `Module._load`/`_resolveFilename` hooks to ensure consistent rspack resolution
 3. **`makeRspackConfig.ts`** — auto-discovers user's rspack/webpack config via `find-up`, merges user + framework + Cypress configs with `webpack-merge`, removes conflicting plugins (HtmlWebpackPlugin, HtmlRspackPlugin, HMR)
-4. **`makeDefaultRspackConfig.ts`** — builds Cypress-specific rspack config: dev mode, inline source maps, HtmlRspackPlugin, CypressCTRspackPlugin
+4. **`makeDefaultRspackConfig.ts`** — builds Cypress-specific rspack config: dev mode, HtmlRspackPlugin, CypressCTRspackPlugin. Note: it deliberately does NOT set `devtool` — `makeRspackConfig.ts` applies a default (`eval-cheap-source-map`) only when the user/framework config didn't set one, so a user's `devtool` is respected (this config is merged last and would otherwise clobber it)
 5. **`createRspackDevServer.ts`** — instantiates `RspackDevServer` with final config
 6. **`CypressCTRspackPlugin.ts`** — custom rspack plugin that tracks spec files, handles `dev-server:specs:changed` events, injects context into the loader
 7. **`loader.ts`** — rspack loader that generates dynamic imports for spec files with chunk names, handles support file injection
@@ -65,3 +65,4 @@ Related issues:
 - Prettier: single quotes, no semicolons, 100 char width
 - Debug logging uses the `debug` library with namespace `cypress-rspack-dev-server:<module>`
 - Constants are UPPER_SNAKE_CASE, classes PascalCase, functions/variables camelCase
+- Never mention Claude Code (or any "Generated with Claude"/"Co-Authored-By: Claude" attribution) in code comments or commit messages
