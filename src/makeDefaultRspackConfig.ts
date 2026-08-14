@@ -26,14 +26,6 @@ export function makeCypressRspackConfig(config: CreateFinalRspackConfig): Config
     },
   } = config
 
-  const optimization: Record<string, any> = {
-    // To prevent files from being tree shaken by rspack, we set optimization.sideEffects: false ensuring that
-    // rspack does not recognize the sideEffects flag in the package.json and thus files are not unintentionally
-    // dropped during testing in production mode.
-    sideEffects: false,
-    splitChunks: false,
-  }
-
   const publicPath =
     path.sep === posixSeparator
       ? path.join(devServerPublicPathRoute, posixSeparator)
@@ -43,7 +35,6 @@ export function makeCypressRspackConfig(config: CreateFinalRspackConfig): Config
 
   const finalConfig: Configuration = {
     mode: 'development',
-    optimization,
     output: {
       filename: '[name].js',
       path: OUTPUT_PATH,

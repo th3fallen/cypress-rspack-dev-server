@@ -38,14 +38,11 @@ describe('makeCypressRspackConfig', () => {
     const result = makeCypressRspackConfig(config)
 
     expect(result.mode).toBe('development')
-    expect(result.optimization).toEqual({
-      sideEffects: false,
-      splitChunks: false,
-    })
     expect(result.plugins).toMatchSnapshot()
-    // devtool is defaulted in makeRspackConfig, not here (this config is merged last).
+    // devtool and optimization are defaulted in makeRspackConfig, not here
+    // (this config is merged last).
     expect(result.devtool).toBeUndefined()
-    expect(result.optimization?.sideEffects).toBe(false)
+    expect(result.optimization).toBeUndefined()
   })
 })
 

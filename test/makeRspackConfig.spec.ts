@@ -70,6 +70,28 @@ describe('makeRspackConfig', () => {
     expect(result.devtool).toBe('eval-cheap-module-source-map')
   })
 
+  it('defaults optimization to no tree-shaking and no chunk splitting', async () => {
+    const result = await makeRspackConfig({
+      devServerConfig: { ...baseDevServerConfig, rspackConfig: {} },
+      sourceRspackModulesResult: createModuleMatrixResult(),
+    })
+
+    expect(result.optimization).toEqual({ sideEffects: false, splitChunks: false })
+  })
+
+  it('respects user-provided optimization keys over the defaults', async () => {
+    const result = await makeRspackConfig({
+      devServerConfig: {
+        ...baseDevServerConfig,
+        rspackConfig: { optimization: { splitChunks: { chunks: 'all' } } },
+      },
+      sourceRspackModulesResult: createModuleMatrixResult(),
+    })
+
+    expect(result.optimization?.splitChunks).toEqual({ chunks: 'all' })
+    expect(result.optimization?.sideEffects).toBe(false)
+  })
+
   it('accepts rspack config as a function', async () => {
     const rspackConfig = () => ({
       resolve: { alias: { '@fn': '/fn-src' } },
